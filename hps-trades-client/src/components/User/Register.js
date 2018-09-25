@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import { NavLink } from 'reactstrap';
 
-import styles from './Register.css';
+import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
 import Components from '../index';
 
@@ -10,7 +10,7 @@ class Register extends Component {
     render() {
         return (
             <Wrapper>
-                <div className="signup-form">
+                <div className="user-form">
                     <form action="/examples/actions/confirmation.php" method="post">
                         <h2>Register</h2>
                         <p className="hint-text">Create your account. It's free and only takes a minute.</p>
