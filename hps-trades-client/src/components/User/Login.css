@@ -1,6 +1,7 @@
 .login-form{
-    width: 385px;
-    margin: 30px auto;
+    width: 400px;
+    margin: 0 auto;
+    padding: 30px 0;
 }
 .login-form form{
     margin-bottom: 15px;

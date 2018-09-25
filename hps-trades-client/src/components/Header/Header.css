@@ -35,3 +35,10 @@
     cursor:pointer;
     color: #fff !important;
 }
+
+.navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+}
