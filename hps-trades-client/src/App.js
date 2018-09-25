@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
 
-import Aux from './hoc/Aux';
+import Wrapper from './hoc/Wrapper';
 import Components from './components';
 import { alertActions } from './_actions';
 import { history } from './_helpers';
@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     const { alert } = this.props;
     return (
-      <Aux>
+      <Wrapper>
         <Components.Layout>
           {alert.message &&
             <div className={`alert ${alert.type}`}>{alert.message}</div>
@@ -38,7 +38,7 @@ class App extends Component {
             </div>
           </Router>
         </Components.Layout>
-      </Aux>
+      </Wrapper>
     );
   }
 

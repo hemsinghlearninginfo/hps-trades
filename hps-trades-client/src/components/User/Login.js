@@ -3,13 +3,13 @@ import CSSModules from 'react-css-modules';
 import { NavLink } from 'reactstrap';
 
 import styles from './Login.css';
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 
 class Login extends Component {
     
     render() {
         return (
-            <Aux>
+            <Wrapper>
                 <div class="login-form">
                     <form action="/examples/actions/confirmation.php" method="post">
                         <h2 class="text-center">Sign in</h2>
@@ -43,7 +43,7 @@ class Login extends Component {
                     </form>
                     {/* <p class="text-center text-muted small">Don't have an account? <a href="#">Sign up here!</a></p> */}
                 </div>
-            </Aux>
+            </Wrapper>
         )
     }
 }

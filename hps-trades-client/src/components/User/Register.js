@@ -3,13 +3,13 @@ import CSSModules from 'react-css-modules';
 import { NavLink } from 'reactstrap';
 
 import styles from './Register.css';
-import Aux from '../../hoc/Aux';
+import Wrapper from '../../hoc/Wrapper';
 import Components from '../index';
 
 class Register extends Component {
     render() {
         return (
-            <Aux>
+            <Wrapper>
                 <div className="signup-form">
                     <form action="/examples/actions/confirmation.php" method="post">
                         <h2>Register</h2>
@@ -39,7 +39,7 @@ class Register extends Component {
                     </form>
                 </div>
 
-            </Aux>
+            </Wrapper>
         )
     }
 }
