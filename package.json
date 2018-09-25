@@ -2,7 +2,6 @@
   "name": "hps-trades",
   "version": "1.0.0",
   "description": "this app track your trade information",
-  "main": "index.js",
   "scripts": {
     "start": "concurrently \"cd hps-trades-client && npm start\" \"cd hps-trades-server && npm start\""
   },
