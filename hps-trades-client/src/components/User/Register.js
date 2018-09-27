@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+
 import CSSModules from 'react-css-modules';
 import { NavLink } from 'reactstrap';
 
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
+import { userActions } from '../../_actions';
 
 class Register extends Component {
 
@@ -37,9 +41,9 @@ class Register extends Component {
         event.preventDefault();
         this.setState({ submitted: true });
         const { user } = this.state;
-        //const { dispatch } = this.props;
+        const { dispatch } = this.props;
         if (user.firstName && user.lastName && user.email && user.password) {
-            //dispatch(userActions.register(user));
+            dispatch(userActions.register(user));
         }
     }
 
@@ -95,11 +99,19 @@ class Register extends Component {
                         <div className="text-center">Already have an account? <NavLink href="/login">Sign in!</NavLink></div>
                     </form>
                 </div>
-
             </Wrapper>
         )
     }
 }
 
-export default CSSModules(Register, styles);
+// export default CSSModules(Register, styles);
 
+function mapStateToProps(state) {
+    const { registering } = state.registration;
+    return {
+        registering
+    };
+}
+
+const connectedRegisterPage = connect(mapStateToProps)(CSSModules(Register, styles));
+export { connectedRegisterPage as Register };
