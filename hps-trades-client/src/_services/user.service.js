@@ -1,5 +1,4 @@
-import { myConfig } from '../_config';
-import config  from 'config';
+//import config  from 'config';
 import { authHeader } from '../_helpers';
 
 export const userService = {
@@ -10,6 +9,10 @@ export const userService = {
     getById,
     update,
     delete: _delete
+};
+
+export const config = {
+    apiUrl: 'http://localhost:5000',
 };
 
 function login(username, password) {
@@ -62,7 +65,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${myConfig.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
