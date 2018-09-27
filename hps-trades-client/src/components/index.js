@@ -6,6 +6,7 @@ import { Login } from './User/Login';
 import { Register } from './User/Register';
 import TNC from './Legal/TNC';
 import PP from './Legal/PP';
+import loading from './Utils/loading';
 
 export default class Component {
 
@@ -19,4 +20,5 @@ export default class Component {
 
     static TNC = TNC;
     static PP = PP;
+    static Loading = loading;
 }
