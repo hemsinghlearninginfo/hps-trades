@@ -13,6 +13,9 @@ import {
     DropdownItem
 } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { userActions } from '../../_actions';
+
 import { myConfigLabels } from '../../config';
 import CSSModules from 'react-css-modules';
 import styles from './Header.css';
@@ -27,6 +30,10 @@ class Header extends Component {
             isOpen: false
         };
     }
+
+    // componentWillMount() {
+    //     this.props.dispatch(userActions.getAll());
+    // }
 
     toggle() {
         this.setState({
@@ -70,7 +77,7 @@ class Header extends Component {
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem className="item">
-                                        Logout
+                                        <a href="/login">Logout</a>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
@@ -82,4 +89,14 @@ class Header extends Component {
     }
 }
 
-export default CSSModules(Header, styles);
+function mapStateToProps(state) {
+    const { users, authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        users
+    };
+}
+
+const connectedHeader = connect(mapStateToProps)(CSSModules(Header, styles));
+export { connectedHeader as Header };

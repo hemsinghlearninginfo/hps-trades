@@ -27,9 +27,7 @@ class App extends Component {
     return (
       <Wrapper>
         <Components.Layout>
-          {alert.message &&
-            <div className={`alert ${alert.type}`}>{alert.message}</div>
-          }
+          <Components.Alert type={alert.type} message={alert.message} />
           <Router history={history}>
             <div>
               <PrivateRoute exact path="/" component={Components.Home} />
