@@ -12,10 +12,11 @@ export const userService = {
 };
 
 export const config = {
-    apiUrl: 'http://localhost:5000',
+    apiUrl: 'http://localhost:4000',
 };
 
 function login(username, password) {
+    
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,7 +65,6 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
     return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 

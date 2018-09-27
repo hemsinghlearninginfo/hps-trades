@@ -17,7 +17,7 @@ class Register extends Component {
             user: {
                 firstName: '',
                 lastName: '',
-                email: '',
+                username: '',
                 password: ''
             },
             submitted: false
@@ -42,7 +42,7 @@ class Register extends Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.email && user.password) {
+        if (user.firstName && user.lastName && user.username && user.password) {
             dispatch(userActions.register(user));
         }
     }
@@ -74,9 +74,9 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <input type="email" className="form-control" name="email" placeholder="Email" required="required" value={user.email} onChange={this.handleChange} />
+                            <input type="email" className="form-control" name="username" placeholder="Email" required="required" value={user.username} onChange={this.handleChange} />
                             {
-                                submitted && !user.email &&
+                                submitted && !user.username &&
                                 <div className="help-block">Email is required</div>
                             }
                         </div>
