@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules';
 import { NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
 
+import Components from '../index';
 import { userActions } from '../../_actions';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';

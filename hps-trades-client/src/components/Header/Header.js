@@ -25,7 +25,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false
         };
@@ -35,7 +34,7 @@ class Header extends Component {
     //     this.props.dispatch(userActions.getAll());
     // }
 
-    toggle() {
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -76,8 +75,8 @@ class Header extends Component {
                                         Option 2
                                     </DropdownItem>
                                     <DropdownItem divider />
-                                    <DropdownItem className="item">
-                                        <a href="/login">Logout</a>
+                                    <DropdownItem className="item" href="/login">
+                                        Logout
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>

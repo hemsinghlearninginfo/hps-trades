@@ -1,38 +1,41 @@
-.changeHeader{
+.changeHeader {
     background-color: #4267b2 !important;
     border-bottom: 1px solid #29487d;
     color: #fff;
-    font-size:12px;
+    font-size: 12px;
     font-weight: bold;
     height: 40px;
 }
 
-.menuHorzintalDivider{
+.menuHorzintalDivider {
     border-right: 1px solid #29487d6e;
     margin: 7px;
 }
 
-.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-brand {
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-brand {
     color: #fff !important;
 }
 
-.topLinks, .topLinks:active{
+.topLinks,
+.topLinks:active {
     color: #fff !important;
 }
 
-.topLinks:hover, .navbar-light .navbar-nav .nav-link:hover{
+.topLinks:hover,
+.navbar-light .navbar-nav .nav-link:hover {
     background-color: #385faf;
     border-radius: 4px;
 }
 
-.dropDownMenu{
-    font-size:12px;
+.dropDownMenu {
+    font-size: 12px;
     font-weight: bold;
 }
 
-.dropDownMenu .item:hover{
+.dropDownMenu .item:hover {
     background-color: #4267b2 !important;
-    cursor:pointer;
+    cursor: pointer;
     color: #fff !important;
 }
 
@@ -42,4 +45,3 @@
     width: 100%;
     z-index: 10;
 }
-
