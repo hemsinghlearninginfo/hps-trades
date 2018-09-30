@@ -7,14 +7,19 @@ export function getIcon(iconType) {
     switch (iconType) {
         case iconConstants.SIGN_OUT:
             iconsHTML = <FaSignOutAlt />;
+            break;
         case iconConstants.SIGN_IN:
             iconsHTML = <FaSignInAlt />;
+            break;
         case iconConstants.USER_PREFERENCE:
             iconsHTML = <FaUserSecret />;
+            break;
         case iconConstants.USER_LABEL:
             iconsHTML = <FaUserAlt />;
-            case iconConstants.LEGAL:
+            break;
+        case iconConstants.LEGAL:
             iconsHTML = <FaGavel />;
+            break;
     }
     return iconsHTML;
 }

@@ -7,7 +7,7 @@ const PP = () => (
     <Components.PageTemplate iconType={iconConstants.LEGAL} heading="Privacy Policy">
         <div>
             privacy policy
-                </div>
+        </div>
     </Components.PageTemplate>
 );
 
