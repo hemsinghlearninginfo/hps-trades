@@ -26,7 +26,8 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            isOpen: false
+            isOpen: false,
+            isUserLogin: false
         };
     }
 
@@ -41,6 +42,35 @@ class Header extends Component {
     }
 
     render() {
+        let userLoginHTML;
+        if (this.state.isUserLogin) {
+            userLoginHTML = (
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                        Hello HS
+                    </DropdownToggle>
+                    <DropdownMenu right className="dropDownMenu">
+                        <DropdownItem className="item">
+                            Preference
+                    </DropdownItem>
+                        <DropdownItem className="item">
+                            Option 2
+                    </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem className="item" href="/login">
+                            Logout
+                    </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            );
+        }
+        else {
+            userLoginHTML = (
+                <NavItem>
+                    <NavLink href="/login">{myConfigLabels.LoginLink}</NavLink>
+                </NavItem>
+            );
+        }
         return (
             <div>
                 <Navbar className="changeHeader" color="light" light expand="md">
@@ -60,26 +90,7 @@ class Header extends Component {
                                 <NavLink href="#" className="topLinks">System</NavLink>
                             </NavItem>
                             <li className="menuHorzintalDivider"></li> */}
-                            <NavItem>
-                                <NavLink href="/login">{myConfigLabels.LoginLink}</NavLink>
-                            </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Hello HS
-                                </DropdownToggle>
-                                <DropdownMenu right className="dropDownMenu">
-                                    <DropdownItem className="item">
-                                        Preference
-                                    </DropdownItem>
-                                    <DropdownItem className="item">
-                                        Option 2
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem className="item" href="/login">
-                                        Logout
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+                            {userLoginHTML}
                         </Nav>
                     </Collapse>
                 </Navbar>
@@ -89,11 +100,10 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication } = state;
+    const { authentication } = state;
     const { user } = authentication;
     return {
-        user,
-        users
+        user
     };
 }
 

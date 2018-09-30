@@ -9,7 +9,7 @@ class Layout extends Component {
     render () {
         return (
             <Wrapper>
-                <Components.Header />
+                 <Components.Header />
                 <main className="mainContainer">
                     {this.props.children}
                 </main>
