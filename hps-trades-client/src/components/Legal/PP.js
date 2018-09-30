@@ -1,11 +1,13 @@
 import React from 'react';
-import Components from '../index';
+import { iconConstants } from '../../_constants';
+import Components from '../';
+
 
 const PP = () => (
-    <Components.PageTemplate heading="Private Policy">
+    <Components.PageTemplate iconType={iconConstants.LEGAL} heading="Privacy Policy">
         <div>
             privacy policy
-        </div>
+                </div>
     </Components.PageTemplate>
 );
 

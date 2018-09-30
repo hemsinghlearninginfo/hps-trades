@@ -6,7 +6,7 @@ import { Login } from './User/Login';
 import { Register } from './User/Register';
 import UserPreference from './User/UserPreference';
 import TNC from './Legal/TNC';
-import PP from './Legal/PP';
+import PP  from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 
