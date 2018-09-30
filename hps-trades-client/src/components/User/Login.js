@@ -67,9 +67,9 @@ class Login extends Component {
                             <button type="submit" className="btn btn-success btn-lg btn-block">Login</button>
                         </div>
                         { loggingIn && <Components.Loading /> }
-                        <div className="clearfix">
-                            <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label>
-                            <a href="#" className="pull-right">Forgot Password?</a>
+                        <div className="text-center">
+                            {/* <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label> */}
+                            <a href="#" className="center">Forgot Password?</a>
                         </div>
                         <div className="or-seperator"><i>or</i></div>
                         <p className="text-center">Don't have an account? <NavLink href="/register">Sign up here!</NavLink></p>
