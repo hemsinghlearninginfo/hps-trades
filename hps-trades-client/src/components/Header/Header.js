@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
+import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
 
 import { myConfigLabels } from '../../config';
 import CSSModules from 'react-css-modules';
@@ -42,7 +43,7 @@ class Header extends Component {
         if (user == null || user.token==null) {
             userLoginHTML = (
                 <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <NavLink href="/login"><FaSignInAlt />Login</NavLink>
                 </NavItem>
             );
         }
@@ -50,15 +51,15 @@ class Header extends Component {
             userLoginHTML = (
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                        Hello {user.firstName}
+                        <FaUserAlt />Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right className="dropDownMenu">
                         <DropdownItem className="item" href="/userpreference">
-                            Preference
+                            <FaUserSecret />Preference
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="item" href="/login">
-                            Logout
+                            <FaSignOutAlt />Logout
                     </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>

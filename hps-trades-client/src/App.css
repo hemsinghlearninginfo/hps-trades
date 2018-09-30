@@ -30,3 +30,8 @@ input.form-control.required {
     padding: 0px !important;
     color: red;
 }
+
+svg {
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
