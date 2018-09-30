@@ -19,11 +19,15 @@ class Register extends Component {
                 firstName: '',
                 lastName: '',
                 username: '',
-                password: ''
+                password: '',
+                confirmPassword: '',
+                isAccept: false
             },
-            submitted: false
+            submitted: false,
+            passwordNotMatched: false
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheckBox = this.handleCheckBox.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -38,19 +42,43 @@ class Register extends Component {
         });
     }
 
+    handleCheckBox(event) {
+        const { user } = this.state;
+        this.setState({
+            user: {
+                ...user,
+                isAccept: event.target.checked
+            }
+        });
+    }
+
+    getFinalObjectToSubmit = (user) => {
+        return ({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            password: user.password
+        });
+    }
+
+
     handleSubmit(event) {
         event.preventDefault();
         this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.username && user.password) {
-            dispatch(userActions.register(user));
+        this.setState({ passwordNotMatched: (user.password === user.confirmPassword) });
+        if (user.firstName && user.lastName && user.username && user.password && user.confirmPassword && user.isAccept && this.state.passwordNotMatched) {
+            //alert('submit user')
+            var submitUser = this.getFinalObjectToSubmit(user);
+            dispatch(userActions.register(submitUser));
         }
     }
 
+    
     render() {
         const { registering } = this.props;
-        const { user, submitted } = this.state;
+        const { user, submitted, passwordNotMatched } = this.state;
         return (
             <Wrapper>
                 <div className="user-form">
@@ -60,16 +88,16 @@ class Register extends Component {
                         <div className="form-group">
                             <div className="row">
                                 <div className="col-xs-6 firstName">
-                                    <input type="text" className="form-control required" name="firstName" 
-                                    placeholder="First Name" value={user.firstName} onChange={this.handleChange} />
+                                    <input type="text" className="form-control required" name="firstName"
+                                        placeholder="First Name" value={user.firstName} onChange={this.handleChange} />
                                     {
                                         submitted && !user.firstName &&
                                         <div className="help-block">First Name is required</div>
                                     }
                                 </div>
                                 <div className="col-xs-6 lastName">
-                                <input type="text" className="form-control required" name="lastName" 
-                                placeholder="Last Name" value={user.lastName} onChange={this.handleChange} />
+                                    <input type="text" className="form-control required" name="lastName"
+                                        placeholder="Last Name" value={user.lastName} onChange={this.handleChange} />
                                     {
                                         submitted && !user.lastName &&
                                         <div className="help-block">Last Name is required</div>
@@ -78,27 +106,39 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <input type="email" className="form-control required" name="username" 
-                            placeholder="Email" value={user.username} onChange={this.handleChange} />
+                            <input type="email" className="form-control required" name="username"
+                                placeholder="Email" value={user.username} onChange={this.handleChange} />
                             {
                                 submitted && !user.username &&
                                 <div className="help-block">Email is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control required" name="password" 
-                            placeholder="Password" value={user.password} onChange={this.handleChange} />
+                            <input type="password" className="form-control required" name="password"
+                                placeholder="Password" value={user.password} onChange={this.handleChange} />
                             {
                                 submitted && !user.password &&
                                 <div className="help-block">Password is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control required" name="confirm_password" 
-                            placeholder="Confirm Password" />
+                            <input type="password" className="form-control required" name="confirmPassword"
+                                placeholder="Confirm Password" value={user.confirmPassword} onChange={this.handleChange} />
+                            {
+                                (submitted && !user.confirmPassword &&
+                                    <div className="help-block">Confirm Password is required</div>)
+                                || (submitted && !passwordNotMatched &&
+                                    <div className="help-block">Confirm Password should be matched with password</div>)
+                            }
                         </div>
                         <div className="form-group">
-                            <label className="checkbox-inline"><input type="checkbox" /> I accept the <a href="/tnc" target="_blank">Terms of Use</a> &amp; <a href="/pp" target="_blank">Privacy Policy</a></label>
+                            <label className="checkbox-inline">
+                                <input name="isAccept" type="checkbox" defaultChecked={user.isAccept} onChange={this.handleCheckBox} /> I accept the <a href="/tnc" target="_blank">Terms of Use</a> &amp; <a href="/pp" target="_blank">Privacy Policy</a>
+                            </label>
+                            {
+                                submitted && !user.isAccept &&
+                                <div className="help-block">Please click on accept conditions</div>
+                            }
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
@@ -111,8 +151,6 @@ class Register extends Component {
         )
     }
 }
-
-// export default CSSModules(Register, styles);
 
 function mapStateToProps(state) {
     const { registering } = state.registration;
