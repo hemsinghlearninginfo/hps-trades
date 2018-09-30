@@ -4,6 +4,7 @@ import Layout from './Layout/Layout';
 import Home from './Home/Home';
 import { Login } from './User/Login';
 import { Register } from './User/Register';
+import UserPreference from './User/UserPreference';
 import TNC from './Legal/TNC';
 import PP from './Legal/PP';
 import loading from './Utils/loading';
@@ -20,6 +21,7 @@ export default class Component {
 
     static Login = Login;
     static Register = Register;
+    static UserPreference = UserPreference;
 
     static TNC = TNC;
     static PP = PP;

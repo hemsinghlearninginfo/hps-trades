@@ -53,12 +53,9 @@ class Header extends Component {
                         Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right className="dropDownMenu">
-                        <DropdownItem className="item">
+                        <DropdownItem className="item" href="/userpreference">
                             Preference
-                    </DropdownItem>
-                        <DropdownItem className="item">
-                            Option 2
-                    </DropdownItem>
+                        </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="item" href="/login">
                             Logout

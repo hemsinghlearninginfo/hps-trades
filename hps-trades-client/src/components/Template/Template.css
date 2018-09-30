@@ -21,6 +21,8 @@
     flex-direction: column;
     padding: 20px;
     border-radius: 5px;
+    font-weight: bold;
+    font-size: 11pt;
 }
 .contentItem{
     color: rgba(0, 0, 0, 0.87);
