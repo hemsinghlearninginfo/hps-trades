@@ -9,7 +9,8 @@ export const userActions = {
     logout,
     register,
     getAll,
-    delete: _delete
+    delete: _delete,
+    isUserLoggedIn: isUserLoggedIn
 };
 
 function login(username, password) {
@@ -18,7 +19,7 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => { 
+                user => {
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -45,7 +46,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
@@ -93,4 +94,14 @@ function _delete(id) {
     function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+}
+
+
+function isUserLoggedIn() {
+    if (localStorage != null && localStorage.user) {
+        return JSON.parse(localStorage.user);
+    }
+    else {
+        return null;
+    }
 }
