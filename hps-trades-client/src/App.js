@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
-import { connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Wrapper from './hoc/Wrapper';
 import Components from './components';
@@ -30,7 +30,10 @@ class App extends Component {
           <Components.Alert type={alert.type} message={alert.message} />
           <Router history={history}>
             <div>
-              <PrivateRoute exact path="/" component={Components.Home} />
+              {/* <PrivateRoute exact path="/" component={Components.Home} /> */}
+              <Route exact path="/" component={Components.Home} />
+              <Route exact path="/tnc" component={Components.TNC} />
+              <Route exact path="/pp" component={Components.PP} />
               <Route exact path="/login" component={Components.Login} />
               <Route exact path="/register" component={Components.Register} />
             </div>

@@ -1,9 +1,12 @@
 import React from 'react';
+import Components from '../index';
 
 const PP = () => (
-    <div>
-        privacy policy
-    </div>
+    <Components.PageTemplate heading="Private Policy">
+        <div>
+            privacy policy
+        </div>
+    </Components.PageTemplate>
 );
 
 export default PP;

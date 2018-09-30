@@ -1,13 +1,12 @@
 import React from 'react';
+import Components from '../index';
 
 const TNC = () => (
-    <div>
-        <div>privacy policy</div>
-        <div>privacy policy</div>
-        <div>privacy policy</div>
-        <div>privacy policy</div>
-        <div>privacy policy</div>
-    </div>
+    <Components.PageTemplate heading="Terms and condition">
+        <div>
+            Terms and Condition
+        </div>
+    </Components.PageTemplate>
 );
 
 export default TNC;

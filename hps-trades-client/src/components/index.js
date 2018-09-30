@@ -9,6 +9,8 @@ import PP from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 
+import pageTemplate from './Template/PageTemplate';
+
 export default class Component {
 
     static Footer = Footer;
@@ -23,4 +25,6 @@ export default class Component {
     static PP = PP;
     static Loading = loading;
     static Alert = alert;
+
+    static PageTemplate = pageTemplate;
 }

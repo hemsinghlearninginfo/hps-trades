@@ -20,3 +20,13 @@ body {
     padding: 0.8rem;
     background: #ccc;
 }
+
+input.form-control.required { 
+    border-left: 2px solid red;
+}
+
+.help-block{
+    font-size: 8pt;
+    padding: 0px !important;
+    color: red;
+}

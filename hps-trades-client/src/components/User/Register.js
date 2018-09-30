@@ -60,13 +60,16 @@ class Register extends Component {
                         <div className="form-group">
                             <div className="row">
                                 <div className="col-xs-6 firstName">
-                                    <input type="text" className="form-control" name="firstName" placeholder="First Name" required="required" value={user.firstName} onChange={this.handleChange} />
+                                    <input type="text" className="form-control required" name="firstName" 
+                                    placeholder="First Name" value={user.firstName} onChange={this.handleChange} />
                                     {
                                         submitted && !user.firstName &&
                                         <div className="help-block">First Name is required</div>
                                     }
                                 </div>
-                                <div className="col-xs-6 lastName"><input type="text" className="form-control" name="lastName" placeholder="Last Name" required="required" value={user.lastName} onChange={this.handleChange} />
+                                <div className="col-xs-6 lastName">
+                                <input type="text" className="form-control required" name="lastName" 
+                                placeholder="Last Name" value={user.lastName} onChange={this.handleChange} />
                                     {
                                         submitted && !user.lastName &&
                                         <div className="help-block">Last Name is required</div>
@@ -75,24 +78,27 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <input type="email" className="form-control" name="username" placeholder="Email" required="required" value={user.username} onChange={this.handleChange} />
+                            <input type="email" className="form-control required" name="username" 
+                            placeholder="Email" value={user.username} onChange={this.handleChange} />
                             {
                                 submitted && !user.username &&
                                 <div className="help-block">Email is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" name="password" placeholder="Password" required="required" value={user.password} onChange={this.handleChange} />
+                            <input type="password" className="form-control required" name="password" 
+                            placeholder="Password" value={user.password} onChange={this.handleChange} />
                             {
                                 submitted && !user.password &&
                                 <div className="help-block">Password is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" name="confirm_password" placeholder="Confirm Password" required="required" />
+                            <input type="password" className="form-control required" name="confirm_password" 
+                            placeholder="Confirm Password" />
                         </div>
                         <div className="form-group">
-                            <label className="checkbox-inline"><input type="checkbox" required="required" /> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
+                            <label className="checkbox-inline"><input type="checkbox" /> I accept the <a href="/tnc" target="_blank">Terms of Use</a> &amp; <a href="/pp" target="_blank">Privacy Policy</a></label>
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
