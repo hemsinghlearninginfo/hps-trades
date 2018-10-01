@@ -1,34 +1,70 @@
 ﻿require('rootpath')();
+require("dotenv").config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cluster = require("cluster");
+const numCPUs = require("os").cpus().length;
 const bodyParser = require('body-parser');
 const jwt = require('_helpers/jwt');
 const errorHandler = require('_helpers/error-handler');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
+// Multi-process to utilize all CPU cores.
+if (cluster.isMaster) {
+    console.error(`Node cluster master ${process.pid} is running`);
 
-// use JWT auth to secure the api
-app.use(jwt());
+    // Fork workers.
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Headers", "*");
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    next();
-});
+    cluster.on("exit", (worker, code, signal) => {
+        console.error(
+            `Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`
+        );
+    });
+}
+else {
 
-// api routes
-app.use('/users', require('./users/users.controller'));
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.json());
+    app.use(cors());
 
-// global error handler
-app.use(errorHandler);
+    // use JWT auth to secure the api
+    app.use(jwt());
 
-// start server
-const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
-const server = app.listen(port, function () {
-    console.log('Server listening on port ' + port);
-});
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Headers", "*");
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        next();
+    });
+
+    app.post("/api/send_email", function (req, res) {
+        res.set("Content-Type", "application/json");
+
+        const { userName, email } = req.body;
+        const locals = { userName };
+        const messageInfo = {
+            email,
+            fromEmail: "info@ingsw.com",
+            fromName: "Star Wars",
+            subject: "Checkout this awesome droids"
+        };
+        mailer.sendOne("droids", messageInfo, locals);
+        res.send('{"message":"Email sent."}');
+    });
+
+    // api routes
+    app.use('/users', require('./users/users.controller'));
+
+    // global error handler
+    app.use(errorHandler);
+
+    // start server
+    const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
+    const server = app.listen(port, function () {
+        console.log('Server listening on port ' + port);
+    });
+}
