@@ -1,7 +1,8 @@
-"use strict";
 var path = require("path");
-var templatesDir = path.resolve(__dirname, "views/mailer");
+var templatesDir = path.resolve(__dirname, "hpsTempEmails");
 var Email = require("email-templates");
+
+module.exports = sendOne;
 
 const mailjet = require("node-mailjet").connect(
     process.env.MJ_APIKEY_PUBLIC,
@@ -22,7 +23,7 @@ const sendEmail = (messageInfo, text, html) => {
     });
 };
 
-exports.sendOne = function (templateName, messageInfo, locals) {
+function sendOne(templateName, messageInfo, locals) {
     const email = new Email({
         views: { root: templatesDir, options: { extension: "ejs" } }
     });
@@ -35,4 +36,4 @@ exports.sendOne = function (templateName, messageInfo, locals) {
             return sendEmail(messageInfo, text, html);
         })
         .catch(console.error);
-};
+}

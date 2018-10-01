@@ -69,7 +69,7 @@ class Login extends Component {
                         { loggingIn && <Components.Loading /> }
                         <div className="text-center">
                             {/* <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label> */}
-                            <a href="#" className="center">Forgot Password?</a>
+                            <a className="center">Forgot Password?</a>
                         </div>
                         <div className="or-seperator"><i>or</i></div>
                         <p className="text-center">Don't have an account? <NavLink href="/register">Sign up here!</NavLink></p>

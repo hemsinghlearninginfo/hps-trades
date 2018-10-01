@@ -9,7 +9,6 @@ import { history } from './_helpers';
 import { PrivateRoute } from './components/Routes/PrivateRoutes';
 import './App.css';
 
-
 class App extends Component {
 
   constructor(props) {
@@ -21,6 +20,8 @@ class App extends Component {
       dispatch(alertActions.clear());
     });
   }
+
+  state = { email: "hemsingh81@gmail.com" };
 
   render() {
     const { alert } = this.props;

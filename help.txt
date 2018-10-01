@@ -4,3 +4,6 @@ https://medium.com/ingenious/sending-emails-from-a-create-react-app-dad5756a4ff2
 
 Bootstrap Templates
 https://www.tutorialrepublic.com/snippets/gallery.php
+
+Email With Templates
+https://medium.com/ingenious/sending-emails-from-a-create-react-app-dad5756a4ff2

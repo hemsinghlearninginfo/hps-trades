@@ -41,18 +41,18 @@ else {
         next();
     });
 
-    app.post("/api/send_email", function (req, res) {
-        res.set("Content-Type", "application/json");
+    app.use("/api/sendemail", function (req, res) {
+        // res.set("Content-Type", "application/json");
 
-        const { userName, email } = req.body;
-        const locals = { userName };
-        const messageInfo = {
-            email,
-            fromEmail: "info@ingsw.com",
-            fromName: "Star Wars",
-            subject: "Checkout this awesome droids"
-        };
-        mailer.sendOne("droids", messageInfo, locals);
+        // const { userName, email } = req.body;
+        // const locals = { userName };
+        // const messageInfo = {
+        //     email,
+        //     fromEmail: "info@gmail.com",
+        //     fromName: "Star Wars",
+        //     subject: "Checkout this awesome droids"
+        // };
+        // mailer.sendOne("hpsTempEmails", messageInfo, locals);
         res.send('{"message":"Email sent."}');
     });
 

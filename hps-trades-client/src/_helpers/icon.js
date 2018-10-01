@@ -1,6 +1,9 @@
 import React from 'react';
 import { iconConstants } from '../_constants';
-import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog } from 'react-icons/fa';
+import {
+    FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative
+}
+    from 'react-icons/fa';
 
 export function getIcon(iconType) {
     let iconsHTML;
@@ -23,6 +26,8 @@ export function getIcon(iconType) {
         case iconConstants.MACHINE:
             iconsHTML = <FaCog />;
             break;
+        default:
+            iconsHTML = <FaAngrycreative />
     }
     return iconsHTML;
 }
