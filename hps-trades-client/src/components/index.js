@@ -10,6 +10,8 @@ import PP  from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 
+import error404 from './Error/404';
+
 import pageTemplate from './Template/PageTemplate';
 
 export default class Component {
@@ -29,4 +31,5 @@ export default class Component {
     static Alert = alert;
 
     static PageTemplate = pageTemplate;
+    static Error404 = error404;
 }
