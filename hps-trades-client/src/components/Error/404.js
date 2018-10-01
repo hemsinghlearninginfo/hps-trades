@@ -20,10 +20,6 @@ const error404 = () => (
                 </div>
             </div>
         </div>
-        <div className="container-fluid" id="footer-container-fluid">
-            <div className="container">
-            </div>
-        </div>
     </div>
 );
 
