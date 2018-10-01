@@ -1,0 +1,2 @@
+For Server Side Email:
+https://medium.com/ingenious/sending-emails-from-a-create-react-app-dad5756a4ff2

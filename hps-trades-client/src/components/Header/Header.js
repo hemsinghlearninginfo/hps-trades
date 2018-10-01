@@ -59,7 +59,7 @@ class Header extends Component {
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="item" href="/login">
-                            <FaSignOutAlt />Logout
+                            <FaSignOutAlt />Log Out
                     </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
