@@ -8,6 +8,7 @@ const numCPUs = require("os").cpus().length;
 const bodyParser = require('body-parser');
 const jwt = require('_helpers/jwt');
 const errorHandler = require('_helpers/error-handler');
+const mailer = require('./_helpers/mailer');
 
 // Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
@@ -42,17 +43,19 @@ else {
     });
 
     app.use("/api/sendemail", function (req, res) {
-        // res.set("Content-Type", "application/json");
+        
+        res.set("Content-Type", "application/json");
 
-        // const { userName, email } = req.body;
-        // const locals = { userName };
-        // const messageInfo = {
-        //     email,
-        //     fromEmail: "info@gmail.com",
-        //     fromName: "Star Wars",
-        //     subject: "Checkout this awesome droids"
-        // };
-        // mailer.sendOne("hpsTempEmails", messageInfo, locals);
+        const { userName, email } = req.body;
+        const locals = { userName };
+        const messageInfo = {
+            email,
+            fromEmail: "info@hpstrades.com",
+            fromName: "Star Wars",
+            subject: "Checkout this awesome droids"
+        };
+        console.log(messageInfo);
+        //mailer.sendOne("hpsTempEmails", messageInfo, locals);
         res.send('{"message":"Email sent."}');
     });
 
