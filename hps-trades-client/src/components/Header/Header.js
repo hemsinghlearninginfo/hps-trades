@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
 
-import { myConfigLabels } from '../../config';
+import { myConfig } from '../../config';
 import CSSModules from 'react-css-modules';
 import styles from './Header.css';
 
@@ -69,7 +69,7 @@ class Header extends Component {
         return (
             <div>
                 <Navbar className="changeHeader" color="light" light expand="md">
-                    <NavbarBrand href="/">{myConfigLabels.AppName}</NavbarBrand>
+                    <NavbarBrand href="/">{myConfig.AppName}</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>

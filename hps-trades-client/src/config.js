@@ -1,4 +1,4 @@
-export const myConfigLabels = {
+export const myConfig = {
     AppName: 'HPS-Trades',
-    LoginLink: 'Login',
+    ApiUrl: 'http://localhost:4000/'
 };

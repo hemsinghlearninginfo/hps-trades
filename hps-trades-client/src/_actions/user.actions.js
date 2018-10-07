@@ -1,6 +1,7 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
+import { emailActions } from './';
 import { history } from '../_helpers';
 
 
@@ -44,11 +45,18 @@ function register(user) {
     return dispatch => {
         dispatch(request(user));
 
+        var emailType = 'newUserRegister';
+        var emailUserObject = { ...user, emailType };
+
         userService.register(user)
             .then(
                 user => {
                     dispatch(success());
-                    history.push('/login');
+                    userService.login(emailUserObject.username, emailUserObject.password)
+                        .then(x => {
+                            emailActions.emailNewUser(emailUserObject);
+                            history.push('/');
+                        });
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

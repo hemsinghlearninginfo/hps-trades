@@ -1,21 +1,17 @@
 import { authHeader } from '../_helpers';
-
+import { myConfig } from '../config';
 
 export const emailService = {
     sendEmail
 };
 
-export const config = {
-    apiUrl: 'http://localhost:4000',
-};
-
-function sendEmail(email, userName = "Anakin Skywalker") {
+function sendEmail(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ... authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, userName })
+        body: JSON.stringify(user)
     };
-    return fetch(`${config.apiUrl}/api/sendemail`, requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'email/sendemail', requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -24,10 +20,8 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                alert(response);
                 window.location.reload(true);
             }
-
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
