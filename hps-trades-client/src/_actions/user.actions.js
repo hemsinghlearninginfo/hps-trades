@@ -52,11 +52,8 @@ function register(user) {
             .then(
                 user => {
                     dispatch(success());
-                    userService.login(emailUserObject.username, emailUserObject.password)
-                        .then(x => {
-                            emailActions.emailNewUser(emailUserObject);
-                            history.push('/');
-                        });
+                    history.push('/');
+                    emailActions.emailNewUser(emailUserObject);
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

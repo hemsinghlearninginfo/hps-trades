@@ -68,9 +68,10 @@ class Register extends Component {
         const { user } = this.state;
         const { dispatch } = this.props;
         this.setState({ passwordNotMatched: (user.password === user.confirmPassword) });
-        if (user.firstName && user.lastName && user.username && user.password && user.confirmPassword && user.isAccept && this.state.passwordNotMatched) {
-            //alert('submit user')
-            var submitUser = this.getFinalObjectToSubmit(user);
+        if (user.firstName && user.lastName && user.username 
+            && user.password && user.confirmPassword 
+            && user.isAccept && (user.password === user.confirmPassword)) {
+            let submitUser = this.getFinalObjectToSubmit(user);
             dispatch(userActions.register(submitUser));
         }
     }
@@ -143,7 +144,9 @@ class Register extends Component {
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
                         </div>
-                        {registering && <Components.Loading />}
+
+<Components.Loading message='Working' />
+                        {registering && <Components.Loading message='Working' />}
                         <div className="text-center">Already have an account? <NavLink href="/login">Sign in!</NavLink></div>
                     </form>
                 </div>
