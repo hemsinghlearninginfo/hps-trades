@@ -34,6 +34,7 @@ class App extends Component {
               {/* <PrivateRoute exact path="/" component={Components.Home} /> */}
               <PrivateRoute exact path="/userpreference" component={Components.UserPreference} />
               <Route exact path="/" component={Components.Home} />
+              <Route exact path="/calendar" component={Components.MarketCalendar} />
               <Route exact path="/tnc" component={Components.TNC} />
               <Route exact path="/pp" component={Components.PP} />
               <Route exact path="/login" component={Components.Login} />

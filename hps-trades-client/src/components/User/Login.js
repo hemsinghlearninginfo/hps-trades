@@ -66,7 +66,7 @@ class Login extends Component {
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Login</button>
                         </div>
-                        { loggingIn && <Components.Loading /> }
+                        { loggingIn && <Components.Loading message="searching" /> }
                         <div className="text-center">
                             {/* <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label> */}
                             <a className="center">Forgot Password?</a>

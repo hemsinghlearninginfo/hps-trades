@@ -9,6 +9,7 @@ import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
 import { userActions } from '../../_actions';
 import Components from '../index';
+import { validateEmail, validatePassword } from '../../_helpers';
 
 class Register extends Component {
 
@@ -24,6 +25,9 @@ class Register extends Component {
                 isAccept: false
             },
             submitted: false,
+            isValidEmail: false,
+            isValidPassword: false,
+            isValidPassword: false,
             passwordNotMatched: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -67,19 +71,30 @@ class Register extends Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
-        this.setState({ passwordNotMatched: (user.password === user.confirmPassword) });
-        if (user.firstName && user.lastName && user.username 
-            && user.password && user.confirmPassword 
-            && user.isAccept && (user.password === user.confirmPassword)) {
+
+        let passwordNotMatched = (user.password === user.confirmPassword);
+        let isValidEmail = validateEmail(user.username);
+        let isValidPassword = validatePassword(user.password);
+
+        this.setState({
+            passwordNotMatched,
+            isValidEmail,
+            isValidPassword
+        });
+
+        if (user.firstName && user.lastName && user.username
+            && user.password && user.confirmPassword
+            && user.isAccept && passwordNotMatched
+            && isValidEmail && isValidPassword) {
             let submitUser = this.getFinalObjectToSubmit(user);
             dispatch(userActions.register(submitUser));
         }
     }
 
-    
+
     render() {
         const { registering } = this.props;
-        const { user, submitted, passwordNotMatched } = this.state;
+        const { user, submitted, passwordNotMatched, isValidEmail, isValidPassword } = this.state;
         return (
             <Wrapper>
                 <div className="user-form">
@@ -107,19 +122,23 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <input type="email" className="form-control required" name="username"
+                            <input type="text" className="form-control required" name="username"
                                 placeholder="Email" value={user.username} onChange={this.handleChange} />
                             {
-                                submitted && !user.username &&
-                                <div className="help-block">Email is required</div>
+                                (submitted && !user.username &&
+                                    <div className="help-block">Email is required</div>)
+                                || (submitted && !isValidEmail &&
+                                    <div className="help-block">Email is not in proper format</div>)
                             }
                         </div>
                         <div className="form-group">
                             <input type="password" className="form-control required" name="password"
                                 placeholder="Password" value={user.password} onChange={this.handleChange} />
                             {
-                                submitted && !user.password &&
-                                <div className="help-block">Password is required</div>
+                                (submitted && !user.password &&
+                                    <div className="help-block">Password is required</div>)
+                                || (submitted && !isValidPassword &&
+                                    <div className="help-block">Password must contain minimum 6 character length including(Capital Letter &amp; Number)</div>)
                             }
                         </div>
                         <div className="form-group">
@@ -144,8 +163,6 @@ class Register extends Component {
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Register Now</button>
                         </div>
-
-<Components.Loading message='Working' />
                         {registering && <Components.Loading message='Working' />}
                         <div className="text-center">Already have an account? <NavLink href="/login">Sign in!</NavLink></div>
                     </form>

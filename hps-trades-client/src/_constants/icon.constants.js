@@ -5,4 +5,7 @@ export const iconConstants = {
     USER_LABEL: 'USER_LABEL',
     LEGAL:'LEGAL',
     MACHINE:'MACHINE',
+    CALENDAR : 'CALENDAR',
+    EDIT:'EDIT',
+    DELETE:'DELETE'
 };

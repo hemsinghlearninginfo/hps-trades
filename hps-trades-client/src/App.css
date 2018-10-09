@@ -21,11 +21,11 @@ body {
     background: #ccc;
 }
 
-input.form-control.required { 
+input.form-control.required {
     border-left: 2px solid red;
 }
 
-.help-block{
+.help-block {
     font-size: 8pt;
     padding: 0px !important;
     color: red;
@@ -34,4 +34,12 @@ input.form-control.required {
 svg {
     margin-right: 3px;
     margin-bottom: 3px;
+}
+
+.editIcon {
+    color: #ffc003;
+}
+
+.deleteIcon {
+    color: #E34724;
 }
