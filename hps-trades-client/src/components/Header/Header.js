@@ -73,8 +73,8 @@ class Header extends Component {
                     <FaCogs />Utils
                     </DropdownToggle>
                 <DropdownMenu right className="dropDownMenu">
-                    <DropdownItem className="item" href="/calendar">
-                        <FaCalendar /> Calendar
+                    <DropdownItem className="item" href="/event">
+                        <FaCalendar /> Events
                         </DropdownItem>
                     <DropdownItem className="item" href="/login">
                         <FaUsersCog /> Users

@@ -6,7 +6,7 @@ import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/'
 import { Button } from 'reactstrap';
 
-class MarketCalendar extends Component {
+class Events extends Component {
 
     constructor(props) {
         super(props);
@@ -17,13 +17,14 @@ class MarketCalendar extends Component {
     }
     render() {
         return (
-            <Components.PageTemplate iconType={iconConstants.CALENDAR} heading="Market Calendar">
+            <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
                 <div>
                     <Button className="btn btn-success pull-right btn-sm">Add New</Button>
                     <table className="table table-striped table-hover table-bordered table-fixed">
                         <thead>
                             <tr>
                                 <th className="date">Date</th>
+                                <th>Type</th>
                                 <th>Message</th>
                                 <th className="actions">Actions</th>
                             </tr>
@@ -31,6 +32,7 @@ class MarketCalendar extends Component {
                         <tbody>
                             <tr>
                                 <td className="date">Date</td>
+                                <td>Type</td>
                                 <td>Message</td>
                                 <td className="actions">
                                     <a href="#" className="editIcon" title="" data-toggle="tooltip" data-original-title="Edit">{getIcon(iconConstants.EDIT)}</a>
@@ -45,4 +47,4 @@ class MarketCalendar extends Component {
     }
 }
 
-export default CSSModules(MarketCalendar, styles);
+export default CSSModules(Events, styles);

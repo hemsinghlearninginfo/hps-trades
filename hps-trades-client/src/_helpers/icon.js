@@ -28,7 +28,7 @@ export function getIcon(iconType) {
         case iconConstants.MACHINE:
             iconsHTML = <FaCog />;
             break;
-        case iconConstants.CALENDAR:
+        case iconConstants.Event:
             iconsHTML = <FaCalendar />;
             break;
         case iconConstants.EDIT:

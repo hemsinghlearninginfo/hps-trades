@@ -10,7 +10,8 @@ import PP  from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 
-import MarketCalendar from './Calendar/marketCalendar';
+import Event from './Event/events';
+import MarketClose from './Event/marketClose';
 
 import error404 from './Error/404';
 
@@ -32,7 +33,8 @@ export default class Component {
     static Loading = loading;
     static Alert = alert;
 
-    static MarketCalendar = MarketCalendar;
+    static Event = Event;
+    static MarketClose = MarketClose;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

@@ -21,20 +21,21 @@ class App extends Component {
     });
   }
 
-  state = { email: "hemsingh81@gmail.com" };
-
   render() {
+
     const { alert } = this.props;
+
     return (
       <Wrapper>
         <Components.Layout>
           <Components.Alert type={alert.type} message={alert.message} />
+          <Components.MarketClose />
           <Router history={history}>
             <Switch>
               {/* <PrivateRoute exact path="/" component={Components.Home} /> */}
               <PrivateRoute exact path="/userpreference" component={Components.UserPreference} />
               <Route exact path="/" component={Components.Home} />
-              <Route exact path="/calendar" component={Components.MarketCalendar} />
+              <Route exact path="/event" component={Components.Event} />
               <Route exact path="/tnc" component={Components.TNC} />
               <Route exact path="/pp" component={Components.PP} />
               <Route exact path="/login" component={Components.Login} />
