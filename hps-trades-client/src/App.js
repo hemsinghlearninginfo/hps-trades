@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route, Redirect, Switch } from 'react-router-dom';
+import {  Router, Route, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Wrapper from './hoc/Wrapper';
@@ -29,7 +29,7 @@ class App extends Component {
       <Wrapper>
         <Components.Layout>
           <Components.Alert type={alert.type} message={alert.message} />
-          <Components.MarketClose />
+          {/* <Components.MarketClose /> */}
           <Router history={history}>
             <Switch>
               {/* <PrivateRoute exact path="/" component={Components.Home} /> */}

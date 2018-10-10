@@ -2,7 +2,9 @@ html {
     box-sizing: 'border-box';
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: 'inherit';
 }
 
@@ -36,10 +38,21 @@ svg {
     margin-bottom: 3px;
 }
 
-.editIcon {
+.editIcon,
+.editIcon:hover {
     color: #ffc003;
 }
 
-.deleteIcon {
+.deleteIcon,
+.cancelIcon,
+.deleteIcon:hover,
+.cancelIcon:hover {
     color: #E34724;
+}
+
+.addIcon,
+.saveIcon,
+.addIcon:hover,
+.saveIcon:hover {
+    color: #28a745;
 }

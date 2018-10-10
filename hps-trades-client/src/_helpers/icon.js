@@ -2,7 +2,7 @@ import React from 'react';
 import { iconConstants } from '../_constants';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative, FaCalendar,
-    FaPencilAlt, FaTrashAlt
+    FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan
 
 }
     from 'react-icons/fa';
@@ -36,6 +36,15 @@ export function getIcon(iconType) {
             break;
         case iconConstants.DELETE:
             iconsHTML = <FaTrashAlt />;
+            break;
+        case iconConstants.ADD:
+            iconsHTML = <FaPlusSquare />;
+            break;
+        case iconConstants.SAVE:
+            iconsHTML = <FaSave />;
+            break;
+        case iconConstants.CANCEL:
+            iconsHTML = <FaBan />;
             break;
         default:
             iconsHTML = <FaAngrycreative />

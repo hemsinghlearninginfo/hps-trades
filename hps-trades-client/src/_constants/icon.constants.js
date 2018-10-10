@@ -7,5 +7,8 @@ export const iconConstants = {
     MACHINE:'MACHINE',
     Event : 'Event',
     EDIT:'EDIT',
-    DELETE:'DELETE'
+    DELETE:'DELETE',
+    ADD:'ADD',
+    SAVE:'SAVE',
+    CANCEL:'CANCEL'
 };
