@@ -22,7 +22,7 @@ class Events extends Component {
             isValid: true,
             date: moment().fromNow(),
             newEvent: {
-                type: '',
+                type: 'select',
                 heading: '',
                 message: '',
             },
@@ -33,24 +33,31 @@ class Events extends Component {
         this.handleChange = this.handleChange.bind(this);
         //this.handleDeleteItem = this.handleDeleteItem.bind(this);
 
-        //this.initialValue = this.initialValue.bind(this);
-
     }
 
     componentDidMount() {
-        this.setState({ types: ['warning', 'news', 'error', 'maintenance'] });
-        //initialValue();
+        this.setState({ types: ['Select', 'Warning', 'News', 'Error', 'Maintenance'] });
     }
 
     handleChange(event) {
-        const { name, value } = event.target;
         const { newEvent } = this.state;
-        this.setState({
-            newEvent: {
-                ...newEvent,
-                [name]: value
-            }
-        });
+        if (event._isAMomentObject) {
+            this.setState({
+                newEvent: {
+                    ...newEvent,
+                    date: event._d.toLocaleString()
+                }
+            });
+        }
+        else {
+            const { name, value } = event.target;
+            this.setState({
+                newEvent: {
+                    ...newEvent,
+                    [name]: value
+                }
+            });
+        }
     }
 
     handleAddEventItem() {
@@ -59,38 +66,28 @@ class Events extends Component {
             this.state
         );
         this.setState({
-            isAdd : !this.state.isAdd
+            isAdd: !this.state.isAdd
         })
-    }
-
-
-    initialValue = () => {
-        let initialEvents = {
-            date: moment().fromNow(),
-            type: '',
-            heading: '',
-            message: ''
-        }
-        this.setState({ events: [...this.state.events, initialEvents] });
     }
 
     addEmptyItem = () => {
         this.setState({
             isAdd: !this.state.isAdd,
-            newEvent : {
-                heading:'',
-                message:''
+            newEvent: {
+                type: 'select',
+                heading: '',
+                message: '',
+                date: moment()
             }
         });
     }
 
     render() {
-        //initialValue();
         const { events, types, isAdd, newEvent } = this.state;
 
         const selectOptionsHTML = types.map((item) => {
             return (
-                <option key={item}>{item}</option>
+                <option key={item} value={item}>{item}</option>
             )
         });
 
@@ -119,8 +116,8 @@ class Events extends Component {
 
         let newItemHTML = isAdd && (
             <tr>
-                <td className="date"><Datetime name="date" /></td>
-                <td className="type"><select name="type">{selectOptionsHTML}</select></td>
+                <td className="date"><Datetime name="date" value={newEvent.date} onChange={this.handleChange} dateFormat="DD-MM-YY" timeFormat="HH:mm" /></td>
+                <td className="type"><select name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select></td>
                 <td className="heading"><input name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} /></td>
                 <td><input name="message" type="text" value={newEvent.message} onChange={this.handleChange} /></td>
                 <td className="actions">
