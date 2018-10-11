@@ -3,3 +3,6 @@ https://medium.com/ingenious/sending-emails-from-a-create-react-app-dad5756a4ff2
 
 Bootstrap Templates
 https://www.tutorialrepublic.com/snippets/gallery.php
+
+Icons
+https://icons8.com/icon/set/candlestick/all

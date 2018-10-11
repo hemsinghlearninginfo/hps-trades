@@ -20,6 +20,8 @@ import { myConfig } from '../../config';
 import CSSModules from 'react-css-modules';
 import styles from './Header.css';
 
+import Components from '../index';
+
 class Header extends Component {
 
     constructor(props) {
@@ -39,7 +41,7 @@ class Header extends Component {
     render() {
         const user = this.props.authentication.user;
         let userLoginHTML;
-        let superAdminUtils;
+        let superAdminHTML;
 
         if (user == null || user.token == null) {
             userLoginHTML = (
@@ -67,7 +69,7 @@ class Header extends Component {
             );
         }
 
-        superAdminUtils = (
+        superAdminHTML = (
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                     <FaCogs />Utils
@@ -86,11 +88,11 @@ class Header extends Component {
         return (
             <div>
                 <Navbar className="changeHeader" color="light" light expand="md">
-                    <NavbarBrand href="/">{myConfig.AppName}</NavbarBrand>
+                    <NavbarBrand href="/"><Components.Logo /><span>{myConfig.AppName}</span></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            {superAdminUtils}
+                            {superAdminHTML}
                             {userLoginHTML}
                         </Nav>
                     </Collapse>

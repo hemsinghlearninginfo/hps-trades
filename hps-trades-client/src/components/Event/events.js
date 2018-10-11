@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Components from '../index';
 import CSSModules from 'react-css-modules';
+import * as Datetime from 'react-datetime';
+import moment from 'moment';
+
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
-import { getIcon } from '../../_helpers/'
+import { getIcon } from '../../_helpers/';
+import '../../assets/css/react-datetime.css';
+
 
 class Events extends Component {
 
@@ -16,6 +21,7 @@ class Events extends Component {
         };
 
     }
+
     componentDidMount() {
         let types = [];
         types = ['warning', 'news', 'error', 'maintenance'];
@@ -66,7 +72,7 @@ class Events extends Component {
                 else {
                     return (
                         <tr key={index}>
-                            <td><input type="text" /></td>
+                            <td><Datetime /></td>
                             <td><select>{selectOptionsHTML}</select></td>
                             <td><input type="text" /></td>
                             <td><input type="text" /></td>
@@ -84,24 +90,22 @@ class Events extends Component {
         }
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
-                <div className="table-responsive">
-                    <table className="table table-sm table-striped table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <a href="#" className="addIcon" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)}</a> Date
+                <table className="table table-sm table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" className="addIcon" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)}</a> Date
                                 </th>
-                                <th>Type</th>
-                                <th>Heading</th>
-                                <th>Message</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {eventItemsHTML}
-                        </tbody>
-                    </table>
-                </div>
+                            <th>Type</th>
+                            <th>Heading</th>
+                            <th>Message</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {eventItemsHTML}
+                    </tbody>
+                </table>
             </Components.PageTemplate>
         );
     }
