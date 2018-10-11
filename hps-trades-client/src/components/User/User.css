@@ -136,3 +136,8 @@ body{
 .userPreferenceTable tbody td:nth-child(1){
     font-weight: bold;
 }
+
+.react-datepicker__time-list{
+    padding-left: 0px;
+    padding-right: 0px;
+}

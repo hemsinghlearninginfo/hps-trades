@@ -4,6 +4,10 @@ import CSSModules from 'react-css-modules';
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/'
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 class Events extends Component {
 
@@ -11,11 +15,19 @@ class Events extends Component {
         super(props);
 
         this.state = {
+            startDate: moment(),
             events: [],
             types: []
         };
-
+        this.handleChange = this.handleChange.bind(this);
     }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
+
     componentDidMount() {
         let types = [];
         types = ['warning', 'news', 'error', 'maintenance'];
@@ -25,13 +37,14 @@ class Events extends Component {
     addEmptyItem = () => {
         let newEvent = {
             isNew: true,
-            date: '10-20-2018',
+            date: moment(),
             type: 'error',
             heading: 'heading',
             message: 'this is my message'
         }
         let events = this.state.events;
         events.push(newEvent);
+
         this.setState({
             events
         });
@@ -66,7 +79,15 @@ class Events extends Component {
                 else {
                     return (
                         <tr key={index}>
-                            <td><input type="text" /></td>
+                            <td><DatePicker
+                                selected={this.state.startDate}
+                                onChange={this.handleChange}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                dateFormat="LLL"
+                                timeCaption="time"
+                            /></td>
                             <td><select>{selectOptionsHTML}</select></td>
                             <td><input type="text" /></td>
                             <td><input type="text" /></td>
