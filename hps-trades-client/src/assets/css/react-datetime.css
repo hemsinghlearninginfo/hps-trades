@@ -212,3 +212,19 @@
   .rdtTime td {
     cursor: default;
   }
+
+  .table-striped tbody tr:nth-of-type(odd), .table-hover tbody tr:hover{
+    background-color: transparent;
+  }
+
+  .rdtToday{
+    background-color: #4267b2 !important;
+    color: white;
+  }
+
+  
+.rdt input{
+  font-size: 10pt;
+  height: 20px;
+  padding:0px;
+}

@@ -55,6 +55,7 @@ select, input {
 .rdt input{
     font-size: 10pt;
     height: 20px;
+    padding:0px;
 }
 
 .form-control{
