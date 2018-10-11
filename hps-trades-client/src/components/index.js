@@ -10,6 +10,8 @@ import PP  from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 
+import logo from './Utils/logo';
+
 import Event from './Event/events';
 import MarketClose from './Event/marketClose';
 
@@ -19,6 +21,7 @@ import pageTemplate from './Template/PageTemplate';
 
 export default class Component {
 
+    static Logo = logo;
     static Footer = Footer;
     static Header = Header;
     static Layout = Layout;

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Components from '../index';
 import CSSModules from 'react-css-modules';
-import styles from './calendar.css';
-import { iconConstants } from '../../_constants';
-import { getIcon } from '../../_helpers/'
-import DatePicker from 'react-datepicker';
+import * as Datetime from 'react-datetime';
 import moment from 'moment';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import styles from './calendar.css';
+import { iconConstants } from '../../_constants';
+import { getIcon } from '../../_helpers/';
+import '../../assets/css/react-datetime.css';
+
 
 class Events extends Component {
 
@@ -15,17 +16,10 @@ class Events extends Component {
         super(props);
 
         this.state = {
-            startDate: moment(),
             events: [],
             types: []
         };
-        this.handleChange = this.handleChange.bind(this);
-    }
 
-    handleChange(date) {
-        this.setState({
-            startDate: date
-        });
     }
 
     componentDidMount() {
@@ -37,14 +31,13 @@ class Events extends Component {
     addEmptyItem = () => {
         let newEvent = {
             isNew: true,
-            date: moment(),
+            date: '10-20-2018',
             type: 'error',
             heading: 'heading',
             message: 'this is my message'
         }
         let events = this.state.events;
         events.push(newEvent);
-
         this.setState({
             events
         });
@@ -79,15 +72,7 @@ class Events extends Component {
                 else {
                     return (
                         <tr key={index}>
-                            <td><DatePicker
-                                selected={this.state.startDate}
-                                onChange={this.handleChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="LLL"
-                                timeCaption="time"
-                            /></td>
+                            <td><Datetime /></td>
                             <td><select>{selectOptionsHTML}</select></td>
                             <td><input type="text" /></td>
                             <td><input type="text" /></td>
@@ -105,24 +90,22 @@ class Events extends Component {
         }
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
-                <div className="table-responsive">
-                    <table className="table table-sm table-striped table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <a href="#" className="addIcon" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)}</a> Date
+                <table className="table table-sm table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" className="addIcon" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)}</a> Date
                                 </th>
-                                <th>Type</th>
-                                <th>Heading</th>
-                                <th>Message</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {eventItemsHTML}
-                        </tbody>
-                    </table>
-                </div>
+                            <th>Type</th>
+                            <th>Heading</th>
+                            <th>Message</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {eventItemsHTML}
+                    </tbody>
+                </table>
             </Components.PageTemplate>
         );
     }

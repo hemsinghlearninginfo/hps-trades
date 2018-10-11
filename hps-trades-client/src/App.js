@@ -7,7 +7,7 @@ import Components from './components';
 import { alertActions } from './_actions';
 import { history } from './_helpers';
 import { PrivateRoute } from './components/Routes/PrivateRoutes';
-import './App.css';
+import './assets/css/App.css';
 
 class App extends Component {
 

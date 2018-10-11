@@ -1,6 +1,6 @@
 .actions {
     text-align: center;
-    width: 150px !important;
+    width: 100px !important;
 }
 
 .actions a {
@@ -49,4 +49,16 @@ th {
 select, input {
     font-size: 10pt;
     text-transform: capitalize;
+    height: 20px;
+}
+
+.rdt input{
+    font-size: 10pt;
+    height: 20px;
+    padding:0px;
+}
+
+.form-control{
+    color: black;
+    border-radius:0px;
 }
