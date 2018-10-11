@@ -48,8 +48,8 @@ th {
 
 select, input {
     font-size: 10pt;
-    text-transform: capitalize;
     height: 20px;
+    width: 100%;
 }
 
 .rdt input{
@@ -61,4 +61,22 @@ select, input {
 .form-control{
     color: black;
     border-radius:0px;
+}
+
+.date{
+    width: 142px;
+}
+.heading{
+    width: 180px;
+}
+.type{
+    width: 120px;
+}
+
+.errorBox{
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    background-color: beige;
 }
