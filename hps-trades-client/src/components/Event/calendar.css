@@ -22,11 +22,6 @@ button {
     margin-left: -15em;
 }
 
-.heading {
-    font-weight: bold;
-    text-align: center;
-}
-
 hr {
     border: 0;
     height: 1px;
@@ -66,6 +61,7 @@ select, input {
 .date{
     width: 168px;
 }
+
 .heading{
     width: 180px;
 }

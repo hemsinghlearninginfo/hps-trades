@@ -56,3 +56,10 @@ svg {
 .saveIcon:hover {
     color: #28a745;
 }
+
+input.required, select.required, .rdt .form-control{
+    border-top: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    border-left: 2px solid red;
+}
