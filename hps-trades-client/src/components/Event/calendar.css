@@ -80,3 +80,8 @@ select, input {
     color: white !important;
     border-radius: 4px;
 }
+
+.calender{
+    width: 116px;
+    float: left;
+}

@@ -24,7 +24,8 @@ class Events extends Component {
                 type: 'select',
                 heading: '',
                 message: '',
-                date: moment().fromNow()
+                date: moment().fromNow(),
+                dateForDisplay: ''
             },
             isAdd: false
         };
@@ -61,6 +62,7 @@ class Events extends Component {
     }
 
     handleAddEventItem() {
+        this.state.newEvent.dateForDisplay = this.state.newEvent.date._d.toLocaleString();
         this.state.events.push(this.state.newEvent);
         this.setState(
             this.state
@@ -75,12 +77,6 @@ class Events extends Component {
             events: this.state.events.filter((_, i) => i !== itemIndex)
         });
     }
-
-
-    // handleDateTimeSelect = (current) => {
-    //     var yesterday = Datetime.moment().subtract(1, 'day');
-    //     return current.isAfter(yesterday);
-    // }
 
     addEmptyItem = () => {
         this.setState({
@@ -109,7 +105,7 @@ class Events extends Component {
                 if (!item.isNew) {
                     return (
                         <tr key={index}>
-                            <td className="date">{item.date}</td>
+                            <td className="date">{item.dateForDisplay}</td>
                             <td className="type">{item.type}</td>
                             <td className="heading">{item.heading}</td>
                             <td>{item.message}</td>
@@ -130,6 +126,7 @@ class Events extends Component {
             <tr>
                 <td className="date">
                     <label onClick={e => e.preventDefault()}>
+                    <div className="calender">
                         <DatePicker
                             minDate={moment()}
                             selected={newEvent.date}
@@ -137,18 +134,11 @@ class Events extends Component {
                             showTimeSelect
                             timeFormat="HH:mm"
                             timeIntervals={1}
-                            dateFormat="LLL"
+                            dateFormat="DD-MM-YY HH:mm A"
                             timeCaption="time"
                             preventOpenOnFocus={true}
-                        // filterDate={this.isWeekday}
-                        
-                        // showTimeSelect
-                        // timeFormat="HH:mm"
-                        // timeIntervals={1}
-                        // dateFormat="DD-MM-YY HH:mm"
-                        // timeCaption="time"
                         />
-                        {getIcon(iconConstants.Event)}
+                        </div>
                     </label>
                 </td>
                 <td className="type"><select className="required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select></td>
