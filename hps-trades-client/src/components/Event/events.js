@@ -119,42 +119,65 @@ class Events extends Component {
             })
         }
         else {
-            eventItemsHTML = !isAdd && (<tr><td colSpan="5" className="noDataFound">No event found</td></tr>)
+            eventItemsHTML = (<tr><td colSpan="5" className="noDataFound">No event found</td></tr>)
         }
 
         let newItemHTML = isAdd && (
-            <tr>
-                <td className="date">
-                    <label onClick={e => e.preventDefault()}>
-                    <div className="calender">
-                        <DatePicker
-                            minDate={moment()}
-                            selected={newEvent.date}
-                            onChange={this.handleChange}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={1}
-                            dateFormat="DD-MM-YY HH:mm A"
-                            timeCaption="time"
-                            preventOpenOnFocus={true}
-                        />
+            <div className="addBox">
+                <div className="addBoxHeading">Add New Event Message</div>
+                <form>
+                    <div className="form-group">
+                        <label className="control-label col-xs-2">Date</label>
+                        <div className="col-xs-10">
+                            <label onClick={e => e.preventDefault()}>
+                                <DatePicker className="form-control"
+                                    minDate={moment()}
+                                    selected={newEvent.date}
+                                    onChange={this.handleChange}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={1}
+                                    dateFormat="DD-MM-YY HH:mm A"
+                                    timeCaption="time"
+                                    preventOpenOnFocus={true}
+                                />
+                            </label>
                         </div>
-                    </label>
-                </td>
-                <td className="type"><select className="required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select></td>
-                <td className="heading"><input className="required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} /></td>
-                <td><input className="required" name="message" type="text" value={newEvent.message} onChange={this.handleChange} /></td>
-                <td className="actions">
-                    <a href="#" className="saveIcon" title="Save" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)}</a>
-                    <a href="#" className="cancelIcon" title="Cancel" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)}</a>
-                </td>
-            </tr>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-xs-2">Type</label>
+                        <div className="col-xs-10">
+                            <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-xs-2">Heading</label>
+                        <div className="col-xs-10">
+                            <input className="form-control required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-xs-2">Message</label>
+                        <div className="col-xs-10">
+                            <input className="form-control required" name="message" type="text" value={newEvent.message} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-xs-offset-2 col-xs-2 pull-right">
+                            <button type="button" className="btn btn-sm btn-primary" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)} Save</button>
+                            &nbsp;
+                        <button type="button" className="btn btn-sm btn-warning" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)} Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         )
 
         let errorHTML = (!isValid && <tr><td colSpan="5"><div className="errorBox">Error</div></td></tr>)
 
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
+                {newItemHTML}
                 <table className="table table-sm table-striped table-hover table-bordered">
                     <thead>
                         <tr>
@@ -169,7 +192,6 @@ class Events extends Component {
                     </thead>
                     <tbody>
                         {errorHTML}
-                        {newItemHTML}
                         {eventItemsHTML}
                     </tbody>
                 </table>

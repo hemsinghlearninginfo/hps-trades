@@ -23,10 +23,6 @@ body {
     background: #ccc;
 }
 
-input.form-control.required {
-    border-left: 2px solid red;
-}
-
 .help-block {
     font-size: 8pt;
     padding: 0px !important;
@@ -57,9 +53,35 @@ svg {
     color: #28a745;
 }
 
-input.required, select.required, .rdt .form-control{
+input.required,
+select.required,
+.rdt .form-control,
+.react-datepicker__input-container input,
+input.form-control.required {
     border-top: 1px solid #ced4da;
     border-right: 1px solid #ced4da;
     border-bottom: 1px solid #ced4da;
     border-left: 2px solid red;
+}
+
+
+.addBox{
+    border: 1px solid #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+}
+
+.addBoxHeading{
+    background-color: #fbfafa;
+    text-align: center;
+    font-weight: bold;
+    font-size: 10pt;
+    font-stretch: extra-expanded;
+    color: #4267b2;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }

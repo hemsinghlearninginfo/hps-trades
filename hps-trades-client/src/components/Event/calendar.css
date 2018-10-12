@@ -41,12 +41,6 @@ th {
     color: red;
 }
 
-select, input {
-    font-size: 10pt;
-    height: 20px;
-    width: 100%;
-}
-
 .form-control{
     color: black;
     border-radius:0px;
@@ -55,7 +49,6 @@ select, input {
 .date{
     width: 168px;
 }
-
 .heading{
     width: 180px;
 }
@@ -81,7 +74,6 @@ select, input {
     border-radius: 4px;
 }
 
-.calender{
-    width: 116px;
-    float: left;
+.labelCalender{
+    margin: 0px;
 }
