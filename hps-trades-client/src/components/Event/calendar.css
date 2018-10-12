@@ -47,12 +47,6 @@ select, input {
     width: 100%;
 }
 
-.rdt input{
-    font-size: 10pt;
-    height: 20px;
-    padding:0px;
-}
-
 .form-control{
     color: black;
     border-radius:0px;
@@ -75,4 +69,14 @@ select, input {
     margin-bottom: 5px;
     border-radius: 3px;
     background-color: beige;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list{
+    padding-right: 0px !important;
+}
+
+.react-datepicker__day--today{
+    background-color: #4267b2;
+    color: white !important;
+    border-radius: 4px;
 }

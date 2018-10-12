@@ -129,19 +129,27 @@ class Events extends Component {
         let newItemHTML = isAdd && (
             <tr>
                 <td className="date">
-                    <DatePicker
-                        selected={newEvent.date}
-                        onChange={this.handleChange}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        timeIntervals={15}
-                        dateFormat="LLL"
-                        timeCaption="time"
-                    />
-                    {/* <Datetime name="date" onChange={this.handleChange}
-                        closeOnSelect={true} closeOnTab={true}
-                        isValidDate={this.handleDateTimeSelect}
-                    /> */}
+                    <label onClick={e => e.preventDefault()}>
+                        <DatePicker
+                            minDate={moment()}
+                            selected={newEvent.date}
+                            onChange={this.handleChange}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={1}
+                            dateFormat="LLL"
+                            timeCaption="time"
+                            preventOpenOnFocus={true}
+                        // filterDate={this.isWeekday}
+                        
+                        // showTimeSelect
+                        // timeFormat="HH:mm"
+                        // timeIntervals={1}
+                        // dateFormat="DD-MM-YY HH:mm"
+                        // timeCaption="time"
+                        />
+                        {getIcon(iconConstants.Event)}
+                    </label>
                 </td>
                 <td className="type"><select className="required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select></td>
                 <td className="heading"><input className="required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} /></td>
