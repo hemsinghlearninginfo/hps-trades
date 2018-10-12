@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Components from '../index';
 import CSSModules from 'react-css-modules';
-import * as Datetime from 'react-datetime';
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
-import '../../assets/css/react-datetime.css';
-
-
+//import '../../assets/css/react-datetime.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class Events extends Component {
 
@@ -25,6 +24,7 @@ class Events extends Component {
                 type: 'select',
                 heading: '',
                 message: '',
+                date: moment().fromNow()
             },
             isAdd: false
         };
@@ -45,7 +45,7 @@ class Events extends Component {
             this.setState({
                 newEvent: {
                     ...newEvent,
-                    date: event._d.toLocaleString()
+                    date: moment(event._d)
                 }
             });
         }
@@ -73,8 +73,14 @@ class Events extends Component {
     handleDeleteEventItem(itemIndex) {
         this.setState({
             events: this.state.events.filter((_, i) => i !== itemIndex)
-          });
+        });
     }
+
+
+    // handleDateTimeSelect = (current) => {
+    //     var yesterday = Datetime.moment().subtract(1, 'day');
+    //     return current.isAfter(yesterday);
+    // }
 
     addEmptyItem = () => {
         this.setState({
@@ -122,7 +128,21 @@ class Events extends Component {
 
         let newItemHTML = isAdd && (
             <tr>
-                <td className="date"><Datetime name="date" value={newEvent.date} onChange={this.handleChange} dateFormat="DD-MM-YY" timeFormat="HH:mm" /></td>
+                <td className="date">
+                    <DatePicker
+                        selected={newEvent.date}
+                        onChange={this.handleChange}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        dateFormat="LLL"
+                        timeCaption="time"
+                    />
+                    {/* <Datetime name="date" onChange={this.handleChange}
+                        closeOnSelect={true} closeOnTab={true}
+                        isValidDate={this.handleDateTimeSelect}
+                    /> */}
+                </td>
                 <td className="type"><select className="required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select></td>
                 <td className="heading"><input className="required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} /></td>
                 <td><input className="required" name="message" type="text" value={newEvent.message} onChange={this.handleChange} /></td>
