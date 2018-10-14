@@ -3,28 +3,34 @@ require('dotenv').config({path: 'process.env'});
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const cluster = require("cluster");
-const numCPUs = require("os").cpus().length;
 const bodyParser = require('body-parser');
 const jwt = require('_helpers/jwt');
 const errorHandler = require('_helpers/error-handler');
 
-// Multi-process to utilize all CPU cores.
-if (cluster.isMaster) {
-    console.error(`Node cluster master ${process.pid} is running`);
+// Seedind DB
+const seed = require('./seed');
+seed.seedDB();
 
-    // Fork workers.
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
+// const cluster = require("cluster");
+// const numCPUs = require("os").cpus().length;
 
-    cluster.on("exit", (worker, code, signal) => {
-        console.error(
-            `Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`
-        );
-    });
-}
-else {
+// // Multi-process to utilize all CPU cores.
+// if (cluster.isMaster) {
+//     console.error(`Node cluster master ${process.pid} is running`);
+
+//     // Fork workers.
+//     for (let i = 0; i < numCPUs; i++) {
+//         cluster.fork();
+//     }
+
+//     cluster.on("exit", (worker, code, signal) => {
+//         console.error(
+//             `Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`
+//         );
+//     });
+// }
+// else 
+{
 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
@@ -40,7 +46,7 @@ else {
         res.header('Access-Control-Allow-Origin', req.headers.origin);
         next();
     });
-    
+
     // api routes for Email
     app.use("/email", require('./emails/email.controller'));
 
