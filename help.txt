@@ -9,3 +9,5 @@ https://icons8.com/icon/set/candlestick/all
 
 Add value in array
 https://codepen.io/a810524z/pen/XKoQoB
+
+http://bootboxjs.com/examples.html

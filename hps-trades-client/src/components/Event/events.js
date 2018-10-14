@@ -7,7 +7,6 @@ import moment from 'moment';
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
-//import '../../assets/css/react-datetime.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Events extends Component {
@@ -18,58 +17,85 @@ class Events extends Component {
         this.state = {
             events: [],
             types: [],
-            isValid: true,
-            date: moment().fromNow(),
+            fromDate: moment().fromNow(),
+            toDate: moment().fromNow(),
             newEvent: {
                 type: 'select',
                 heading: '',
                 message: '',
-                date: moment().fromNow(),
+                fromDate: moment().fromNow(),
+                toDate: moment().fromNow(),
                 dateForDisplay: ''
             },
-            isAdd: false
+            isAdd: false,
+            isValidDateRange: true
         };
 
-        this.handleAddEventItem = this.handleAddEventItem.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteEventItem = this.handleDeleteEventItem.bind(this);
-
     }
 
     componentDidMount() {
         this.setState({ types: ['Select', 'Warning', 'News', 'Error', 'Maintenance'] });
     }
 
-    handleChange(event) {
+    handleChange(event, ctrl = "") {
         const { newEvent } = this.state;
-        if (event._isAMomentObject) {
-            this.setState({
-                newEvent: {
-                    ...newEvent,
-                    date: moment(event._d)
-                }
-            });
+        if (event != null) {
+            if (event._isAMomentObject != null && event._isAMomentObject && ctrl != "") {
+                this.setState({
+                    newEvent: {
+                        ...newEvent,
+                        [ctrl]: moment(event._d)
+                    }
+                });
+            }
+            else {
+                const { name, value } = event.target;
+                this.setState({
+                    newEvent: {
+                        ...newEvent,
+                        [name]: value
+                    }
+                });
+            }
         }
-        else {
-            const { name, value } = event.target;
+        else if (ctrl != null) {
             this.setState({
                 newEvent: {
                     ...newEvent,
-                    [name]: value
+                    [ctrl]: ''
                 }
             });
         }
     }
 
-    handleAddEventItem() {
-        this.state.newEvent.dateForDisplay = this.state.newEvent.date._d.toLocaleString();
-        this.state.events.push(this.state.newEvent);
-        this.setState(
-            this.state
-        );
-        this.setState({
-            isAdd: !this.state.isAdd
-        })
+    handleSubmit(event) {
+        event.preventDefault();
+        this.setState({ submitted: true });
+
+        const { newEvent } = this.state;
+        if (newEvent.fromDate && newEvent.toDate) {
+            let isValidDateRange = (newEvent.fromDate < newEvent.toDate);
+            this.setState({
+                isValidDateRange
+            });
+        }
+
+        if (this.state.submitted &&
+            newEvent.fromDate && newEvent.toDate
+            && newEvent.type && newEvent.heading
+            && newEvent.message) {
+            this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
+            this.state.events.push(this.state.newEvent);
+            this.setState(
+                this.state
+            );
+            this.setState({
+                isAdd: !this.state.isAdd
+            })
+        }
     }
 
     handleDeleteEventItem(itemIndex) {
@@ -85,13 +111,15 @@ class Events extends Component {
                 type: 'select',
                 heading: '',
                 message: '',
-                date: moment()
-            }
+                fromDate: moment(),
+                toDate: moment()
+            },
+            submitted: false
         });
     }
 
     render() {
-        const { events, types, isAdd, newEvent, isValid } = this.state;
+        const { events, types, isAdd, newEvent, submitted, isValidDateRange } = this.state;
 
         const selectOptionsHTML = types.map((item) => {
             return (
@@ -104,97 +132,145 @@ class Events extends Component {
             eventItemsHTML = events.map((item, index) => {
                 if (!item.isNew) {
                     return (
-                        <tr key={index}>
-                            <td className="date">{item.dateForDisplay}</td>
-                            <td className="type">{item.type}</td>
-                            <td className="heading">{item.heading}</td>
-                            <td>{item.message}</td>
-                            <td className="actions">
-                                <a href="#" className="editIcon" title="Edit">{getIcon(iconConstants.EDIT)}</a>
-                                <a href="#" className="deleteIcon" title="Delete" onClick={this.handleDeleteEventItem.bind(this, index)}>{getIcon(iconConstants.DELETE)}</a>
-                            </td>
-                        </tr>
+                        <div className="col-sm-6 col-md-6" key={index}>
+                            <div className="card eventCards">
+                                <div className="card-body">
+                                    <h5 class="card-title">{item.heading}</h5>
+                                    <p><strong>{item.dateForDisplay}</strong></p>
+                                    <p><strong>Type: {item.type}</strong></p>
+                                    <p class="card-text">{item.message}</p>
+                                    <a href="#" className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)} Edit</a>
+                                    &nbsp;
+                                    <a href="#" className="btn btn-sm btn-danger" title="Delete" onClick={this.handleDeleteEventItem.bind(this, index)}>{getIcon(iconConstants.DELETE)} Delete</a>
+                                </div>
+                            </div>
+                        </div>
                     )
                 }
             })
         }
         else {
-            eventItemsHTML = (<tr><td colSpan="5" className="noDataFound">No event found</td></tr>)
+            eventItemsHTML = (
+                <div className="col-sm-12 col-md-12">
+                    <div className="noDataFound">
+                        No event found
+                    </div>
+                </div>
+            )
         }
 
         let newItemHTML = isAdd && (
             <div className="addBox">
                 <div className="addBoxHeading">Add New Event Message</div>
-                <form>
-                    <div className="form-group">
-                        <label className="control-label col-xs-2">Date</label>
-                        <div className="col-xs-10">
-                            <label onClick={e => e.preventDefault()}>
-                                <DatePicker className="form-control"
-                                    minDate={moment()}
-                                    selected={newEvent.date}
-                                    onChange={this.handleChange}
-                                    showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={1}
-                                    dateFormat="DD-MM-YY HH:mm A"
-                                    timeCaption="time"
-                                    preventOpenOnFocus={true}
-                                />
-                            </label>
+                <form name="form" onSubmit={this.handleSubmit}>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label className="control-label col-xs-2"><strong>Date &amp; Time From</strong></label>
+                                <div className="col-xs-10">
+                                    <label onClick={e => e.preventDefault()}>
+                                        <DatePicker className="form-control"
+                                            minDate={moment()}
+                                            selected={newEvent.fromDate}
+                                            onChange={(e) => this.handleChange(e, "fromDate")}
+                                            showTimeSelect
+                                            timeFormat="HH:mm"
+                                            timeIntervals={1}
+                                            dateFormat="DD-MM-YY HH:mm A"
+                                            timeCaption="time"
+                                            preventOpenOnFocus={true}
+                                        />
+                                    </label>
+                                    {
+                                        submitted && !newEvent.fromDate &&
+                                        <div className="help-block">From Date &amp; Time is required</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label className="control-label col-xs-2"><strong>Date &amp; Time To</strong></label>
+                                <div className="col-xs-10">
+                                    <label onClick={e => e.preventDefault()}>
+                                        <DatePicker className="form-control"
+                                            minDate={moment()}
+                                            selected={newEvent.toDate}
+                                            onChange={(e) => this.handleChange(e, "toDate")}
+                                            showTimeSelect
+                                            timeFormat="HH:mm"
+                                            timeIntervals={1}
+                                            dateFormat="DD-MM-YY HH:mm A"
+                                            timeCaption="time"
+                                            preventOpenOnFocus={true}
+                                        />
+                                    </label>
+                                    {
+                                        (submitted && !newEvent.toDate &&
+                                        <div className="help-block">To Date &amp; Time is required</div>) ||
+                                        (submitted && !isValidDateRange &&
+                                            <div className="help-block">To Date &amp; Time should be greater than From Date &amp; Time.</div>)
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="control-label col-xs-2">Type</label>
-                        <div className="col-xs-10">
-                            <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
+
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label className="control-label col-xs-2"><strong>Type</strong></label>
+                                <div className="col-xs-10">
+                                    <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
+                                    {
+                                        submitted && (!newEvent.type || newEvent.type.toUpperCase() == "select".toUpperCase()) &&
+                                        <div className="help-block">Message type is required</div>
+                                    }
+                                </div>
+                            </div></div>
+                        <div className="col-md-6">
+                            <div className="form-group form-group-sm">
+                                <label className="control-label col-xs-2"><strong>Heading</strong></label>
+                                <div className="col-xs-10">
+                                    <input className="form-control required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} />
+                                    {
+                                        submitted && !newEvent.heading &&
+                                        <div className="help-block">Heading is required</div>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="control-label col-xs-2">Heading</label>
-                        <div className="col-xs-10">
-                            <input className="form-control required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label className="control-label col-xs-2">Message</label>
+                    <div className="form-group form-group-sm">
+                        <label className="control-label col-xs-2"><strong>Message</strong></label>
                         <div className="col-xs-10">
                             <input className="form-control required" name="message" type="text" value={newEvent.message} onChange={this.handleChange} />
+                            {
+                                submitted && !newEvent.message &&
+                                <div className="help-block">Message is required</div>
+                            }
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="col-xs-offset-2 col-xs-2 pull-right">
-                            <button type="button" className="btn btn-sm btn-primary" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)} Save</button>
+                            <button type="submit" className="btn btn-sm btn-primary" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)} Save</button>
                             &nbsp;
-                        <button type="button" className="btn btn-sm btn-warning" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)} Cancel</button>
+                            <button type="button" className="btn btn-sm btn-warning" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)} Cancel</button>
                         </div>
                     </div>
                 </form>
             </div>
         )
 
-        let errorHTML = (!isValid && <tr><td colSpan="5"><div className="errorBox">Error</div></td></tr>)
-
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
                 {newItemHTML}
-                <table className="table table-sm table-striped table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th className="date">
-                                {!isAdd && (<a href="#" className="addIcon" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)}</a>)} Date
-                                </th>
-                            <th className="type">Type</th>
-                            <th className="heading">Heading</th>
-                            <th>Message</th>
-                            <th className="actions">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {errorHTML}
-                        {eventItemsHTML}
-                    </tbody>
-                </table>
+                {!isAdd && (
+                    <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>
+                )}
+                <div className="row">
+                    {eventItemsHTML}
+                </div>
             </Components.PageTemplate>
         );
     }
