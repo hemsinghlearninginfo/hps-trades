@@ -12,4 +12,4 @@ const schema = new Schema({
 
 schema.set('toJSON', { virtuals: true });
 
-module.exports = mongoose.model('UserRoles', schema);
+module.exports = mongoose.model('UserRole', schema);

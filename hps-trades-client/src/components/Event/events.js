@@ -164,62 +164,55 @@ class Events extends Component {
                 <div className="addBoxHeading">Add New Event Message</div>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <div className="form-group">
-                                <label className="control-label col-xs-2"><strong>Date &amp; Time From</strong></label>
-                                <div className="col-xs-10">
-                                    <label onClick={e => e.preventDefault()}>
-                                        <DatePicker className="form-control"
-                                            minDate={moment()}
-                                            selected={newEvent.fromDate}
-                                            onChange={(e) => this.handleChange(e, "fromDate")}
-                                            showTimeSelect
-                                            timeFormat="HH:mm"
-                                            timeIntervals={1}
-                                            dateFormat="DD-MM-YY HH:mm A"
-                                            timeCaption="time"
-                                            preventOpenOnFocus={true}
-                                        />
-                                    </label>
-                                    {
-                                        submitted && !newEvent.fromDate &&
-                                        <div className="help-block">From Date &amp; Time is required</div>
-                                    }
-                                </div>
+                                <label className="control-label"><strong>Date &amp; Time From</strong></label>
+                                <label className="calCtrl" onClick={e => e.preventDefault()}>
+                                    <DatePicker className="form-control"
+                                        minDate={moment()}
+                                        selected={newEvent.fromDate}
+                                        onChange={(e) => this.handleChange(e, "fromDate")}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={1}
+                                        dateFormat="DD-MM-YY HH:mm A"
+                                        timeCaption="time"
+                                        preventOpenOnFocus={true}
+                                    />
+                                </label>
+                                {
+                                    submitted && !newEvent.fromDate &&
+                                    <div className="help-block">From Date &amp; Time is required</div>
+                                }
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <div className="form-group">
-                                <label className="control-label col-xs-2"><strong>Date &amp; Time To</strong></label>
-                                <div className="col-xs-10">
-                                    <label onClick={e => e.preventDefault()}>
-                                        <DatePicker className="form-control"
-                                            minDate={moment()}
-                                            selected={newEvent.toDate}
-                                            onChange={(e) => this.handleChange(e, "toDate")}
-                                            showTimeSelect
-                                            timeFormat="HH:mm"
-                                            timeIntervals={1}
-                                            dateFormat="DD-MM-YY HH:mm A"
-                                            timeCaption="time"
-                                            preventOpenOnFocus={true}
-                                        />
-                                    </label>
-                                    {
-                                        (submitted && !newEvent.toDate &&
+                                <label className="control-label"><strong>Date &amp; Time To</strong></label>
+                                <label className="calCtrl" onClick={e => e.preventDefault()}>
+                                    <DatePicker className="form-control"
+                                        minDate={moment()}
+                                        selected={newEvent.toDate}
+                                        onChange={(e) => this.handleChange(e, "toDate")}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={1}
+                                        dateFormat="DD-MM-YY HH:mm A"
+                                        timeCaption="time"
+                                        preventOpenOnFocus={true}
+                                    />
+                                </label>
+                                {
+                                    (submitted && !newEvent.toDate &&
                                         <div className="help-block">To Date &amp; Time is required</div>) ||
-                                        (submitted && !isValidDateRange &&
-                                            <div className="help-block">To Date &amp; Time should be greater than From Date &amp; Time.</div>)
-                                    }
-                                </div>
+                                    (submitted && !isValidDateRange &&
+                                        <div className="help-block">To Date &amp; Time should be greater than From Date &amp; Time.</div>)
+                                }
                             </div>
                         </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <div className="form-group">
-                                <label className="control-label col-xs-2"><strong>Type</strong></label>
+                                <label className="control-label"><strong>Type</strong></label>
                                 <div className="col-xs-10">
                                     <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
                                     {
@@ -228,9 +221,9 @@ class Events extends Component {
                                     }
                                 </div>
                             </div></div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <div className="form-group form-group-sm">
-                                <label className="control-label col-xs-2"><strong>Heading</strong></label>
+                                <label className="control-label"><strong>Heading</strong></label>
                                 <div className="col-xs-10">
                                     <input className="form-control required" name="heading" type="text" value={newEvent.heading} onChange={this.handleChange} />
                                     {

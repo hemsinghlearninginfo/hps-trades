@@ -1,6 +1,7 @@
 const db = require('../_helpers/db');
 const bcrypt = require('bcryptjs');
 const User = db.User;
+const UserRole = db.UserRole;
 
 module.exports = {
     seedSysAdmin
@@ -9,12 +10,14 @@ module.exports = {
 async function seedSysAdmin() {
     let username = 'hpssysadmin@gmail.com';
     const user = await User.findOne({ username });
-    if (!user) {
+    const userRole = await UserRole.findOne({ role: 'SysAdmin' });
+    if (!user && userRole) {
         let userParam = {
             username: username,
             password: 'hpsadmin@123',
             firstName: 'hps',
-            lastName: 'family'
+            lastName: 'family',
+            role: userRole._id
         }
         const user = new User(userParam);
         // hash password
@@ -23,6 +26,7 @@ async function seedSysAdmin() {
         }
         // save user
         await user.save();
+        console.log('Activity: SysAdmin Activated');
     }
-    
+
 }
