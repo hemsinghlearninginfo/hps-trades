@@ -27,9 +27,9 @@ class ConfirmAlert extends React.Component {
         const closeBtn = <button className="close" onClick={this.clickCancel}>&times;</button>;
 
         return (
-            <div>
-                <Button color="danger" onClick={this.clickCancel}>{this.props.buttonLabel}</Button>
-                <Modal isOpen={this.state.modal} toggle={this.clickCancel} className={this.props.className}>
+            <div className="d-inline">
+                <Button className={this.props.buttonClassName} color="danger" onClick={this.clickCancel}>{this.props.buttonIcon}{this.props.buttonLabel}</Button>
+                <Modal isOpen={this.state.modal} toggle={this.clickCancel} className={this.props.modalClassName}>
                     <ModalHeader toggle={this.clickCancel} close={closeBtn}>{this.props.title}</ModalHeader>
                     <ModalBody>
                         {this.props.message}

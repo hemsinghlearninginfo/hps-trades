@@ -146,13 +146,17 @@ class Events extends Component {
                         <div className="col-sm-6 col-md-6" key={index}>
                             <div className="card eventCards">
                                 <div className="card-body">
-                                    <h5 class="card-title">{item.heading}</h5>
+                                    <h5 className="card-title">{item.heading}</h5>
                                     <p><strong>{item.dateForDisplay}</strong></p>
                                     <p><strong>Type: {item.type}</strong></p>
-                                    <p class="card-text">{item.message}</p>
+                                    <p className="card-text">{item.message}</p>
                                     <a href="#" className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)} Edit</a>
-                                    &nbsp;
-                                    <a href="#" className="btn btn-sm btn-danger" title="Delete" onClick={this.handleDeleteEventItem.bind(this, index)}>{getIcon(iconConstants.DELETE)} Delete</a>
+                                    {' '}
+                                    <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
+                                        modalClassName=""
+                                        title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
+                                        yesButtonClick={this.handleDeleteEventItem.bind(this, index)} cancelButtonLabel="Cancel">
+                                    </Components.ConfirmAlert>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +182,7 @@ class Events extends Component {
                         <div className="col-md-3">
                             <div className="form-group">
                                 <label className="control-label"><strong>Date &amp; Time From</strong></label>
-                                <label className="calCtrl" onClick={e => e.preventDefault()}>
+                                <label onClick={e => e.preventDefault()}>
                                     <DatePicker className="form-control"
                                         minDate={moment()}
                                         selected={newEvent.fromDate}
@@ -258,7 +262,7 @@ class Events extends Component {
                     <div className="form-group">
                         <div className="col-xs-offset-2 col-xs-2 pull-right">
                             <button type="submit" className="btn btn-sm btn-primary" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)} Save</button>
-                            &nbsp;
+                            {' '}
                             <button type="button" className="btn btn-sm btn-warning" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)} Cancel</button>
                         </div>
                     </div>
@@ -268,7 +272,6 @@ class Events extends Component {
 
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
-                <Components.ConfirmAlert buttonLabel="click me" className="" title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok" yesButtonClick={this.handleDeleteYes} cancelButtonLabel="Cancel"  />
                 {newItemHTML}
                 {!isAdd && (
                     <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>
