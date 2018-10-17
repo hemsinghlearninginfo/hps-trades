@@ -7,8 +7,10 @@ import { Register } from './User/Register';
 import UserPreference from './User/UserPreference';
 import TNC from './Legal/TNC';
 import PP  from './Legal/PP';
+
 import loading from './Utils/loading';
 import alert from './Utils/alert';
+import ConfirmAlert from './Utils/confirmAlert';
 
 import logo from './Utils/logo';
 
@@ -35,6 +37,7 @@ export default class Component {
     static PP = PP;
     static Loading = loading;
     static Alert = alert;
+    static ConfirmAlert = ConfirmAlert;
 
     static Event = Event;
     static MarketClose = MarketClose;

@@ -71,6 +71,13 @@ class Events extends Component {
         }
     }
 
+    handleDeleteYes() {
+        console.log('click Delete Yes');
+    }
+    handleDeleteCancel() {
+        console.log('click Delete Cancel');
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         this.setState({ submitted: true });
@@ -116,6 +123,10 @@ class Events extends Component {
             },
             submitted: false
         });
+    }
+
+    showModal = () => {
+        this.refs.modal.getDOMNode().modal();
     }
 
     render() {
@@ -257,6 +268,7 @@ class Events extends Component {
 
         return (
             <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
+                <Components.ConfirmAlert buttonLabel="click me" className="" title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok" yesButtonClick={this.handleDeleteYes} cancelButtonLabel="Cancel"  />
                 {newItemHTML}
                 {!isAdd && (
                     <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>
