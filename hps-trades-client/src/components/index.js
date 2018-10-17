@@ -4,6 +4,7 @@ import Layout from './Layout/Layout';
 import Home from './Home/Home';
 import { Login } from './User/Login';
 import { Register } from './User/Register';
+import { ForgotPassword } from './User/ForgotPassword';
 import UserPreference from './User/UserPreference';
 import TNC from './Legal/TNC';
 import PP  from './Legal/PP';
@@ -32,6 +33,7 @@ export default class Component {
     static Login = Login;
     static Register = Register;
     static UserPreference = UserPreference;
+    static ForgotPassword = ForgotPassword;
 
     static TNC = TNC;
     static PP = PP;

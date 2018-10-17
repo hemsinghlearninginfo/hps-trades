@@ -26,7 +26,5 @@ async function seedSysAdmin() {
         }
         // save user
         await user.save();
-        console.log('Activity: SysAdmin Activated');
     }
-
 }

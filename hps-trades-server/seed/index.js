@@ -14,5 +14,4 @@ const runDBObjects = async () => {
 function seedDB() {
     console.log('Seeding DB Starts');
     runDBObjects();
-    console.log('Seeding DB Ends');
 }

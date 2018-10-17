@@ -8,7 +8,7 @@ import { userActions } from '../../_actions';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
 
-class Login extends Component {
+class ForgotPassword extends Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,6 @@ class Login extends Component {
 
         this.state = {
             username: '',
-            password: '',
             submitted: false
         };
 
@@ -35,44 +34,35 @@ class Login extends Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { username, password } = this.state;
+        const { username } = this.state;
         const { dispatch } = this.props;
-        if (username && password) {
-            dispatch(userActions.login(username, password));
+        if (username ) {
+            //dispatch(userActions.login(username));
         }
     }
 
     render() {
         const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
+        const { username, submitted } = this.state;
         return (
             <Wrapper>
                 <div className="user-form">
                     <form name="form" onSubmit={this.handleSubmit}>
-                        <h2>Sign in</h2>
-                        <p className="hint-text">Create your account. It's free and only takes a minute.</p>
+                        <h2 className="fpwd">Forgot Password?</h2>
+                        <p className="hint-text">Enter your email address to reset your password.</p>
                         <div className="form-group">
                             <input type="email" className="form-control" name="username" value={username} onChange={this.handleChange} />
                             {submitted && !username &&
-                                <div className="help-block">Username is required</div>
+                                <div className="help-block">Email is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                            {submitted && !password &&
-                                <div className="help-block">Password is required</div>
-                            }
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success btn-lg btn-block">Login</button>
+                            <button type="submit" className="btn btn-success btn-lg btn-block">Reset my password</button>
                         </div>
                         { loggingIn && <Components.Loading message="searching" /> }
                         <div className="text-center">
-                            {/* <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label> */}
-                            <a className="center" href="/fpwd">Forgot Password?</a>
+                            <a className="center" href="/login">Login</a>
                         </div>
-                        <div className="or-seperator"><i>or</i></div>
-                        <p className="text-center">Don't have an account? <NavLink href="/register">Sign up here!</NavLink></p>
                     </form>
                 </div>
             </Wrapper>
@@ -87,5 +77,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedLoginPage = connect(mapStateToProps)(CSSModules(Login, styles));
-export { connectedLoginPage as Login }; 
+const connectedForgotPasswordPage = connect(mapStateToProps)(CSSModules(ForgotPassword, styles));
+export { connectedForgotPasswordPage as ForgotPassword }; 

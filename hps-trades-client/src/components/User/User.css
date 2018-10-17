@@ -1,31 +1,37 @@
-body{
+body {
     color: #fff;
     background: #63738a;
     font-family: 'Roboto', sans-serif;
 }
-.form-control{
+
+.form-control {
     height: 40px;
     box-shadow: none;
     color: #969fa4;
 }
-.form-control:focus{
+
+.form-control:focus {
     border-color: #5cb85c;
 }
-.form-control, .btn{        
+
+.form-control, .btn {
     border-radius: 3px;
 }
-.user-form{
+
+.user-form {
     width: 400px;
     margin: 0 auto;
     padding: 30px 0;
 }
-.user-form h2{
+
+.user-form h2 {
     color: #636363;
     margin: 0 0 15px;
     position: relative;
     text-align: center;
 }
-.user-form h2:before, .user-form h2:after{
+
+.user-form h2:before, .user-form h2:after {
     content: "";
     height: 2px;
     width: 30%;
@@ -33,19 +39,27 @@ body{
     position: absolute;
     top: 50%;
     z-index: 2;
-}	
-.user-form h2:before{
+}
+
+.fpwd:before, .fpwd:after {
+    width: 11% !important;
+}
+
+.user-form h2:before {
     left: 0;
 }
-.user-form h2:after{
+
+.user-form h2:after {
     right: 0;
 }
-.user-form .hint-text{
+
+.user-form .hint-text {
     color: #848282;
     margin-bottom: 30px;
     text-align: center;
 }
-.user-form form{
+
+.user-form form {
     color: #848282;
     border-radius: 3px;
     margin-bottom: 15px;
@@ -53,38 +67,47 @@ body{
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 30px;
 }
-.user-form .form-group{
+
+.user-form .form-group {
     margin-bottom: 20px;
 }
-.user-form input[type="checkbox"]{
+
+.user-form input[type="checkbox"] {
     margin-top: 3px;
 }
-.user-form .btn{        
+
+.user-form .btn {
     font-size: 16px;
-    font-weight: bold;		
+    font-weight: bold;
     min-width: 140px;
     outline: none !important;
 }
-.user-form .row div:first-child{
+
+.user-form .row div:first-child {
     padding-right: 10px;
 }
-.user-form .row div:last-child{
+
+.user-form .row div:last-child {
     padding-left: 10px;
-}    	
-.user-form a{
+}
+
+.user-form a {
     color: #fff;
     text-decoration: underline;
 }
-.user-form a:hover{
+
+.user-form a:hover {
     text-decoration: none;
 }
-.user-form form a{
+
+.user-form form a {
     color: #5cb85c;
     text-decoration: none;
-}	
-.user-form form a:hover{
+}
+
+.user-form form a:hover {
     text-decoration: underline;
-}  
+}
 
 .col-xs-6 {
     width: 50%;
@@ -93,11 +116,11 @@ body{
     min-height: 1px;
 }
 
-.firstName{
+.firstName {
     padding-left: 15px;
 }
 
-.lastName{
+.lastName {
     padding-right: 15px;
 }
 
@@ -109,13 +132,13 @@ body{
     float: left!important;
 }
 
-.or-seperator{
+.or-seperator {
     margin-top: 20px;
     text-align: center;
     border-top: 1px solid #ccc;
 }
 
-.or-seperator i{
+.or-seperator i {
     padding: 0 10px;
     background: #f7f7f7;
     position: relative;
@@ -124,20 +147,20 @@ body{
 }
 
 .nav-link {
-    display:inline-block;
+    display: inline-block;
     padding: 0.5rem 0rem;
 }
 
-.userPreferenceTable{
+.userPreferenceTable {
     margin-top: 20px;
     font-size: 0.9em;
 }
 
-.userPreferenceTable tbody td:nth-child(1){
+.userPreferenceTable tbody td:nth-child(1) {
     font-weight: bold;
 }
 
-.react-datepicker__time-list{
+.react-datepicker__time-list {
     padding-left: 0px;
     padding-right: 0px;
 }
