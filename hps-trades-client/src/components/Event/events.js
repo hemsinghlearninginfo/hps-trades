@@ -143,7 +143,7 @@ class Events extends Component {
             eventItemsHTML = events.map((item, index) => {
                 if (!item.isNew) {
                     return (
-                        <div className="col-sm-6 col-md-6" key={index}>
+                        <div className="col-sm-6 col-md-4" key={index}>
                             <div className="card eventCards">
                                 <div className="card-body">
                                     <h5 className="card-title">{item.heading}</h5>

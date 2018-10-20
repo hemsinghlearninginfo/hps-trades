@@ -85,3 +85,13 @@ label{
     margin-bottom : 2px;
 }
 
+
+.react-datepicker-popper{
+    z-index: 110;
+    width: 315px;
+}
+
+.react-datepicker__time-list {
+    padding-left: 0px;
+    padding-right: 0px;
+}

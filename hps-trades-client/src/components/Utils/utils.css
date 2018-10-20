@@ -124,3 +124,7 @@
 .showModal{
     display: block;
 }
+
+.recaptcha{
+    text-align: center;
+}

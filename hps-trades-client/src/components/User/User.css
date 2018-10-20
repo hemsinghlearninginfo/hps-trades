@@ -42,7 +42,7 @@ body {
 }
 
 .fpwd:before, .fpwd:after {
-    width: 11% !important;
+    width: 9% !important;
 }
 
 .user-form h2:before {
@@ -158,9 +158,4 @@ body {
 
 .userPreferenceTable tbody td:nth-child(1) {
     font-weight: bold;
-}
-
-.react-datepicker__time-list {
-    padding-left: 0px;
-    padding-right: 0px;
 }

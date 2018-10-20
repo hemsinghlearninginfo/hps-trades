@@ -52,13 +52,13 @@ class Login extends Component {
                         <h2>Sign in</h2>
                         <p className="hint-text">Create your account. It's free and only takes a minute.</p>
                         <div className="form-group">
-                            <input type="email" className="form-control" name="username" value={username} onChange={this.handleChange} />
+                            <input type="email" className="form-control" name="username" value={username} onChange={this.handleChange} placeholder="example@domain.com" />
                             {submitted && !username &&
-                                <div className="help-block">Username is required</div>
+                                <div className="help-block">Email is required</div>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
+                            <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} placeholder="password" />
                             {submitted && !password &&
                                 <div className="help-block">Password is required</div>
                             }
