@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Components from '../index';
 import { userActions } from '../../_actions';
+import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
 import GoogleReCaptcha from '../Utils/GoogleReCaptcha';
@@ -19,7 +20,8 @@ class ForgotPassword extends Component {
         this.state = {
             username: '',
             googleReCaptchaValue: '',
-            submitted: false
+            submitted: false,
+            successSend: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,7 +41,11 @@ class ForgotPassword extends Component {
         const { username, googleReCaptchaValue } = this.state;
         const { dispatch } = this.props;
         if (username && googleReCaptchaValue) {
-            //dispatch(userActions.login(username));
+            var forgotPasswordToEmail = {
+                username
+            }
+            dispatch(userActions.forgotPasswordToEmail(forgotPasswordToEmail));
+            this.setState({ successSend: true });
         }
     }
 
@@ -51,10 +57,13 @@ class ForgotPassword extends Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
-        const { username, googleReCaptchaValue, submitted } = this.state;
+        const { forgotpasswording } = this.props;
+        const { username, googleReCaptchaValue, submitted, successSend } = this.state;
         return (
             <Wrapper>
+                {successSend &&
+                    <Components.Alert type="alert-success" message={messageConstants.FORGOTPASSWORD_REQUEST_SEND} />
+                }
                 <div className="user-form">
                     <form name="form" onSubmit={this.handleSubmit}>
                         <h2 className="fpwd">Forgot Password?</h2>
@@ -76,7 +85,7 @@ class ForgotPassword extends Component {
                         <div className="form-group">
                             <button type="submit" className="btn btn-success btn-lg btn-block">Reset my password</button>
                         </div>
-                        {loggingIn && <Components.Loading message="searching" />}
+                        {forgotpasswording && <Components.Loading message='Email' />}
                         <div className="text-center">
                             <a className="center" href="/login">"I remember Login Details"</a>
                         </div>
@@ -88,9 +97,9 @@ class ForgotPassword extends Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { forgotpasswording } = state.forgotpasswordToEmail;
     return {
-        loggingIn
+        forgotpasswording
     };
 }
 

@@ -10,6 +10,7 @@ export const userActions = {
     logout,
     register,
     getAll,
+    forgotPasswordToEmail,
     delete: _delete,
     isUserLoggedIn: isUserLoggedIn
 };
@@ -82,6 +83,24 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function forgotPasswordToEmail(username) {
+    return dispatch => {
+        dispatch(request(username));
+        userService.forgotPasswordToEmail(username)
+            .then(
+                username => dispatch(success(username)),
+                error => {
+                    dispatch(failure(username, error.toString()))
+                    //dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(username) { return { type: userConstants.FORGOTPASSWORD_REQUEST, username } }
+    function success(username) { return { type: userConstants.FORGOTPASSWORD_SUCCESS, username } }
+    function failure(error) { return { type: userConstants.FORGOTPASSWORD_FAILURE, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

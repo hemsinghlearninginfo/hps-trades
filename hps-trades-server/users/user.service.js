@@ -6,6 +6,7 @@ const User = db.User;
 
 module.exports = {
     authenticate,
+    forgotPasswordToEmail,
     getAll,
     getById,
     create,
@@ -22,6 +23,16 @@ async function authenticate({ username, password }) {
             ...userWithoutHash,
             token
         };
+    }
+}
+
+async function forgotPasswordToEmail({ username }) {
+    const user = await User.findOne({ username });
+    if (user) {
+        console.log('found');
+    }
+    else{
+        throw 'Username "' + username + '" is not found';
     }
 }
 

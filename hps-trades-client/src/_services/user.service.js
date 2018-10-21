@@ -9,6 +9,7 @@ export const userService = {
     getAll,
     getById,
     update,
+    forgotPasswordToEmail,
     delete: _delete
 };
 
@@ -55,6 +56,15 @@ function getById(id) {
     return fetch(myConfig.ApiUrl + 'users/${id}', requestOptions).then(handleResponse);
 }
 
+function forgotPasswordToEmail(username) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(username)
+    };
+    return fetch(myConfig.ApiUrl + 'users/forgotpasswordtoemail', requestOptions).then(handleResponse);
+}
+
 function register(user) {
     const requestOptions = {
         method: 'POST',
@@ -73,6 +83,7 @@ function update(user) {
 
     return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(handleResponse);;
 }
+
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
