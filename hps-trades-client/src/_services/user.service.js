@@ -53,7 +53,7 @@ function getById(id) {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(myConfig.ApiUrl + 'users/${id}', requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + `users/${id}`, requestOptions).then(handleResponse);
 }
 
 function forgotPasswordToEmail(username) {
@@ -81,7 +81,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(handleResponse);;
+    return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(handleResponse);
 }
 
 

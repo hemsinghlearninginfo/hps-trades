@@ -113,7 +113,7 @@ const connectedHeader = connect(mapStateToProps)(CSSModules(Header, styles));
 export { connectedHeader as Header };
 
 
-{/* <NavItem>
+/* <NavItem>
     <NavLink href="#">Current Status</NavLink>
 </NavItem>
 <li className="menuHorzintalDivider"></li>
@@ -124,4 +124,4 @@ export { connectedHeader as Header };
 <NavItem>
     <NavLink href="#" className="topLinks">System</NavLink>
 </NavItem>
-<li className="menuHorzintalDivider"></li> */}
+<li className="menuHorzintalDivider"></li> */

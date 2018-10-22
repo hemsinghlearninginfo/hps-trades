@@ -7,7 +7,6 @@ import { userActions } from '../../_actions';
 import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
-import GoogleReCaptcha from '../Utils/GoogleReCaptcha';
 
 class ForgotPassword extends Component {
 
@@ -76,7 +75,7 @@ class ForgotPassword extends Component {
                             }
                         </div>
                         <div className="form-group recaptcha">
-                            <GoogleReCaptcha googleReCaptcha={googleReCaptchaValue}
+                            <Components.GoogleReCaptcha googleReCaptcha={googleReCaptchaValue}
                                 reCaptchanChange={this.handleChangeReCaptcha} />
                             {submitted && !googleReCaptchaValue &&
                                 <div className="help-block">Please validate captcha</div>

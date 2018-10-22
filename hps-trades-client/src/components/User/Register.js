@@ -27,7 +27,6 @@ class Register extends Component {
             submitted: false,
             isValidEmail: false,
             isValidPassword: false,
-            isValidPassword: false,
             passwordNotMatched: false
         };
         this.handleChange = this.handleChange.bind(this);

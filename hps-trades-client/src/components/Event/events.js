@@ -43,7 +43,7 @@ class Events extends Component {
     handleChange(event, ctrl = "") {
         const { newEvent } = this.state;
         if (event != null) {
-            if (event._isAMomentObject != null && event._isAMomentObject && ctrl != "") {
+            if (event._isAMomentObject !== null && event._isAMomentObject && ctrl !== "") {
                 this.setState({
                     newEvent: {
                         ...newEvent,
@@ -94,7 +94,12 @@ class Events extends Component {
             newEvent.fromDate && newEvent.toDate
             && newEvent.type && newEvent.heading
             && newEvent.message) {
-            this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
+            //this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
+            this.setState({
+                newEvent: {
+                    dateForDisplay: `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`
+                }
+            })
             this.state.events.push(this.state.newEvent);
             this.setState(
                 this.state
@@ -141,27 +146,25 @@ class Events extends Component {
         let eventItemsHTML = [];
         if (events.length > 0) {
             eventItemsHTML = events.map((item, index) => {
-                if (!item.isNew) {
-                    return (
-                        <div className="col-sm-6 col-md-4" key={index}>
-                            <div className="card eventCards">
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.heading}</h5>
-                                    <p><strong>{item.dateForDisplay}</strong></p>
-                                    <p><strong>Type: {item.type}</strong></p>
-                                    <p className="card-text">{item.message}</p>
-                                    <a href="#" className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)} Edit</a>
-                                    {' '}
-                                    <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
-                                        modalClassName=""
-                                        title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
-                                        yesButtonClick={this.handleDeleteEventItem.bind(this, index)} cancelButtonLabel="Cancel">
-                                    </Components.ConfirmAlert>
-                                </div>
+                return ((!item.isNew) &&
+                    <div className="col-sm-6 col-md-4" key={index}>
+                        <div className="card eventCards">
+                            <div className="card-body">
+                                <h5 className="card-title">{item.heading}</h5>
+                                <p><strong>{item.dateForDisplay}</strong></p>
+                                <p><strong>Type: {item.type}</strong></p>
+                                <p className="card-text">{item.message}</p>
+                                <a href="#" className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)} Edit</a>
+                                {' '}
+                                <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
+                                    modalClassName=""
+                                    title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
+                                    yesButtonClick={this.handleDeleteEventItem.bind(this, index)} cancelButtonLabel="Cancel">
+                                </Components.ConfirmAlert>
                             </div>
                         </div>
-                    )
-                }
+                    </div>
+                )
             })
         }
         else {
@@ -231,7 +234,7 @@ class Events extends Component {
                                 <div className="col-xs-10">
                                     <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
                                     {
-                                        submitted && (!newEvent.type || newEvent.type.toUpperCase() == "select".toUpperCase()) &&
+                                        submitted && (!newEvent.type || newEvent.type.toUpperCase() === "select".toUpperCase()) &&
                                         <div className="help-block">Message type is required</div>
                                     }
                                 </div>

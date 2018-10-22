@@ -8,10 +8,6 @@ import Components from '../';
 
 class UserPreference extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Components.PageTemplate iconType={iconConstants.USER_PREFERENCE} heading="User Preferences">

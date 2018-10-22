@@ -12,6 +12,7 @@ import PP  from './Legal/PP';
 import loading from './Utils/loading';
 import alert from './Utils/alert';
 import ConfirmAlert from './Utils/confirmAlert';
+import GoogleReCaptcha from './Utils/GoogleReCaptcha';
 
 import logo from './Utils/logo';
 
@@ -40,6 +41,7 @@ export default class Component {
     static Loading = loading;
     static Alert = alert;
     static ConfirmAlert = ConfirmAlert;
+    static GoogleReCaptcha = GoogleReCaptcha;
 
     static Event = Event;
     static MarketClose = MarketClose;
