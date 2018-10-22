@@ -7,6 +7,7 @@ import { userActions } from '../../_actions';
 import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
+import { validateEmail } from '../../_helpers';
 
 class ForgotPassword extends Component {
 
@@ -20,7 +21,8 @@ class ForgotPassword extends Component {
             username: '',
             googleReCaptchaValue: '',
             submitted: false,
-            successSend: false
+            successSend: false,
+            isValidEmail: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,7 +41,12 @@ class ForgotPassword extends Component {
         this.setState({ submitted: true });
         const { username, googleReCaptchaValue } = this.state;
         const { dispatch } = this.props;
-        if (username && googleReCaptchaValue) {
+        let isValidEmail = validateEmail(username);
+
+        this.setState({
+            isValidEmail
+        });
+        if (username && isValidEmail && googleReCaptchaValue) {
             var forgotPasswordToEmail = {
                 username
             }
@@ -57,7 +64,7 @@ class ForgotPassword extends Component {
 
     render() {
         const { forgotpasswording } = this.props;
-        const { username, googleReCaptchaValue, submitted, successSend } = this.state;
+        const { username, googleReCaptchaValue, submitted, isValidEmail, successSend } = this.state;
         return (
             <Wrapper>
                 {successSend &&
@@ -68,10 +75,13 @@ class ForgotPassword extends Component {
                         <h2 className="fpwd">Forgot Password?</h2>
                         <p className="hint-text">Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
                         <div className="form-group">
-                            <input type="email" className="form-control" name="username" value={username}
+                            <input type="text" className="form-control" name="username" value={username}
                                 onChange={this.handleChange} placeholder="example@domain.com" autoComplete="false" />
-                            {submitted && !username &&
-                                <div className="help-block">Email is required</div>
+                            {   
+                                (submitted && !username &&
+                                <div className="help-block">Email is required</div>)
+                                || (submitted && !isValidEmail &&
+                                <div className="help-block">Email is not in proper format</div>)
                             }
                         </div>
                         <div className="form-group recaptcha">
