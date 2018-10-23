@@ -45,7 +45,7 @@ function sendEmail(emailParam) {
     var smtpConfig = {
         host: 'smtp.gmail.com',
         port: 465,
-        secure: false, // use SSL
+        secure: true, // use SSL
         auth: {
             user: process.env.HPS_TRADES_GMAIL_ID,
             pass: process.env.HPS_TRADES_GMIAL_PWD
