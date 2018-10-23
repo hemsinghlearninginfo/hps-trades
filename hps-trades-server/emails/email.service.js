@@ -71,7 +71,6 @@ function sendEmail(emailParam) {
         text: 'Hello world?',
         html: '<b>Hello world</b>'
     };
-    console.log(transporter);
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log('Error: ', error);
