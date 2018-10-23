@@ -12,7 +12,8 @@ function jwt() {
             '/users/authenticate',
             '/users/forgotpasswordtoemail',
             '/users/register',
-            '/email/sendemail'
+            '/email/sendemail',
+            '/email/forpassword'
         ]
     });
 }
