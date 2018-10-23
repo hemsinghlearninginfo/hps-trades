@@ -13,3 +13,9 @@ function sendemail(req, res, next) {
   //       .then(() => res.json({}))
   //       .catch(err => next(err));
 }
+
+function sendEmailForPassword(req, res, next) {
+  emailService.sendEmailForPassword(req.body)
+    .then(() => res.json({}))
+    .catch(err => next(err));
+}

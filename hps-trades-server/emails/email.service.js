@@ -1,12 +1,19 @@
 ﻿const nodemailer = require('nodemailer');
+const EmailTemplate = require('email-templates').EmailTemplate;
 const db = require('_helpers/db');
 const Email = db.Email;
 
 module.exports = {
-    sendemail
+    sendEmail,
+    sendEmailForPassword
 };
 
-async function sendemail(emailParam) {
+async function sendEmailForPassword(emailParam) {
+    var emailObject = new Email(emailParam);
+    emailObject.template = ".._template/forgotPassword";
+}
+
+async function sendEmail(emailParam) {
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',

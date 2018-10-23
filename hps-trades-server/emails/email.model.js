@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+    template : {type : String},
     from: { type: String, required: true },
     to: { type: String, required: true },
     subject: { type: String, required: true },
