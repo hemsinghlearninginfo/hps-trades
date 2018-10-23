@@ -42,16 +42,24 @@ async function sendEmailForPassword(emailParam) {
 
 function sendEmail(emailParam) {
     emailParam.to = emailParam.to || 'hemsingh81@gmail.com';
-    var smtpConfig = {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, // use SSL
+    // var smtpConfig = {
+    //     pool:true,
+    //     host: 'smtp-relay.gmail.com',
+    //     port: 465,
+    //     secure: true, // use SSL
+    //     auth: {
+    //         user: process.env.HPS_TRADES_GMAIL_ID,
+    //         pass: process.env.HPS_TRADES_GMIAL_PWD
+    //     }
+    // };
+    // var transporter = nodemailer.createTransport(smtpConfig);
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
         auth: {
-            user: process.env.HPS_TRADES_GMAIL_ID,
-            pass: process.env.HPS_TRADES_GMIAL_PWD
-        }
-    };
-    var transporter = nodemailer.createTransport(smtpConfig);
+               user:  process.env.HPS_TRADES_GMAIL_ID,
+               pass: process.env.HPS_TRADES_GMIAL_PWD
+           }
+       });
 
     emailParam.from = emailParam.from || process.env.HPS_TRADES_GMAIL_ID;
     emailParam.body = parseBodyFromTemplate(emailParam)
@@ -63,7 +71,7 @@ function sendEmail(emailParam) {
         text: 'Hello world?',
         html: '<b>Hello world</b>'
     };
-    console.log(mailOptions);
+    console.log(transporter);
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log('Error: ', error);
