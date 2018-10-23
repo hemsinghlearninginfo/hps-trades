@@ -1,6 +1,5 @@
 ﻿const nodemailer = require('nodemailer');
 const fs = require("fs");
-const EmailTemplate = require('email-templates').EmailTemplate;
 const db = require('_helpers/db');
 const Email = db.Email;
 
@@ -16,43 +15,10 @@ async function sendEmailForPassword(emailParam) {
     emailObject.subject = emailObject.subject || 'Password Reset - HPS Trades';
 
     sendEmail(emailObject);
-    //var sendResetPasswordLink = getTemplate(emailParam);
-    // var sendResetPasswordLink = transporter.templateSender(
-    //     new EmailTemplate(emailParam.template), {
-    //         from: emailParam.from,
-    //     });
-
-    // console.log('sendResetPasswordLink', sendResetPasswordLink);
-
-    // sendResetPasswordLink({
-    //     to: emailObject.to,
-    //     subject: emailObject.subject
-    // }, {
-    //         name: name,
-    //         username: username,
-    //         token: tokenUrl
-    //     }, function (err, info) {
-    //         if (err) {
-    //             console.log(err)
-    //         } else {
-    //             console.log('Link sent\n' + JSON.stringify(info));
-    //         }
-    //     });
 }
 
 function sendEmail(emailParam) {
     emailParam.to = emailParam.to || 'hemsingh81@gmail.com';
-    // var smtpConfig = {
-    //     pool:true,
-    //     host: 'smtp-relay.gmail.com',
-    //     port: 465,
-    //     secure: true, // use SSL
-    //     auth: {
-    //         user: process.env.HPS_TRADES_GMAIL_ID,
-    //         pass: process.env.HPS_TRADES_GMIAL_PWD
-    //     }
-    // };
-    // var transporter = nodemailer.createTransport(smtpConfig);
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -62,28 +28,28 @@ function sendEmail(emailParam) {
        });
 
     emailParam.from = emailParam.from || process.env.HPS_TRADES_GMAIL_ID;
-    emailParam.body = parseBodyFromTemplate(emailParam)
-
+    emailParam.body = parseBodyFromTemplate(emailParam, true);
+    emailParam.text = parseBodyFromTemplate(emailParam, false)
     let mailOptions = {
-        from: 'hps.trades.email@gmail.com',
-        to: 'hemsingh81@gmail.com',
-        subject: 'Password Reset - HPS Trades',
-        text: 'Hello world?',
-        html: '<b>Hello world</b>'
+        from: emailParam.from,
+        to: emailParam.to,
+        subject: emailParam.subject,
+        text: emailParam.text,
+        html: emailParam.body
     };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log('Error: ', error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    // transporter.sendMail(mailOptions, function (error, info) {
+    //     if (error) {
+    //         console.log('Error: ', error);
+    //     } else {
+    //         console.log('Email sent: ' + info.response);
+    //     }
+    // });
 }
 
-function parseBodyFromTemplate(emailObject) {
+function parseBodyFromTemplate(emailObject, isHTML = true) {
     let result = '';
     try {
-        result = fs.readFileSync(`${emailObject.template}/html.ejs`, 'utf8').toString();
+        result = fs.readFileSync(`${emailObject.template}/${isHTML? `html` : 'text'}.ejs`, 'utf8').toString();
         result = result.replace(/<#=NAME=#>/g, 'Hem');
     } catch (e) {
         console.log('Error:', e.stack);

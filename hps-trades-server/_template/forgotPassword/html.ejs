@@ -47,99 +47,39 @@
         td {
             border: 0px;
         }
-
-        .logo {
-            width: 30px;
-            height: auto;
-            margin: 5px;
-            border: 1px solid white;
-            padding: 2px;
-            border-radius: 2px;
-            background-color: #1e3d7b;
-        }
-
-        .hpsText {
-            display: inline;
-            font-size: 24pt;
-            font-weight: bold;
-            color: white;
-        }
-
-        .auto-generated-message {
-            padding-top: 15px;
-            font-family: arial, sans-serif;
-            font-style: normal;
-            font-variant: normal;
-            font-weight: normal;
-            font-size: 11px;
-            line-height: 17px;
-            font-size-adjust: none;
-            font-stretch: normal;
-        }
-
-        .bodyMessage {
-            padding: 15px;
-            font-family: arial, sans-serif;
-            font-style: normal;
-            font-variant: normal;
-            font-weight: normal;
-            font-size: 12px;
-            line-height: 17px;
-            font-size-adjust: none;
-            font-stretch: normal'
-
-        }
-
-        .bodyTable {
-            border: 1px solid #000;
-            border-collapse: collapse;
-            padding: 15px 20px;
-            text-align: left;
-            background-color: white;
-        }
-
-        .bodyDiv {
-            margin: 10px;
-            overflow: hidden;
-        }
     </style>
 </head>
 
 <body>
-    <div class="bodyDiv" align="center">
-        <table width="580" cellspacing="0" cellpadding="0" class="bodyTable">
+    <div align="center" style="margin:10px;overflow:hidden;">
+        <table width="580" cellspacing="0" cellpadding="0" style=" border:1px solid #000; border-collapse:collapse; padding:15px 20px; text-align:left; background-color:white;">
             <tbody>
                 <tr>
-                    <td style="background-color:#374395;">
-                        <table>
-                            <tr>
-                                <td><img class="logo" alt="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFUSURBVHhe7dHBTcMwHEbx7NY9GIM1ugCTIHFmDbbgWGrpb2GV2Nh5auqo7yd9hxwsWy+LpBl9nk6XtPjUKANCBoQMCBkQMmCnHGp0cVwpxvf5PDQDFgwIHS5gunymP2hAyICQASEDQgaEpg2YQ40uju8m3bkWqbVd3jntw24YEDIgZEDIgJABIQNCBoQMCBkQMiBkQMiAkAEhA0IGDC9vr5e0+OxmwGDA6wxYMGA4yp814HWPCrhlcfx/swXM7xldHO82HKqGPGAtUmu9Ad+/PoZmwIIBGzt0wBxqdHH8j6cMuHZ5awYsGBAyIGRAyICQASEDQgaE7hFwy+J41dMErOkNVWNAA/7OgAUDQgaEDAhN+7AbBoQMCBkQSnduWRy/n3TJWqTWdnlYp91C1RgQMiBkQMiAkAGhowd8uPwHRxfHVWMoyICQASEDQgaEDCjNa1l+AB6LukV+fUN6AAAAAElFTkSuQmCC" /></td>
-                                <td>
-                                    <div class="hpsText">HPS Trades</div>
-                                </td>
-                            </tr>
-                        </table>
+                    <td style="background-color:#374395;padding:5px;">
+                        <div style="display:inline;font-size:20pt;font-weight:bold;color:white;">HPS Trades</div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="bodyMessage">
-                        <p><strong>Dear <#=NAME=#>,</strong></p>
-                        <p>A password reset has been requested for this email address.
-                            If you have not forgotten your password, please ignore this
-                            email.</p>
-                        <p>To reset your password click on the link below and follow
-                            the instructions.</p>
-                        <p><a href="http://ptepractice.com/forgotpassword/reset/token/E9E1B692-194F-42DD-B5D9C3A7741CEBA5"
-                                target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://ptepractice.com/forgotpassword/reset/token/E9E1B692-194F-42DD-B5D9C3A7741CEBA5&amp;source=gmail&amp;ust=1540308895212000&amp;usg=AFQjCNGzkcoAE_eTTHrHZ2ylYAK6qOVf0w">http://ptepractice.com/<wbr>forgotpassword/reset/token/<wbr>E9E1B692-194F-42DD-<wbr>B5D9C3A7741CEBA5</a></p>
-                        <p>(If you cannot click on the link above, try copying and
-                            pasting the link into your browser's address bar.)</p>
-                        <p>The link will expire 24 hours after this email was sent.</p>
-                        <p><br></p>
+                    <td style="padding:15px;font-family:arial,sans-serif;font-style:normal;font-variant:normal;font-weight:normal;font-size:12px;line-height:17px;font-size-adjust:none;font-stretch:normal'">
+                        <div style="padding:15px; color:#374395;">
+                            <p><strong>Dear <#=NAME=#>,</strong></p>
+                            <p>A password reset has been requested for this email address.
+                                If you have not forgotten your password, please ignore this
+                                email.</p>
+                            <p>To reset your password click on the link below and follow
+                                the instructions.</p>
+                            <p><a href="http://ptepractice.com/forgotpassword/reset/token/E9E1B692-194F-42DD-B5D9C3A7741CEBA5"
+                                    target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://ptepractice.com/forgotpassword/reset/token/E9E1B692-194F-42DD-B5D9C3A7741CEBA5&amp;source=gmail&amp;ust=1540308895212000&amp;usg=AFQjCNGzkcoAE_eTTHrHZ2ylYAK6qOVf0w">http://ptepractice.com/<wbr>forgotpassword/reset/token/<wbr>E9E1B692-194F-42DD-<wbr>B5D9C3A7741CEBA5</a></p>
+                            <p>(If you cannot click on the link above, try copying and
+                                pasting the link into your browser's address bar.)</p>
+                            <p>The link will expire 24 hours after this email was sent.</p>
+                            <p></p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="auto-generated-message">
+        <div style="padding-top:15px; font-family:arial, sans-serif;font-style:normal;font-variant:normal;font-weight:bold;font-size:12px;line-height:17px;font-size-adjust:none;font-stretch:normal;">
             This is an auto-generated email. Please do not reply to this address.
         </div>
     </div>
