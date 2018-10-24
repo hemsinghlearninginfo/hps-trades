@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const emailController = require('../emails/email.controller');
 
 module.exports = {
     authenticate,
@@ -29,7 +30,10 @@ async function authenticate({ username, password }) {
 async function forgotPasswordToEmail({ username }) {
     const user = await User.findOne({ username });
     if (user) {
-        console.log('found');
+        var emailObject ={
+            to : username
+        }
+        emailController.sendEmailForPassword(emailObject);
     }
     else{
         throw 'Username "' + username + '" is not found';

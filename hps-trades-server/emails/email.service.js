@@ -8,28 +8,26 @@ module.exports = {
     sendEmailForPassword
 };
 
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+           user:  process.env.HPS_TRADES_GMAIL_ID,
+           pass: process.env.HPS_TRADES_GMIAL_PWD
+       }
+   });
+
 async function sendEmailForPassword(emailParam) {
     var emailObject = new Email(emailParam);
     emailObject.template = "_template/forgotPassword";
     emailObject.from = emailObject.from || process.env.HPS_TRADES_GMAIL_ID_WITH_NAME;
     emailObject.subject = emailObject.subject || 'Password Reset - HPS Trades';
-
+    emailParam.body = parseBodyFromTemplate(emailObject.template, true);
+    emailParam.text = parseBodyFromTemplate(emailObject.template, false)
+    
     sendEmail(emailObject);
 }
 
 function sendEmail(emailParam) {
-    emailParam.to = emailParam.to || 'hemsingh81@gmail.com';
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-               user:  process.env.HPS_TRADES_GMAIL_ID,
-               pass: process.env.HPS_TRADES_GMIAL_PWD
-           }
-       });
-
-    emailParam.from = emailParam.from || process.env.HPS_TRADES_GMAIL_ID;
-    emailParam.body = parseBodyFromTemplate(emailParam, true);
-    emailParam.text = parseBodyFromTemplate(emailParam, false)
     let mailOptions = {
         from: emailParam.from,
         to: emailParam.to,
@@ -46,10 +44,10 @@ function sendEmail(emailParam) {
     // });
 }
 
-function parseBodyFromTemplate(emailObject, isHTML = true) {
+function parseBodyFromTemplate(template, isHTML = true) {
     let result = '';
     try {
-        result = fs.readFileSync(`${emailObject.template}/${isHTML? `html` : 'text'}.ejs`, 'utf8').toString();
+        result = fs.readFileSync(`${template}/${isHTML? `html` : 'text'}.ejs`, 'utf8').toString();
         result = result.replace(/<#=NAME=#>/g, 'Hem');
     } catch (e) {
         console.log('Error:', e.stack);
