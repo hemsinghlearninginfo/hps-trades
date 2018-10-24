@@ -4,7 +4,7 @@ const emailService = require('./email.service');
 
 // routes
 router.post('/sendemail', sendemail);
-router.post('/forpassword', sendEmailForPassword);
+router.post('/sendemailforpassword', sendEmailForPassword);
 
 module.exports = router;
 
