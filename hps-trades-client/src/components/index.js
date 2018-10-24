@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import { Login } from './User/Login';
 import { Register } from './User/Register';
 import { ForgotPassword } from './User/ForgotPassword';
+import { ResetPassword } from './User/ResetPassword';
 import UserPreference from './User/UserPreference';
 import TNC from './Legal/TNC';
 import PP  from './Legal/PP';
@@ -35,6 +36,7 @@ export default class Component {
     static Register = Register;
     static UserPreference = UserPreference;
     static ForgotPassword = ForgotPassword;
+    static ResetPassword = ResetPassword;
 
     static TNC = TNC;
     static PP = PP;
