@@ -7,7 +7,6 @@ import { userActions } from '../../_actions';
 import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
-import { validateEmail } from '../../_helpers';
 
 class ResetPassword extends Component {
 
@@ -18,16 +17,16 @@ class ResetPassword extends Component {
         this.props.dispatch(userActions.logout());
 
         this.state = {
-            username: '',
-            googleReCaptchaValue: '',
+            password: '',
+            confirmPassword: '',
             submitted: false,
-            successSend: false,
+            successUpdate: false,
             isValidEmail: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeReCaptcha = this.handleChangeReCaptcha.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        console.log(this.props.location);
     }
 
     handleChange(e) {
@@ -39,56 +38,44 @@ class ResetPassword extends Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { username, googleReCaptchaValue } = this.state;
+        const { password, confirmPassword } = this.state;
         const { dispatch } = this.props;
-        let isValidEmail = validateEmail(username);
 
-        this.setState({
-            isValidEmail
-        });
-        if (username && isValidEmail && googleReCaptchaValue) {
-            var forgotPasswordToEmail = {
-                username
-            }
-            dispatch(userActions.forgotPasswordToEmail(forgotPasswordToEmail));
-            this.setState({ successSend: true });
+        if (password && confirmPassword) {
+            // var forgotPasswordToEmail = {
+            //     username
+            // }
+            // dispatch(userActions.forgotPasswordToEmail(forgotPasswordToEmail));
+            //this.setState({ successSend: true });
         }
-    }
-
-    handleChangeReCaptcha = (value) => {
-        this.setState({ googleReCaptchaValue: value });
-        return new Promise(function (resolve, reject) {
-            resolve();
-        });
     }
 
     render() {
         const { forgotpasswording } = this.props;
-        const { username, googleReCaptchaValue, submitted, isValidEmail, successSend } = this.state;
+        const { password, confirmPassword, submitted,  successUpdate } = this.state;
         return (
             <Wrapper>
-                {successSend &&
+                {successUpdate &&
                     <Components.Alert type="alert-success" message={messageConstants.FORGOTPASSWORD_REQUEST_SEND} />
                 }
                 <div className="user-form">
                     <form name="form" onSubmit={this.handleSubmit}>
-                        <h2 className="fpwd">Forgot Password?</h2>
-                        <p className="hint-text">Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
+                        <h2 className="resetpwd">Reset Password?</h2>
+                        <p className="hint-text">Please choose a new password to update existing password.</p>
                         <div className="form-group">
-                            <input type="text" className="form-control" name="username" value={username}
-                                onChange={this.handleChange} placeholder="example@domain.com" autoComplete="false" />
+                            <input type="password" className="form-control" name="username" value={password}
+                                onChange={this.handleChange} placeholder="Password" autoComplete="false" />
                             {   
-                                (submitted && !username &&
-                                <div className="help-block">Email is required</div>)
-                                || (submitted && !isValidEmail &&
-                                <div className="help-block">Email is not in proper format</div>)
+                                (submitted && !password &&
+                                <div className="help-block">Password is required</div>)
                             }
                         </div>
-                        <div className="form-group recaptcha">
-                            <Components.GoogleReCaptcha googleReCaptcha={googleReCaptchaValue}
-                                reCaptchanChange={this.handleChangeReCaptcha} />
-                            {submitted && !googleReCaptchaValue &&
-                                <div className="help-block">Please validate captcha</div>
+                        <div className="form-group">
+                            <input type="password" className="form-control" name="username" value={confirmPassword}
+                                onChange={this.handleChange} placeholder="Confirm Password" autoComplete="false" />
+                            {   
+                                (submitted && !confirmPassword &&
+                                <div className="help-block">Confirm Password is required</div>)
                             }
                         </div>
                         <div className="form-group">
