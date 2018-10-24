@@ -3,7 +3,7 @@ const router = express.Router();
 const userRoleService = require('./userRole.service');
 
 // routes
-router.post('/register', register);
+router.post('/create', create);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', update);
@@ -11,7 +11,7 @@ router.delete('/:id', _delete);
 
 module.exports = router;
 
-function register(req, res, next) {
+function create(req, res, next) {
     userRoleService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));

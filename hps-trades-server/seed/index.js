@@ -1,5 +1,6 @@
 var user = require('./user');
 var userRoles = require('./userRoles');
+var emailTypes = require('./emailTypes');
 
 module.exports = {
     seedDB
@@ -8,7 +9,7 @@ module.exports = {
 const runDBObjects = async () => {
     const fistResponse = await userRoles.seedUserRoles();
     const secondResponse = await user.seedSysAdmin(fistResponse);
-    // const thirdAsyncRequest = await example.thirdAsyncRequest(secondResponse);
+    const thirdAsyncRequest = await emailTypes.seedEmailTypes(secondResponse);
 };
 
 function seedDB() {
