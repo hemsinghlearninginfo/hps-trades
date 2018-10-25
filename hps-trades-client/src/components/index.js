@@ -18,7 +18,6 @@ import GoogleReCaptcha from './Utils/GoogleReCaptcha';
 import logo from './Utils/logo';
 
 import Event from './Event/events';
-import MarketClose from './Event/marketClose';
 
 import error404 from './Error/404';
 
@@ -46,7 +45,6 @@ export default class Component {
     static GoogleReCaptcha = GoogleReCaptcha;
 
     static Event = Event;
-    static MarketClose = MarketClose;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

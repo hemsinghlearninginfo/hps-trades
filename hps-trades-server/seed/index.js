@@ -1,6 +1,7 @@
 var user = require('./user');
 var userRoles = require('./userRoles');
 var emailTypes = require('./emailTypes');
+var eventTypes = require('./eventTypes');
 
 module.exports = {
     seedDB
@@ -10,9 +11,9 @@ const runDBObjects = async () => {
     const fistResponse = await userRoles.seedUserRoles();
     const secondResponse = await user.seedSysAdmin(fistResponse);
     const thirdAsyncRequest = await emailTypes.seedEmailTypes(secondResponse);
+    const fourthAsyncRequest = await eventTypes.seedEventTypes(thirdAsyncRequest);
 };
 
 function seedDB() {
-    console.log('Seeding DB Starts');
     runDBObjects();
 }

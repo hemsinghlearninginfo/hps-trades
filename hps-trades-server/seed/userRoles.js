@@ -1,6 +1,6 @@
 const db = require('../_helpers/db');
 const UserRoles = db.UserRole;
-const constants = require('../_helpers/constants');
+const constants = require('../_helpers/dataConstants');
 
 module.exports = {
     seedUserRoles

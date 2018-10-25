@@ -2,7 +2,7 @@
 const email = require('_helpers/email');
 const EmailDb = db.Email;
 const EmailTypeDb = db.EmailType;
-const constants = require('_helpers/constants');
+const constants = require('_helpers/dataconstants');
 const uniqueString = require('unique-string');
 
 module.exports = {
