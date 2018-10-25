@@ -47,6 +47,11 @@ seed.seedDB();
         next();
     });
 
+    // api routes for Master Data
+    app.use("/eventtype", require('./masters/eventTypes/eventTypes.controller'));
+    app.use("/emailtype", require('./masters/emailTypes/emailTypes.controller'));
+    app.use("/userrole", require('./masters/userRoles/userRoles.controller'));
+
     // api routes for Email
     app.use("/email", require('./emails/email.controller'));
 
