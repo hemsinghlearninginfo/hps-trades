@@ -2,7 +2,7 @@ import React from 'react';
 import { iconConstants } from '../_constants';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative, FaCalendar,
-    FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan
+    FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan, FaExclamationCircle
 
 }
     from 'react-icons/fa';
@@ -28,7 +28,7 @@ export function getIcon(iconType) {
         case iconConstants.MACHINE:
             iconsHTML = <FaCog />;
             break;
-        case iconConstants.Event:
+        case iconConstants.EVENT:
             iconsHTML = <FaCalendar />;
             break;
         case iconConstants.EDIT:
@@ -45,6 +45,9 @@ export function getIcon(iconType) {
             break;
         case iconConstants.CANCEL:
             iconsHTML = <FaBan />;
+            break;
+        case iconConstants.ERROR:
+            iconsHTML = <FaExclamationCircle />;
             break;
         default:
             iconsHTML = <FaAngrycreative />

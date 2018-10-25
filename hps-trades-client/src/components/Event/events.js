@@ -274,7 +274,7 @@ class Events extends Component {
         )
 
         return (
-            <Components.PageTemplate iconType={iconConstants.Event} heading="Market Events">
+            <Components.PageTemplate iconType={iconConstants.EVENT} heading="Market Events">
                 {newItemHTML}
                 {!isAdd && (
                     <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>

@@ -5,10 +5,11 @@ export const iconConstants = {
     USER_LABEL: 'USER_LABEL',
     LEGAL:'LEGAL',
     MACHINE:'MACHINE',
-    Event : 'Event',
+    EVENT : 'EVENT',
     EDIT:'EDIT',
     DELETE:'DELETE',
     ADD:'ADD',
     SAVE:'SAVE',
-    CANCEL:'CANCEL'
+    CANCEL:'CANCEL',
+    ERROR: 'ERROR'
 };
