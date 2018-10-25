@@ -15,7 +15,7 @@ async function seedEmailTypes() {
         description: 'Send Email from System when user register him self'
     },
     {
-        type: 'ForgotPassword',
+        type: 'ForgotPasswordRequest',
         description: 'Forgot Password'
     },
     ];

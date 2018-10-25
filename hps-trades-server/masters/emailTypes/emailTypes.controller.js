@@ -19,13 +19,13 @@ function create(req, res, next) {
 
 function getAll(req, res, next) {
     userRoleService.getAll()
-        .then(users => res.json(users))
+        .then(types => res.json(types))
         .catch(err => next(err));
 }
 
 function getById(req, res, next) {
     userRoleService.getById(req.params.id)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+        .then(type => type ? res.json(type) : res.sendStatus(404))
         .catch(err => next(err));
 }
 

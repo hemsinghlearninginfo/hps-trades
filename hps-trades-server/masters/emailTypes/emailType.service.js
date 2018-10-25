@@ -19,7 +19,7 @@ async function getById(id) {
 
 async function create(emailTypeParam) {
     // validate
-    if (await EmailType.findOne({ type: emailTypeParam.role })) {
+    if (await EmailType.findOne({ type: emailTypeParam.type })) {
         throw 'Email Type "' + emailTypeParam.type + '" is already added';
     }
     const emailType = new EmailType(emailTypeParam);

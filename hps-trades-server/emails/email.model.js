@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+    type:
+    {
+        type: Schema.Types.ObjectId,
+        ref: 'EmailType'
+    },
     template : {type : String},
     from: { type: String, required: true },
     to: { type: String, required: true },
