@@ -3,6 +3,7 @@ const email = require('_helpers/email');
 const EmailDb = db.Email;
 const EmailTypeDb = db.EmailType;
 const constants = require('_helpers/constants');
+const uniqueString = require('unique-string');
 
 module.exports = {
     sendEmailForPassword
@@ -13,13 +14,22 @@ async function sendEmailForPassword(emailParam) {
     if (!emailTypeFound) {
         throw 'Email type is not found';
     }
-    var emailObject = new EmailDb();
+
+    let token = uniqueString();
+    let validityDate = new Date();
+    validityDate.setDate(validityDate.getDate() + 1);
+
+    let emailObject = new EmailDb();
+
     emailObject.type = emailTypeFound._id;
     emailObject.template = "_template/forgotPassword";
     emailObject.from = process.env.HPS_TRADES_GMAIL_ID_WITH_NAME;
     emailObject.subject = 'Password Reset - HPS Trades';
     emailObject.to = emailParam.to;
     emailObject.name = emailParam.name;
+
+    emailObject.link1 =process.env.HPS_TRADES_MAIN_APP_URL + (process.env.HPS_TRADES_MAIN_APP_RESET_PWD).replace('{0}',token);
+    emailObject.link1Validity  = validityDate;
 
     emailObject.htmlBody = email.parseEmailBodyFromTemplate(emailObject, true);
     emailObject.textBody = email.parseEmailBodyFromTemplate(emailObject, false);

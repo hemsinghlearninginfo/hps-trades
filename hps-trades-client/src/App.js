@@ -52,7 +52,7 @@ class App extends Component {
       </Wrapper>
     );
   }
-
+  
 }
 
 function mapStateToProps(state) {
