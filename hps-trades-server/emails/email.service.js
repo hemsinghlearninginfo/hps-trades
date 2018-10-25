@@ -1,14 +1,15 @@
 ﻿const db = require('_helpers/db');
 const email = require('_helpers/email');
 const EmailDb = db.Email;
-const EmailType = db.EmailType;
+const EmailTypeDb = db.EmailType;
+const constants = require('_helpers/constants');
 
 module.exports = {
     sendEmailForPassword
 };
 
 async function sendEmailForPassword(emailParam) {
-    const emailTypeFound = await EmailType.findOne({ type: 'ForgotPasswordRequest' })
+    const emailTypeFound = await EmailTypeDb.findOne({ type: constants.emailTypes()[0].type })
     if (!emailTypeFound) {
         throw 'Email type is not found';
     }
