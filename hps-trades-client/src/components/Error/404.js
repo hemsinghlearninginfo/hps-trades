@@ -13,7 +13,7 @@ const error404 = () => (
         <div className="container-fluid" id="body-container-fluid">
             <div className="container">
                 <div className="jumbotron">
-                    <h1 className="display-1">4 <span className="Icon404">{getIcon(iconConstants.MACHINE)}</span> 4</h1>
+                    <h1 className="display-1">4<span className="Icon404">{getIcon(iconConstants.MACHINE)}</span>4</h1>
                     <h1 className="display-3">ERROR</h1>
                     <p className="lower-case">Aw !! webpage not found please try to refresh</p>
                     <p className="lower-case">Maybe the page is under maintenance</p>
