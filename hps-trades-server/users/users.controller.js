@@ -4,7 +4,8 @@ const userService = require('./user.service');
 
 // routes
 router.post('/authenticate', authenticate);
-router.post('/forgotpasswordtoemail', forgotpasswordToEmail);
+router.post('/forgotpasswordtoemail', forgotPasswordToEmail);
+router.post('/isvalidforgotpasswordlink', isValidForgotpasswordLink);
 router.post('/register', register);
 router.get('/', getAll);
 router.get('/current', getCurrent);
@@ -20,8 +21,14 @@ function authenticate(req, res, next) {
         .catch(err => next(err));
 }
 
-function forgotpasswordToEmail(req, res, next) {
+function forgotPasswordToEmail(req, res, next) {
     userService.forgotPasswordToEmail(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function isValidForgotpasswordLink(req, res, next) {
+    userService.isValidForgotpasswordLink(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

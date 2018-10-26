@@ -8,6 +8,7 @@ const emailService = require('../emails/email.service');
 module.exports = {
     authenticate,
     forgotPasswordToEmail,
+    isValidForgotpasswordLink,
     getAll,
     getById,
     create,
@@ -39,6 +40,21 @@ async function forgotPasswordToEmail({ username }) {
     else {
         throw 'Username "' + username + '" is not found';
     }
+}
+
+async function isValidForgotpasswordLink({ link }) {
+    console.log(link);
+    // const user = await User.findOne({ username });
+    // if (user) {
+    //     var emailPrams = {
+    //         to: username,
+    //         name: user.firstName
+    //     }
+    //     emailService.sendEmailForPassword(emailPrams);
+    // }
+    // else {
+    //     throw 'Username "' + username + '" is not found';
+    // }
 }
 
 async function getAll() {

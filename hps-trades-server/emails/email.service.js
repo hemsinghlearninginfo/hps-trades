@@ -6,7 +6,8 @@ const constants = require('_helpers/dataconstants');
 const uniqueString = require('unique-string');
 
 module.exports = {
-    sendEmailForPassword
+    sendEmailForPassword,
+    isValidLink,
 };
 
 async function sendEmailForPassword(emailParam) {
@@ -28,8 +29,8 @@ async function sendEmailForPassword(emailParam) {
     emailObject.to = emailParam.to;
     emailObject.name = emailParam.name;
 
-    emailObject.link1 =process.env.HPS_TRADES_MAIN_APP_URL + (process.env.HPS_TRADES_MAIN_APP_RESET_PWD).replace('{0}',token);
-    emailObject.link1Validity  = validityDate;
+    emailObject.link1 = process.env.HPS_TRADES_MAIN_APP_URL + (process.env.HPS_TRADES_MAIN_APP_RESET_PWD).replace('{0}', token);
+    emailObject.link1Validity = validityDate;
 
     emailObject.htmlBody = email.parseEmailBodyFromTemplate(emailObject, true);
     emailObject.textBody = email.parseEmailBodyFromTemplate(emailObject, false);
@@ -39,4 +40,12 @@ async function sendEmailForPassword(emailParam) {
     // save email into database
     const emailToSave = new EmailDb(emailObject);
     await emailToSave.save();
+}
+
+async function isValidLink({ link1, link2, link3, link4, link5 }) {
+    console.log(link1, link2, link3, link4, link5);
+    // const emailTypeFound = await EmailDb.findOne({ link1: /link1/ })
+    // if (!emailTypeFound) {
+    //     throw 'Email type is not found';
+    // }   
 }
