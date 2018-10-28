@@ -16,9 +16,9 @@ function userRoles() {
 
 function emailTypes() {
     var et = [];
-    et.push({ type: 'NewUserRequest', description: 'Send Email from Master for New User Request' });
-    et.push({ type: 'NewUserRegistered', description: 'Send Email from System when user register him self' });
-    et.push({ type: 'ForgotPasswordRequest', description: 'Forgot Password' });
+    et.push({ type: 'NewUserRegistered', description: 'Send Email from system when register him self', returnMessage : 'New user register' });
+    et.push({ type: 'NewUserRegisteredConfirm', description: 'Send Email from system when new user registration confirmed', returnMessage : 'New user register confirm' });
+    et.push({ type: 'ForgotPasswordRequest', description: 'Forgot Password', returnMessage : 'Forgot password request' });
     return et;
 }
 

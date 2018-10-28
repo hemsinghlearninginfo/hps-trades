@@ -46,15 +46,14 @@ function register(user) {
     return dispatch => {
         dispatch(request(user));
 
-        var emailType = 'newUserRegister';
-        var emailUserObject = { ...user, emailType };
+        var emailUserObject = { ...user };
 
         userService.register(user)
             .then(
                 user => {
                     dispatch(success());
                     history.push('/');
-                    emailActions.emailNewUser(emailUserObject);
+                    emailActions.emailForNewUserRegistration(emailUserObject);
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

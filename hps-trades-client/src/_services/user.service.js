@@ -1,6 +1,7 @@
 //import config  from 'config';
 import { authHeader } from '../_helpers';
 import { myConfig } from '../config' ;
+import { commonService } from './';
 
 export const userService = {
     login,
@@ -22,7 +23,7 @@ function login(username, password) {
     };
 
     return fetch(myConfig.ApiUrl + 'users/authenticate', requestOptions)
-        .then(handleResponse)
+        .then(commonService.handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
             if (user.token) {
@@ -45,7 +46,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(myConfig.ApiUrl + 'users', requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'users', requestOptions).then(commonService.handleResponse);
 }
 
 function getById(id) {
@@ -53,7 +54,7 @@ function getById(id) {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(myConfig.ApiUrl + `users/${id}`, requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + `users/${id}`, requestOptions).then(commonService.handleResponse);
 }
 
 function forgotPasswordToEmail(username) {
@@ -62,7 +63,7 @@ function forgotPasswordToEmail(username) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(username)
     };
-    return fetch(myConfig.ApiUrl + 'users/forgotpasswordtoemail', requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'users/forgotpasswordtoemail', requestOptions).then(commonService.handleResponse);
 }
 
 function register(user) {
@@ -71,7 +72,7 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(myConfig.ApiUrl + 'users/register', requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'users/register', requestOptions).then(commonService.handleResponse);
 }
 
 function update(user) {
@@ -81,7 +82,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(commonService.handleResponse);
 }
 
 
@@ -92,23 +93,23 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(myConfig.ApiUrl + 'users/' +  id, requestOptions).then(handleResponse);
+    return fetch(myConfig.ApiUrl + 'users/' +  id, requestOptions).then(commonService.handleResponse);
 }
 
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                window.location.reload(true);
-            }
+// function handleResponse(response) {
+//     return response.text().then(text => {
+//         const data = text && JSON.parse(text);
+//         if (!response.ok) {
+//             if (response.status === 401) {
+//                 // auto logout if 401 response returned from api
+//                 logout();
+//                 window.location.reload(true);
+//             }
 
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
+//             const error = (data && data.message) || response.statusText;
+//             return Promise.reject(error);
+//         }
 
-        return data;
-    });
-}
+//         return data;
+//     });
+// }

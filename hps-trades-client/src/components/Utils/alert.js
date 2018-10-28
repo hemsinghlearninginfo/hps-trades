@@ -5,7 +5,7 @@ import Wrapper from '../../hoc/Wrapper';
 const alert = (props) => (
     <Wrapper>
         {props.message &&
-            <div className="hideMe"><div className={`alert ${props.type}`}>{props.message}</div></div>
+            <div><div className={`alert ${props.type}`}>{props.message}</div></div>
         }
     </Wrapper>
 );

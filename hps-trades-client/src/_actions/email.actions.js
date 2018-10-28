@@ -1,9 +1,9 @@
 import { emailService } from '../_services';
 
 export const emailActions = {
-    emailNewUser,
+    emailForNewUserRegistration,
 };
 
-function emailNewUser(user) {
-    return emailService.sendEmail(user);
+function emailForNewUserRegistration(user) {
+    return emailService.emailForNewUserRegistration(user);
 }

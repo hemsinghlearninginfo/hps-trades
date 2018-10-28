@@ -3,15 +3,15 @@ import { myConfig } from '../config';
 import { commonService } from './';
 
 export const emailService = {
-    sendEmail
+    emailForNewUserRegistration
 };
 
-function sendEmail(user) {
+function emailForNewUserRegistration(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(myConfig.ApiUrl + 'email/sendemail', requestOptions)
+    return fetch(`${myConfig.ApiUrl}email/emailfornewuserregistration`, requestOptions)
         .then(commonService.handleResponse);
 }

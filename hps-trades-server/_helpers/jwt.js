@@ -12,7 +12,7 @@ function jwt() {
             '/users/authenticate',
             '/users/forgotpasswordtoemail',
             '/users/register',
-            '/email/sendemail',
+            '/email/emailfornewuserregistration',
             '/email/forpassword'
         ]
     });

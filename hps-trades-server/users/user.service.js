@@ -20,14 +20,29 @@ module.exports = {
 
 async function authenticate({ username, password }) {
     const user = await UserDb.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
-        const token = jwt.sign({ sub: user.id }, config.secret);
-        return {
-            ...userWithoutHash,
-            token
-        };
+    if (user) {
+        if (bcrypt.compareSync(password, user.hash)) {
+            if (user.isRegistrationActive) {
+                const { hash, ...userWithoutHash } = user.toObject();
+                const token = jwt.sign({ sub: user.id }, config.secret);
+                return {
+                    ...userWithoutHash,
+                    token
+                };
+            }
+            else {
+                throw 'Your account is not activated, please check you email and click on activation link.'; 
+            }
+        }
     }
+    // if (user && bcrypt.compareSync(password, user.hash)) {
+    //     const { hash, ...userWithoutHash } = user.toObject();
+    //     const token = jwt.sign({ sub: user.id }, config.secret);
+    //     return {
+    //         ...userWithoutHash,
+    //         token
+    //     };
+    // }
 }
 
 async function forgotPasswordToEmail({ username }) {
@@ -78,10 +93,10 @@ async function create(userParam) {
     // Set user Role
     if (user.role === undefined) {
         const userRole = await UserRoleDb.findOne({ role: dataConstants.userRoles()[2].role });
-        if(userRole){
+        if (userRole) {
             user.role = userRole._id;
         }
-        else{
+        else {
             throw 'User Role not found';
         }
     }

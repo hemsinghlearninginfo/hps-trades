@@ -17,7 +17,8 @@ async function seedSysAdmin() {
             password: 'hpsadmin@123',
             firstName: 'hps',
             lastName: 'family',
-            role: userRole._id
+            role: userRole._id,
+            isRegistrationActive : true
         }
         const user = new User(userParam);
         // hash password

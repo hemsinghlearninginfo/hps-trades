@@ -11,6 +11,7 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'UserRole'
     },
+    isRegistrationActive: { type: Boolean, default : false },
     createdDate: { type: Date, default: Date.now }
 });
 
