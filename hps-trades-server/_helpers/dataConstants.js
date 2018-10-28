@@ -2,7 +2,8 @@
 module.exports = {
     userRoles,
     emailTypes,
-    eventTypes
+    eventTypes,
+    emailActions
 }
 
 function userRoles() {
@@ -29,3 +30,12 @@ function eventTypes() {
     et.push({ type: 'Annoucement', description: 'Annoucement' });
     return et;
 }
+
+function emailActions() {
+    // var ea = [];
+    // ea.push({ action: 'NewUserRegisterForConfirm', description: 'Action come form client to confirm user and send confirm mail' });
+    var ea ={
+        NEW_USER_REGISTER_CONFIRM:'NewUserRegisterForConfirm'
+    }
+    return ea;
+};

@@ -22,14 +22,19 @@ async function sendEmail(emailParam) {
         text: emailParam.textBody,
         html: emailParam.htmlBody,
     };
-    console.log(mailOptions);
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //         console.log('Error: ', error);
-    //     } else {
-    //         console.log('Email sent: ' + info.response);
-    //     }
-    // });
+
+    if (process.env.HPS_TRADES_EMAIL_ON === 'Yes') {
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log('Error: ', error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    else {
+        console.log(mailOptions);
+    }
 }
 
 function parseEmailBodyFromTemplate(emailParam, isHTML = true) {
