@@ -2,8 +2,10 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
-const User = db.User;
+const UserDb = db.User;
+const UserRoleDb = db.UserRole;
 const emailService = require('../emails/email.service');
+const dataConstants = require('../_helpers/dataConstants');
 
 module.exports = {
     authenticate,
@@ -17,7 +19,7 @@ module.exports = {
 };
 
 async function authenticate({ username, password }) {
-    const user = await User.findOne({ username });
+    const user = await UserDb.findOne({ username });
     if (user && bcrypt.compareSync(password, user.hash)) {
         const { hash, ...userWithoutHash } = user.toObject();
         const token = jwt.sign({ sub: user.id }, config.secret);
@@ -29,7 +31,7 @@ async function authenticate({ username, password }) {
 }
 
 async function forgotPasswordToEmail({ username }) {
-    const user = await User.findOne({ username });
+    const user = await UserDb.findOne({ username });
     if (user) {
         var emailPrams = {
             to: username,
@@ -58,20 +60,31 @@ async function isValidForgotpasswordLink({ link }) {
 }
 
 async function getAll() {
-    return await User.find().select('-hash');
+    return await UserDb.find().select('-hash');
 }
 
 async function getById(id) {
-    return await User.findById(id).select('-hash');
+    return await UserDb.findById(id).select('-hash');
 }
 
 async function create(userParam) {
     // validate
-    if (await User.findOne({ username: userParam.username })) {
+    if (await UserDb.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
 
-    const user = new User(userParam);
+    const user = new UserDb(userParam);
+
+    // Set user Role
+    if (user.role === undefined) {
+        const userRole = await UserRoleDb.findOne({ role: dataConstants.userRoles()[2].role });
+        if(userRole){
+            user.role = userRole._id;
+        }
+        else{
+            throw 'User Role not found';
+        }
+    }
 
     // hash password
     if (userParam.password) {
@@ -83,11 +96,11 @@ async function create(userParam) {
 }
 
 async function update(id, userParam) {
-    const user = await User.findById(id);
+    const user = await UserDb.findById(id);
 
     // validate
     if (!user) throw 'User not found';
-    if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
+    if (user.username !== userParam.username && await UserDb.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
 
@@ -103,5 +116,5 @@ async function update(id, userParam) {
 }
 
 async function _delete(id) {
-    await User.findByIdAndRemove(id);
+    await UserDb.findByIdAndRemove(id);
 }
