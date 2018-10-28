@@ -14,6 +14,7 @@ import loading from './Utils/loading';
 import alert from './Utils/alert';
 import ConfirmAlert from './Utils/confirmAlert';
 import GoogleReCaptcha from './Utils/GoogleReCaptcha';
+import URLToken from './Utils/URLToken';
 
 import logo from './Utils/logo';
 
@@ -43,6 +44,7 @@ export default class Component {
     static Alert = alert;
     static ConfirmAlert = ConfirmAlert;
     static GoogleReCaptcha = GoogleReCaptcha;
+    static URLToken = URLToken;
 
     static Event = Event;
 
