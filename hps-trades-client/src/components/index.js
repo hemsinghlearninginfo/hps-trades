@@ -14,7 +14,7 @@ import loading from './Utils/loading';
 import alert from './Utils/alert';
 import ConfirmAlert from './Utils/confirmAlert';
 import GoogleReCaptcha from './Utils/GoogleReCaptcha';
-import URLToken from './Utils/URLToken';
+import URLToken from './URL/URLToken';
 
 import logo from './Utils/logo';
 

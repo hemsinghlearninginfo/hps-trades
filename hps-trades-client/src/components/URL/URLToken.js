@@ -1,18 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import { getQueryString } from '../../_helpers';
+import Components from '../index';
 
-class URLToken extends React.Component {
+class URLToken extends Component {
 
-  constructor(props) {
-    super(props);
+  componentDidMount(){
     var queryString = getQueryString(this.props, 'url');
-    console.log('queryString : ', queryString);
   }
 
   render() {
     return (
       <div>
-        url
+        <Components.Loading isDropper={true} message='Loading' />
       </div>
     );
   }
