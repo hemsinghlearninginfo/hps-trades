@@ -15,11 +15,13 @@ async function performActionsAsPerEmailULR(action, emailRecordId) {
     if (!emailFound)
         throw 'Error in processing your request, please try agian.';
     if (action.toUpperCase() === dataConstants.emailTypes()[0].type.toUpperCase()) {
-        ConfirmNewUser(emailFound.to).then(response => {
+        ConfirmNewUser(emailFound.to)
+        .then(response => {
             if(response){
                 return emailFound.link1RedirectPage;
             }
-        }).catch(error => {
+        })
+        .catch(error => {
             throw errorConstants.GenericError;
         });
     }
