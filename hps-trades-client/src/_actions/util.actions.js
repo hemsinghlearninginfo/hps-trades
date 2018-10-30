@@ -1,5 +1,7 @@
 import { utilConstants } from '../_constants';
-import { utilActions } from '../_services';
+import { utilService } from '../_services';
+import { alertActions } from './';
+import { history } from '../_helpers';
 
 
 export const utilActions = {
@@ -10,10 +12,16 @@ function isURLValidate(url) {
     return dispatch => {
         dispatch(request(url));
 
-        utilActions.isURLValidate(url)
+        utilService.isURLValidate(url)
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
+                urlResponse => {
+                    dispatch(success(urlResponse))
+                },
+                error => {
+                    history.push('/404');
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
             );
     };
 

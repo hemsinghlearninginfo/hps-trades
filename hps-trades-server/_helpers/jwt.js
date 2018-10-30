@@ -10,10 +10,11 @@ function jwt() {
         path: [
             // public routes that don't require authentication
             '/users/authenticate',
-            '/users/forgotpasswordtoemail',
             '/users/register',
+            '/email/isvalidlink',
+            '/users/forgotpasswordtoemail',
             '/email/emailfornewuserregistration',
-            '/email/forpassword'
+            '/email/forpassword',
         ]
     });
 }

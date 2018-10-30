@@ -11,7 +11,6 @@ function isURLValidate(url) {
         method: 'GET',
         headers: authHeader()
     };
-
-    return fetch(`${myConfig.ApiUrl}mailToken/?token=${url}`, requestOptions)
+    return fetch(`${myConfig.ApiUrl}email/isvalidlink?url=${url}`, requestOptions)
         .then(commonService.handleResponse);
 }

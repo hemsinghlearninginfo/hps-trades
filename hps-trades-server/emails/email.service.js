@@ -4,7 +4,7 @@ const EmailDb = db.Email;
 const EmailTypeDb = db.EmailType;
 const constants = require('_helpers/dataconstants');
 const uniqueString = require('unique-string');
-const crypto = require('../_helpers/crypto');
+const util = require('../_helpers/util');
 
 module.exports = {
     emailForNewUserRegistration,
@@ -35,7 +35,7 @@ async function emailForNewUserRegistration(emailParam) {
     emailObject.to = emailParam.username;
     emailObject.name = emailParam.firstName;
 
-    let link1 = crypto.encrypt((process.env.HPS_TRADES_MAIN_MAIL_ACTION_OTHER)
+    let link1 = util.encrypt((process.env.HPS_TRADES_MAIN_MAIL_ACTION_OTHER)
         .replace('{0}', constants.emailActions().NEW_USER_REGISTER_CONFIRM)
         .replace('{1}', newUserToken));
     emailObject.link1 = process.env.HPS_TRADES_MAIN_APP_URL + (process.env.HPS_TRADES_MAIN_APP_URL_CONFIRM).replace('{0}',link1);

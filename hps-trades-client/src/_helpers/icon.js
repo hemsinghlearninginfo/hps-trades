@@ -3,7 +3,6 @@ import { iconConstants } from '../_constants';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative, FaCalendar,
     FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan, FaExclamationCircle
-
 }
     from 'react-icons/fa';
 
