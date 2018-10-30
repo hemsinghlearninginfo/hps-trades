@@ -26,16 +26,21 @@ function sendEmailForPassword(req, res, next) {
 
 function isValidLink(req, res, next) {
   if (req.query.url !== '') {
-    var urlWithActionAndToken = util.decrypt(req.query.url);
-    
+    let queryString = req.query.url;
+    let urlWithActionAndToken = util.decrypt(queryString);
+    let action = util.getQueryStringValue(urlWithActionAndToken, 'action');
+    let token = util.getQueryStringValue(urlWithActionAndToken, 'token');
+    let recordId = util.getQueryStringValue(urlWithActionAndToken, 'rec');
+    let emailToken = {
+      recordId,
+      link1: queryString
+    }
 
-    var action = util.getQueryStringValue(urlWithActionAndToken,'action');
-    var token = util.getQueryStringValue(urlWithActionAndToken,'token');
-    console.log(action);
-    console.log(token);
-    //emailService.isValidLink(req.body)
-    //   .then(() => res.json({}))
-    //   .catch(err => next(err));
+    emailService.isValidLink(emailToken)
+      .then(() => {
+        res.json({})
+      })
+      .catch(err => next(err));
 
     //res.send('done');
     // emailService.isValidLink(req.body)
