@@ -36,7 +36,7 @@ async function emailForNewUserRegistration(emailParam) {
     emailObject.name = emailParam.firstName;
 
     let link1 = util.encrypt((process.env.HPS_TRADES_MAIN_MAIL_ACTION_OTHER)
-        .replace('{0}', constants.emailActions().NEW_USER_REGISTER_CONFIRM)
+        .replace('{0}', constants.emailTypes()[0].type)
         .replace('{1}', newUserToken)
         .replace('{2}', emailObject._id)
     );
@@ -99,17 +99,17 @@ async function sendEmailForPassword(emailParam) {
 }
 
 async function isValidLink({ recordId, link1, link2, link3, link4, link5 }) {
-    const emailTypeFound = await EmailDb.findOne({ _id: recordId })
+    const emailFound = await EmailDb.findOne({ _id: recordId })
     let isLinkValid = false;
-    if (!emailTypeFound) {
+    if (!emailFound) {
         throw 'Email type is not found';
     }
     else {
-        isLinkValid = ((link1 && emailTypeFound.link1 !== undefined && (emailTypeFound.link1.toString()).indexOf(link1)) >= 0 ? true : false)
-        || ((link2 && emailTypeFound.link2 !== undefined && (emailTypeFound.link2.toString()).indexOf(link2)) >= 0 ? true : false)
-        || ((link3 && emailTypeFound.link3 !== undefined && (emailTypeFound.link3.toString()).indexOf(link3)) >= 0 ? true : false)
-        || ((link4 && emailTypeFound.link4 !== undefined && (emailTypeFound.link4.toString()).indexOf(link4)) >= 0 ? true : false)
-        || ((link5 && emailTypeFound.link5 !== undefined && (emailTypeFound.link5.toString()).indexOf(link5)) >= 0 ? true : false);
+        isLinkValid = ((link1 && emailFound.link1 !== undefined && (emailFound.link1.toString()).indexOf(link1)) >= 0 ? true : false)
+        || ((link2 && emailFound.link2 !== undefined && (emailFound.link2.toString()).indexOf(link2)) >= 0 ? true : false)
+        || ((link3 && emailFound.link3 !== undefined && (emailFound.link3.toString()).indexOf(link3)) >= 0 ? true : false)
+        || ((link4 && emailFound.link4 !== undefined && (emailFound.link4.toString()).indexOf(link4)) >= 0 ? true : false)
+        || ((link5 && emailFound.link5 !== undefined && (emailFound.link5.toString()).indexOf(link5)) >= 0 ? true : false);
     }
     return isLinkValid;
 }
