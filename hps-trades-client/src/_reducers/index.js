@@ -5,6 +5,7 @@ import { registration } from './registration.reducer';
 import { emails } from './emails.reducer';
 import { users } from './users.reducer';
 import { alert } from './alert.reducer';
+import { generic } from './generic.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   emails,
   users,
   alert,
+  generic,
 });
 
 export default rootReducer;

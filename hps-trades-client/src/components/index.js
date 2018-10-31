@@ -18,7 +18,7 @@ import { URLToken } from './URL/URLToken';
 
 import logo from './Utils/logo';
 
-import Event from './Event/events';
+import { Events } from './Event/events';
 
 import error404 from './Error/404';
 
@@ -46,7 +46,7 @@ export default class Component {
     static GoogleReCaptcha = GoogleReCaptcha;
     static URLToken = URLToken;
 
-    static Event = Event;
+    static Events = Events;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

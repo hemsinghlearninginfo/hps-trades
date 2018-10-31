@@ -39,7 +39,7 @@ class App extends Component {
                 <Route exact path="/tkn" component={Components.URLToken} />
                 <Route exact path="/fpwd" component={Components.ForgotPassword} />
                 {/* <Route exact path="/resetpwd" component={Components.ResetPassword} /> */}
-                <Route exact path="/event" component={Components.Event} />
+                <Route exact path="/event" component={Components.Events} />
                 <Route exact path="/tnc" component={Components.TNC} />
                 <Route exact path="/pp" component={Components.PP} />
                 <Route exact path="/login" component={Components.Login} />

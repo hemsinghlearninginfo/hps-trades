@@ -3,15 +3,15 @@ import { myConfig } from '../config';
 import { commonService } from './';
 
 export const eventService = {
-    getAllEventTypes
+    getAllActiveEventTypes
 };
 
-function getAllEventTypes() {
+function getAllActiveEventTypes() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(myConfig.ApiUrl + 'users', requestOptions)
+    return fetch(`${myConfig.ApiUrl}eventtype`, requestOptions)
         .then(commonService.handleResponse);
 }

@@ -3,7 +3,9 @@ import Components from '../index';
 import CSSModules from 'react-css-modules';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
+import { eventActions } from '../../_actions';
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
@@ -37,7 +39,17 @@ class Events extends Component {
     }
 
     componentDidMount() {
-        this.setState({ types: ['Select', 'Warning', 'News', 'Error', 'Maintenance'] });
+        let eventTypes = Promise.resolve(eventActions.getAllActiveEventTypes());
+        console.log(eventTypes);
+        eventTypes.then(function(result) {
+            this.setState({ types: result});
+            // expected output: 123
+          });
+        // .then(function (result) {
+        //     console.log('this');
+        //     console.log(result);
+        //     this.setState({ types: result});
+        // });
     }
 
     handleChange(event, ctrl = "") {
@@ -69,13 +81,6 @@ class Events extends Component {
                 }
             });
         }
-    }
-
-    handleDeleteYes() {
-        console.log('click Delete Yes');
-    }
-    handleDeleteCancel() {
-        console.log('click Delete Cancel');
     }
 
     handleSubmit(event) {
@@ -287,4 +292,12 @@ class Events extends Component {
     }
 }
 
-export default CSSModules(Events, styles);
+function mapStateToProps(state) {
+    const { requestLoading } = state.generic;
+    return {
+        requestLoading
+    };
+}
+
+const connectedEventsPage = connect(mapStateToProps)(CSSModules(Events, styles));
+export { connectedEventsPage as Events }; 
