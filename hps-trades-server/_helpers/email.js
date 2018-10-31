@@ -24,13 +24,13 @@ async function sendEmail(emailParam) {
     };
 
     if (process.env.HPS_TRADES_EMAIL_ON === 'Yes') {
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log('Error: ', error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
+        // transporter.sendMail(mailOptions, function (error, info) {
+        //     if (error) {
+        //         console.log('Error: ', error);
+        //     } else {
+        //         console.log('Email sent: ' + info.response);
+        //     }
+        // });
     }
     else {
         console.log(mailOptions);

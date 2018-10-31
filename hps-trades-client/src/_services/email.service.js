@@ -2,9 +2,22 @@ import { authHeader } from '../_helpers';
 import { myConfig } from '../config';
 import { commonService } from './';
 
+
 export const emailService = {
+    isURLValidate,
     emailForNewUserRegistration
 };
+
+
+function isURLValidate(url) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    return fetch(`${myConfig.ApiUrl}email/isvalidlink?url=${url}`, requestOptions)
+        .then(commonService.handleResponse);
+}
+
 
 function emailForNewUserRegistration(user) {
     const requestOptions = {
@@ -15,3 +28,5 @@ function emailForNewUserRegistration(user) {
     return fetch(`${myConfig.ApiUrl}email/emailfornewuserregistration`, requestOptions)
         .then(commonService.handleResponse);
 }
+
+

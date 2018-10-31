@@ -1,4 +1,4 @@
-import { userConstants } from '../_constants';
+import { appConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { emailActions } from './';
@@ -32,14 +32,14 @@ function login(username, password) {
             );
     };
 
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request(user) { return { type: appConstants.LOGIN_REQUEST, user } }
+    function success(user) { return { type: appConstants.LOGIN_SUCCESS, user } }
+    function failure(error) { return { type: appConstants.LOGIN_FAILURE, error } }
 }
 
 function logout() {
     userService.logout();
-    return { type: userConstants.LOGOUT };
+    return { type: appConstants.LOGOUT };
 }
 
 function register(user) {
@@ -63,9 +63,9 @@ function register(user) {
             );
     };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+    function request(user) { return { type: appConstants.REGISTER_REQUEST, user } }
+    function success(user) { return { type: appConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: appConstants.REGISTER_FAILURE, error } }
 }
 
 function getAll() {
@@ -79,9 +79,9 @@ function getAll() {
             );
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function request() { return { type: appConstants.GETALL_REQUEST } }
+    function success(users) { return { type: appConstants.GETALL_SUCCESS, users } }
+    function failure(error) { return { type: appConstants.GETALL_FAILURE, error } }
 }
 
 function forgotPasswordToEmail(username) {
@@ -97,9 +97,9 @@ function forgotPasswordToEmail(username) {
             );
     };
 
-    function request(username) { return { type: userConstants.FORGOTPASSWORD_REQUEST, username } }
-    function success(username) { return { type: userConstants.FORGOTPASSWORD_SUCCESS, username } }
-    function failure(error) { return { type: userConstants.FORGOTPASSWORD_FAILURE, error } }
+    function request(username) { return { type: appConstants.FORGOTPASSWORD_REQUEST, username } }
+    function success(username) { return { type: appConstants.FORGOTPASSWORD_SUCCESS, username } }
+    function failure(error) { return { type: appConstants.FORGOTPASSWORD_FAILURE, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -114,9 +114,9 @@ function _delete(id) {
             );
     };
 
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function request(id) { return { type: appConstants.DELETE_REQUEST, id } }
+    function success(id) { return { type: appConstants.DELETE_SUCCESS, id } }
+    function failure(id, error) { return { type: appConstants.DELETE_FAILURE, id, error } }
 }
 
 

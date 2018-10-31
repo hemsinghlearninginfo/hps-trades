@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { getQueryString } from '../../_helpers';
 import Components from '../index';
-import { utilActions } from '../../_actions';
+import { emailActions } from '../../_actions';
 
 class URLToken extends Component {
 
@@ -20,25 +20,26 @@ class URLToken extends Component {
     if (!isRequestPost) {
       const { dispatch } = this.props;
       var queryString = getQueryString(this.props, 'url');
-      dispatch(utilActions.isURLValidate(queryString));
+      dispatch(emailActions.isURLValidate(queryString));
       this.setState({ isRequestPost: true });
     }
   }
 
   render() {
     const { isRequestPost } = this.state;
+    const { requestLoading } = this.props;
     return (
       <div>
-        {!isRequestPost && <Components.Loading isDropper={true} message='Loading' />}
+        {(!isRequestPost || requestLoading) && <Components.Loading isDropper={true} message='Loading' />}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { utilLoading } = state.util;
+  const { requestLoading } = state.emails;
   return {
-    utilLoading
+    requestLoading
   };
 }
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const emailService = require('./email.service');
 const util = require('../_helpers/util');
 const commonDbMethods = require('../_helpers/commonDbMethods');
+const errorConstants = require('../_helpers/errorConstants');
 
 // routes
 router.post('/emailfornewuserregistration', emailForNewUserRegistration);
@@ -39,29 +40,33 @@ function isValidLink(req, res, next) {
       recordId,
       link1: queryString
     }
+
+    var urlResponse = {
+      status : 'sucess',
+      urlToRedirect : ''
+    }
+
     emailService.isValidLink(emailToken)
       .then(response => {
-        //res.json({})
         if (response) {
           commonDbMethods.performActionsAsPerEmailULR(action, recordId)
-            .then(response => {
-              return response;
+            .then(actionResponse => {
+              urlResponse.urlToRedirect = actionResponse
+              res.json({ urlResponse });
             })
-            .catch(error => {
-              return error;
-            });
+            .catch(err => next(err));
         }
         else {
-          throw 'Invalid URL';
+          throw errorConstants.GenericError;
         }
       })
       .catch(err => {
         //next(err)
-        throw 'Error in processing your request, please try agian.'
+        throw errorConstants.GenericError;
       });
   }
   else {
-    throw 'Invalid url';
+    throw errorConstants.GenericError;
   }
 }
 

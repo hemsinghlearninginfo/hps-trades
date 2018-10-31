@@ -1,20 +1,20 @@
-import { userConstants } from '../_constants';
+import { appConstants } from '../_constants';
 
 export function users(state = {}, action) {
   switch (action.type) {
-    case userConstants.GETALL_REQUEST:
+    case appConstants.GETALL_REQUEST:
       return {
         loading: true
       };
-    case userConstants.GETALL_SUCCESS:
+    case appConstants.GETALL_SUCCESS:
       return {
         items: action.users
       };
-    case userConstants.GETALL_FAILURE:
+    case appConstants.GETALL_FAILURE:
       return { 
         error: action.error
       };
-    case userConstants.DELETE_REQUEST:
+    case appConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {
         ...state,
@@ -24,12 +24,12 @@ export function users(state = {}, action) {
             : user
         )
       };
-    case userConstants.DELETE_SUCCESS:
+    case appConstants.DELETE_SUCCESS:
       // remove deleted user from state
       return {
         items: state.items.filter(user => user.id !== action.id)
       };
-    case userConstants.DELETE_FAILURE:
+    case appConstants.DELETE_FAILURE:
       // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
       return {
         ...state,

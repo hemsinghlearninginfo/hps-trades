@@ -15,23 +15,23 @@ async function performActionsAsPerEmailULR(action, emailRecordId) {
     if (!emailFound)
         throw 'Error in processing your request, please try agian.';
     if (action.toUpperCase() === dataConstants.emailTypes()[0].type.toUpperCase()) {
-        ConfirmNewUser(emailFound.to)
-        .then(response => {
-            if(response){
-                return emailFound.link1RedirectPage;
-            }
-        })
-        .catch(error => {
-            throw errorConstants.GenericError;
-        });
+        return ConfirmNewUser(emailFound.to)
+            .then(response => {
+                if (response) {
+                    return emailFound.link1RedirectPage;
+                }
+            })
+            .catch(error => {
+                throw errorConstants.GenericError;
+            });
     }
 }
 
 
-async function ConfirmNewUser(userame) {
-    const userFound = await UserDb.findOne({ userame : userame });
+async function ConfirmNewUser(username) {
+    const userFound = await UserDb.findOne({ username: username });
     if (!userFound)
-        throw userame + ' not found in the system, please register';
+        throw username + ' not found in the system, please register';
     try {
         userFound.isRegistrationActive = true;
         await userFound.save();
