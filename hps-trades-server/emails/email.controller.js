@@ -3,7 +3,7 @@ const router = express.Router();
 const emailService = require('./email.service');
 const util = require('../_helpers/util');
 const commonDbMethods = require('../_helpers/commonDbMethods');
-const errorConstants = require('../_helpers/errorConstants');
+const messageConstants = require('../_helpers/messageConstants');
 
 // routes
 router.post('/emailfornewuserregistration', emailForNewUserRegistration);
@@ -41,32 +41,26 @@ function isValidLink(req, res, next) {
       link1: queryString
     }
 
-    var urlResponse = {
-      status : 'sucess',
-      urlToRedirect : ''
-    }
-
     emailService.isValidLink(emailToken)
       .then(response => {
         if (response) {
           commonDbMethods.performActionsAsPerEmailULR(action, recordId)
-            .then(actionResponse => {
-              urlResponse.urlToRedirect = actionResponse
+            .then(urlResponse => {
               res.json({ urlResponse });
             })
             .catch(err => next(err));
         }
         else {
-          throw errorConstants.GenericError;
+          throw messageConstants.GenericError;
         }
       })
       .catch(err => {
         //next(err)
-        throw errorConstants.GenericError;
+        throw messageConstants.GenericError;
       });
   }
   else {
-    throw errorConstants.GenericError;
+    throw messageConstants.GenericError;
   }
 }
 

@@ -1,6 +1,6 @@
 const db = require('./db');
 const dataConstants = require('./dataConstants');
-const errorConstants = require('./errorConstants');
+const messageConstants = require('./messageConstants');
 const EmailDb = db.Email;
 const UserDb = db.User;
 
@@ -17,26 +17,35 @@ async function performActionsAsPerEmailULR(action, emailRecordId) {
     if (action.toUpperCase() === dataConstants.emailTypes()[0].type.toUpperCase()) {
         return ConfirmNewUser(emailFound.to)
             .then(response => {
-                if (response) {
-                    return emailFound.link1RedirectPage;
-                }
+                return response;
             })
             .catch(error => {
-                throw errorConstants.GenericError;
+                throw messageConstants.GenericError;
             });
     }
 }
 
 
 async function ConfirmNewUser(username) {
+    var urlResponse = {
+        status: 'sucess',
+        urlToRedirect: '/',
+        message: messageConstants.NEW_USER_EMAIL_APPROVED
+    }
     const userFound = await UserDb.findOne({ username: username });
     if (!userFound)
         throw username + ' not found in the system, please register';
     try {
-        userFound.isRegistrationActive = true;
-        await userFound.save();
-        return true;
+        if (!userFound.isRegistrationActive) {
+            userFound.isRegistrationActive = true;
+            await userFound.save();
+            urlResponse.message = messageConstants.NEW_USER_EMAIL_APPROVED;
+        }
+        else {
+            urlResponse.message = messageConstants.NEW_USER_EMAIL_ALLREADY_APPROVED;
+        }
+        return urlResponse;
     } catch (error) {
-        throw errorConstants.GenericError;
+        throw messageConstants.GenericError;
     }
 }

@@ -1,5 +1,5 @@
 import { emailService } from '../_services';
-import { appConstants } from '../_constants';
+import { appConstants, responseConstants, messageConstants } from '../_constants';
 import { alertActions } from './';
 import { history } from '../_helpers';
 
@@ -16,8 +16,12 @@ function isURLValidate(url) {
 
         emailService.isURLValidate(url)
             .then(
-                urlResponse => {
-                    dispatch(success(urlResponse))
+                response => {
+                    dispatch(success(response));
+                    if(response.urlResponse.status === responseConstants.STATUS_SUCESS){
+                        history.push(response.urlResponse.urlToRedirect);
+                        dispatch(alertActions.success(response.urlResponse.message));
+                    }
                 },
                 error => {
                     history.push('/404');
