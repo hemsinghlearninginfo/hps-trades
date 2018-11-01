@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 
 export const eventActions = {
     getAllActiveEventTypes,
+    create,
 };
 
 async function getAllActiveEventTypes() {
@@ -16,4 +17,25 @@ async function getAllActiveEventTypes() {
     catch (error) {
         return error;
     }
+}
+
+
+function create(formEvent) {
+    return dispatch => {
+        dispatch(request(formEvent.heading, formEvent.fromDate, formEvent.toDate));
+        eventService.create(formEvent)
+            .then(
+                eventCreated => {
+                    dispatch(success());
+                    dispatch(alertActions.success('Event added successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString() + ' Please reload your page.'));
+                }
+            );
+    };
+    function request(event) { return { type: appConstants.REQUEST, event } }
+    function success(user) { return { type: appConstants.SUCCESS, user } }
+    function failure(error) { return { type: appConstants.FAILURE, error } }
 }

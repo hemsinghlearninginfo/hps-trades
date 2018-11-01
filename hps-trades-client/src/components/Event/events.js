@@ -18,11 +18,11 @@ class Events extends Component {
 
         this.state = {
             events: [],
-            types: [],
+            eventTypes: [],
             fromDate: moment().fromNow(),
             toDate: moment().fromNow(),
             newEvent: {
-                type: 'select',
+                eventType: 'select',
                 heading: '',
                 message: '',
                 fromDate: moment().fromNow(),
@@ -48,7 +48,7 @@ class Events extends Component {
                 return responseText;
             })
             .then((response) => {
-                this.setState({ types: response });
+                this.setState({ eventTypes: response });
             });
     }
 
@@ -95,16 +95,15 @@ class Events extends Component {
             });
         }
 
-        if (this.state.submitted &&
-            newEvent.fromDate && newEvent.toDate
-            && newEvent.type && newEvent.heading
+        if (newEvent.fromDate && newEvent.toDate
+            && newEvent.eventType && newEvent.heading
             && newEvent.message) {
-            //this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
-            this.setState({
-                newEvent: {
-                    dateForDisplay: `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`
-                }
-            })
+            this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
+            // this.setState({
+            //     newEvent: {
+            //         dateForDisplay: `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`
+            //     }
+            // })
             this.state.events.push(this.state.newEvent);
             this.setState(
                 this.state
@@ -112,6 +111,10 @@ class Events extends Component {
             this.setState({
                 isAdd: !this.state.isAdd
             })
+
+            const { dispatch } = this.props;
+            dispatch(eventActions.create(this.state.newEvent));
+
         }
     }
 
@@ -129,7 +132,8 @@ class Events extends Component {
                 heading: '',
                 message: '',
                 fromDate: moment(),
-                toDate: moment()
+                toDate: moment(),
+                dateForDisplay: ''
             },
             submitted: false
         });
@@ -140,8 +144,8 @@ class Events extends Component {
     }
 
     render() {
-        const { events, types, isAdd, newEvent, submitted, isValidDateRange } = this.state;
-        const selectOptionsHTML = types.map((item) => {
+        const { events, eventTypes, isAdd, newEvent, submitted, isValidDateRange } = this.state;
+        const selectOptionsHTML = eventTypes.map((item) => {
             return (
                 <option key={item._id} value={item._id}>{item.type}</option>
             )
@@ -236,12 +240,12 @@ class Events extends Component {
                             <div className="form-group">
                                 <label className="control-label"><strong>Type</strong></label>
                                 <div className="col-xs-10">
-                                    <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>
+                                    <select className="form-control required" name="eventType" value={newEvent.eventType} onChange={this.handleChange}>
                                         <option>Select Type</option>
                                         {selectOptionsHTML}
                                     </select>
                                     {
-                                        submitted && (!newEvent.type || newEvent.type.toUpperCase() === "select".toUpperCase()) &&
+                                        submitted && (!newEvent.eventType || newEvent.eventType.toUpperCase() === "select".toUpperCase()) &&
                                         <div className="help-block">Message type is required</div>
                                     }
                                 </div>

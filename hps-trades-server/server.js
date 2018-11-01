@@ -52,6 +52,9 @@ seed.seedDB();
     app.use("/emailtype", require('./masters/emailTypes/emailTypes.controller'));
     app.use("/userrole", require('./masters/userRoles/userRoles.controller'));
 
+    // api routes for event
+    app.use("/event", require('./event/events.controller'));
+
     // api routes for Email
     app.use("/email", require('./emails/email.controller'));
 

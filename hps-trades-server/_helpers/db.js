@@ -8,5 +8,6 @@ module.exports = {
     Email: require('../emails/email.model'),
     UserRole: require('../masters/userRoles/userRole.model'),
     EmailType: require('../masters/emailTypes/emailType.model'),
-    EventType: require('../masters/eventTypes/eventType.model')
+    EventType: require('../masters/eventTypes/eventType.model'),
+    Event: require('../event/event.model')
 };
