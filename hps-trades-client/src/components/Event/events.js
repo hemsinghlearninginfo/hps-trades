@@ -30,26 +30,26 @@ class Events extends Component {
                 dateForDisplay: ''
             },
             isAdd: false,
-            isValidDateRange: true
+            isValidDateRange: true,
+            isLoaded: false,
+            error: ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteEventItem = this.handleDeleteEventItem.bind(this);
+
     }
 
+
     componentDidMount() {
-        let eventTypes = Promise.resolve(eventActions.getAllActiveEventTypes());
-        console.log(eventTypes);
-        eventTypes.then(function(result) {
-            this.setState({ types: result});
-            // expected output: 123
-          });
-        // .then(function (result) {
-        //     console.log('this');
-        //     console.log(result);
-        //     this.setState({ types: result});
-        // });
+        eventActions.getAllActiveEventTypes()
+            .then((responseText) => {
+                return responseText;
+            })
+            .then((response) => {
+                this.setState({ types: response });
+            });
     }
 
     handleChange(event, ctrl = "") {
@@ -141,10 +141,9 @@ class Events extends Component {
 
     render() {
         const { events, types, isAdd, newEvent, submitted, isValidDateRange } = this.state;
-
         const selectOptionsHTML = types.map((item) => {
             return (
-                <option key={item} value={item}>{item}</option>
+                <option key={item._id} value={item._id}>{item.type}</option>
             )
         });
 
@@ -237,7 +236,10 @@ class Events extends Component {
                             <div className="form-group">
                                 <label className="control-label"><strong>Type</strong></label>
                                 <div className="col-xs-10">
-                                    <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>{selectOptionsHTML}</select>
+                                    <select className="form-control required" name="type" value={newEvent.type} onChange={this.handleChange}>
+                                        <option>Select Type</option>
+                                        {selectOptionsHTML}
+                                    </select>
                                     {
                                         submitted && (!newEvent.type || newEvent.type.toUpperCase() === "select".toUpperCase()) &&
                                         <div className="help-block">Message type is required</div>
