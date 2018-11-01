@@ -17,25 +17,25 @@ function userRoles() {
 
 function emailTypes() {
     var et = [];
-    et.push({ type: 'NewUserRegistered', description: 'Send Email from system when register him self', returnMessage : 'New user register' });
-    et.push({ type: 'NewUserRegisteredConfirm', description: 'Send Email from system when new user registration confirmed', returnMessage : 'New user register confirm' });
-    et.push({ type: 'ForgotPasswordRequest', description: 'Forgot Password', returnMessage : 'Forgot password request' });
+    et.push({ type: 'NewUserRegistered', description: 'Send Email from system when register him self', returnMessage: 'New user register' });
+    et.push({ type: 'NewUserRegisteredConfirm', description: 'Send Email from system when new user registration confirmed', returnMessage: 'New user register confirm' });
+    et.push({ type: 'ForgotPasswordRequest', description: 'Forgot Password', returnMessage: 'Forgot password request' });
     return et;
 }
 
 function eventTypes() {
     var et = [];
-    et.push({ type: 'UnderMaintenance', description: 'Site Under Maintenance' });
-    et.push({ type: 'MarketClose', description: 'Market Close' });
-    et.push({ type: 'Annoucement', description: 'Annoucement' });
+    et.push({ type: 'UnderMaintenance', name: 'Under Maintenance', isAllowToClose: false, description: 'Site Under Maintenance' });
+    et.push({ type: 'MarketClose', name: 'Market Close', isAllowToClose: false, description: 'Market Close' });
+    et.push({ type: 'Annoucement', name: 'Accoucement', description: 'Annoucement' });
     return et;
 }
 
 function emailActions() {
     // var ea = [];
     // ea.push({ action: 'NewUserRegisterForConfirm', description: 'Action come form client to confirm user and send confirm mail' });
-    var ea ={
-        NEW_USER_REGISTER_CONFIRM:'NewUserRegisterForConfirm'
+    var ea = {
+        NEW_USER_REGISTER_CONFIRM: 'NewUserRegisterForConfirm'
     }
     return ea;
 };

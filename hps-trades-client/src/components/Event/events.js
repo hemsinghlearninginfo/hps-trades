@@ -16,6 +16,11 @@ class Events extends Component {
     constructor(props) {
         super(props);
 
+        const user = this.props.authentication.user;
+        if (user == null || user.token == null) {
+            this.props.history.push('/');
+        }
+
         this.state = {
             events: [],
             eventTypes: [],
@@ -147,7 +152,7 @@ class Events extends Component {
         const { events, eventTypes, isAdd, newEvent, submitted, isValidDateRange } = this.state;
         const selectOptionsHTML = eventTypes.map((item) => {
             return (
-                <option key={item._id} value={item._id}>{item.type}</option>
+                <option key={item._id} value={item._id}>{item.name}</option>
             )
         });
 
@@ -300,8 +305,10 @@ class Events extends Component {
 
 function mapStateToProps(state) {
     const { requestLoading } = state.generic;
+    const { authentication } = state;
     return {
-        requestLoading
+        requestLoading,
+        authentication
     };
 }
 

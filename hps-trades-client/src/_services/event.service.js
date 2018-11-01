@@ -22,7 +22,6 @@ function create(formEvent) {
         headers: authHeaderAppJson(),
         body: JSON.stringify(formEvent)
     };
-    console.log(requestOptions);
     return fetch(`${myConfig.ApiUrl}event/create`, requestOptions)
         .then(commonService.handleResponse);
 }

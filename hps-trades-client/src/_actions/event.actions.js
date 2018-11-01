@@ -1,4 +1,4 @@
-import { appConstants } from '../_constants';
+import { appConstants, responseConstants } from '../_constants';
 import { eventService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
@@ -15,7 +15,11 @@ async function getAllActiveEventTypes() {
         return eventTypes;
     }
     catch (error) {
-        return error;
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
     }
 }
 

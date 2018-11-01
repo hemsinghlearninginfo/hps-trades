@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     type: { type: String, unique: true, required: true },
+    name: { type: String, required: true },
     description: { type: String, required: true },
-    isActive : {type: Boolean, default : true},
-    isDelete : {type: Boolean, default : false},
+    isAllowToClose: { type: Boolean, default: true },
+    isActive: { type: Boolean, default: true },
+    isDelete: { type: Boolean, default: false },
     createdDate: { type: Date, default: Date.now },
     modifiedDate: { type: Date, default: Date.now }
 });
