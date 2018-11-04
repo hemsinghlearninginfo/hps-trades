@@ -12,7 +12,6 @@ export const userActions = {
     getAll,
     forgotPasswordToEmail,
     delete: _delete,
-    isUserLoggedIn: isUserLoggedIn
 };
 
 function login(username, password) {
@@ -117,14 +116,4 @@ function _delete(id) {
     function request(id) { return { type: appConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: appConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: appConstants.DELETE_FAILURE, id, error } }
-}
-
-
-function isUserLoggedIn() {
-    if (localStorage != null && localStorage.user) {
-        return JSON.parse(localStorage.user);
-    }
-    else {
-        return null;
-    }
 }

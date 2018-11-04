@@ -9,6 +9,7 @@ import { eventActions } from '../../_actions';
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
+import { dataManager } from '../../_helpers'
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Events extends Component {

@@ -7,7 +7,7 @@ import { userActions } from '../../_actions';
 import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
-import { validateEmail } from '../../_helpers';
+import { utils } from '../../_helpers';
 
 class ForgotPassword extends Component {
 
@@ -41,7 +41,7 @@ class ForgotPassword extends Component {
         this.setState({ submitted: true });
         const { username, googleReCaptchaValue } = this.state;
         const { dispatch } = this.props;
-        let isValidEmail = validateEmail(username);
+        let isValidEmail = utils.validateEmail(username);
 
         this.setState({
             isValidEmail

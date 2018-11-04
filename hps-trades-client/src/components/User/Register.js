@@ -9,7 +9,7 @@ import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
 import { userActions } from '../../_actions';
 import Components from '../index';
-import { validateEmail, validatePassword } from '../../_helpers';
+import { utils } from '../../_helpers';
 
 class Register extends Component {
 
@@ -72,8 +72,8 @@ class Register extends Component {
         const { dispatch } = this.props;
 
         let passwordNotMatched = (user.password === user.confirmPassword);
-        let isValidEmail = validateEmail(user.username);
-        let isValidPassword = validatePassword(user.password);
+        let isValidEmail = utils.validateEmail(user.username);
+        let isValidPassword = utils.validatePassword(user.password);
 
         this.setState({
             passwordNotMatched,
