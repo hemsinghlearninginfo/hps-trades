@@ -23,6 +23,19 @@ async function getAllActiveEventTypes() {
     }
 }
 
+async function getEventsByUser(){
+    // try {
+    //     const events = await eventService.getAllActiveEventTypes();
+    //     return events;
+    // }
+    // catch (error) {
+    //     if (responseConstants.INVALID_TOKEN === error) {
+    //         history.push('/');
+    //         return '';
+    //     }
+    //     else { return error; }
+    // }
+}
 
 function create(formEvent) {
     return dispatch => {

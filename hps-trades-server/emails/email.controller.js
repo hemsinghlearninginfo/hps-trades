@@ -31,9 +31,10 @@ function isValidLink(req, res, next) {
 
     let queryString = req.query.url;
     let decryptUrl = util.decrypt(queryString);
+    if(decryptUrl === '') throw 'Please check you url.'
 
     let action = util.getQueryStringValue(decryptUrl, 'action');
-    let token = util.getQueryStringValue(decryptUrl, 'token');
+    //let token = util.getQueryStringValue(decryptUrl, 'token'); Not In use
     let recordId = util.getQueryStringValue(decryptUrl, 'rec');
 
     let emailToken = {

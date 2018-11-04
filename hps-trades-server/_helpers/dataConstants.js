@@ -25,9 +25,9 @@ function emailTypes() {
 
 function eventTypes() {
     var et = [];
-    et.push({ type: 'UnderMaintenance', name: 'Under Maintenance', isAllowToClose: false, description: 'Site Under Maintenance' });
-    et.push({ type: 'MarketClose', name: 'Market Close', isAllowToClose: false, description: 'Market Close' });
-    et.push({ type: 'Annoucement', name: 'Accoucement', description: 'Annoucement' });
+    et.push({ type: 'UnderMaintenance', name: 'Under Maintenance', isAllowToClose: false, description: 'Site Under Maintenance', userRole : 'SysAdmin' });
+    et.push({ type: 'MarketClose', name: 'Market Close', isAllowToClose: false, description: 'Market Close', userRole : 'SysAdmin' });
+    et.push({ type: 'Announcement', name: 'Announcement', description: 'Announcement', userRole : 'Master' });
     return et;
 }
 

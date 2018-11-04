@@ -7,7 +7,7 @@ import { userActions } from '../../_actions';
 import { messageConstants } from '../../_constants';
 import styles from './User.css';
 import Wrapper from '../../hoc/Wrapper';
-import { getQueryString } from '../../_helpers';
+import { utils } from '../../_helpers';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
 
@@ -30,7 +30,7 @@ class ResetPassword extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        var queryString = getQueryString(this.props, 'token');
+        var queryString = utils.getQueryString(this.props, 'token');
         console.log('queryString : ', queryString);
     }
 

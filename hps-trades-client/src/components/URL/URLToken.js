@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 
-import { getQueryString } from '../../_helpers';
+import { utils } from '../../_helpers';
 import Components from '../index';
 import { emailActions } from '../../_actions';
 
@@ -19,7 +19,7 @@ class URLToken extends Component {
     const { isRequestPost } = this.state;
     if (!isRequestPost) {
       const { dispatch } = this.props;
-      var queryString = getQueryString(this.props, 'url');
+      var queryString = utils.getQueryString(this.props, 'url');
       dispatch(emailActions.isURLValidate(queryString));
       this.setState({ isRequestPost: true });
     }

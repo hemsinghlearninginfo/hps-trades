@@ -17,11 +17,11 @@ async function seedSysAdmin() {
             password: 'hpsadmin@123',
             firstName: 'hps',
             lastName: 'family',
-            role: userRole._id,
+            userRole: userRole._id,
             isRegistrationActive : true
         }
         const user = new User(userParam);
-        // hash password
+        // hash password.
         if (userParam.password) {
             user.hash = bcrypt.hashSync(userParam.password, 10);
         }

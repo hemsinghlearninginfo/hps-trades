@@ -6,6 +6,11 @@ const schema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     isAllowToClose: { type: Boolean, default: true },
+    userRole:
+    {
+        type: Schema.Types.ObjectId,
+        ref: 'UserRole'
+    },
     isActive: { type: Boolean, default: true },
     isDelete: { type: Boolean, default: false },
     createdDate: { type: Date, default: Date.now },

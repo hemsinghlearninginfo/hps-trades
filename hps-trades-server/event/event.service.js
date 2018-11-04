@@ -2,34 +2,36 @@
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const EventDb = db.Event;
+const UserDb = db.User;
+const EventTypeDb = db.EventType;
 const dataConstants = require('../_helpers/dataConstants');
 
 module.exports = {
     // getAll,
     // getById,
     create,
+    getEventTypeByUser,
 };
 
 // async function getAll() {
 //     return await EventDb.find().select('-hash');
 // }
 
-// async function getById(id) {
-//     return await EventDb.findById(id).select('-hash');
-// }
+async function getEventTypeByUser(userId) {
+    //return await EventDb.findById(id).select('-hash');
+    //const getEvents = EventType.findOne({role : })
+    const user = UserDb.findOne({_id : userId});
+    if(!user){
+        throw 'Invalid user'
+    }
+
+    const eventTypes = EventTypeDb.findOne({userRole : user.role});
+    if(!eventTypes){ throw 'Invalid user type'}
+
+    return eventTypes;
+}
 
 async function create(newEvent) {
-    // validate
-    // if (await EventDb.findOne({ username: newEvent.username })) {
-    //     throw 'Username "' + newEvent.username + '" is already taken';
-    // }
-    // let event = {
-    //     heading: newEvent.heading,
-    //     message: newEvent.message,
-    //     fromDate: newEvent.fromDate,
-    //     toDate: newEvent.toDate,
-    //     eventType: newEvent.type
-    // }
     const eventToAdd = new EventDb(newEvent);
     await eventToAdd.save();
 }

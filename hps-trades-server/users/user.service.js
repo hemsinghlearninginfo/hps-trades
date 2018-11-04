@@ -86,7 +86,7 @@ async function create(userParam) {
     if (user.role === undefined) {
         const userRole = await UserRoleDb.findOne({ role: dataConstants.userRoles()[2].role });
         if (userRole) {
-            user.role = userRole._id;
+            user.userRole = userRole._id;
         }
         else {
             throw 'User Role not found';

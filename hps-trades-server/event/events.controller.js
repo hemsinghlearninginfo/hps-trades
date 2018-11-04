@@ -4,6 +4,7 @@ const eventService = require('./event.service');
 
 // routes
 router.post('/create', create);
+router.post('/getEventTypeByUser', getEventTypeByUser);
 // router.get('/', getAll);
 // router.get('/:id', getById);
 
@@ -11,6 +12,12 @@ module.exports = router;
 
 function create(req, res, next) {
     eventService.create(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getEventTypeByUser(req, res, next) {
+    eventService.getEventTypeByUser(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
