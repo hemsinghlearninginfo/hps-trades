@@ -49,7 +49,7 @@ class Events extends Component {
 
 
     componentDidMount() {
-        eventActions.getAllActiveEventTypes()
+        eventActions.getEventTypesByUser()
             .then((responseText) => {
                 return responseText;
             })

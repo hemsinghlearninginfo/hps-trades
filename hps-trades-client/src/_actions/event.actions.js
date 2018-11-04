@@ -2,10 +2,12 @@ import { appConstants, responseConstants } from '../_constants';
 import { eventService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
+import { dataManager } from '../dataManager';
 
 
 export const eventActions = {
     getAllActiveEventTypes,
+    getEventTypesByUser,
     create,
 };
 
@@ -23,18 +25,19 @@ async function getAllActiveEventTypes() {
     }
 }
 
-async function getEventsByUser(){
-    // try {
-    //     const events = await eventService.getAllActiveEventTypes();
-    //     return events;
-    // }
-    // catch (error) {
-    //     if (responseConstants.INVALID_TOKEN === error) {
-    //         history.push('/');
-    //         return '';
-    //     }
-    //     else { return error; }
-    // }
+async function getEventTypesByUser(){
+    try {
+        const loggedInUserRole = dataManager.getCurrentUser().userRole;
+        const events = await eventService.getEventTypesByUser(loggedInUserRole);
+        return events;
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
 }
 
 function create(formEvent) {

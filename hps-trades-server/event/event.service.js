@@ -17,17 +17,9 @@ module.exports = {
 //     return await EventDb.find().select('-hash');
 // }
 
-async function getEventTypeByUser(userId) {
-    //return await EventDb.findById(id).select('-hash');
-    //const getEvents = EventType.findOne({role : })
-    const user = UserDb.findOne({_id : userId});
-    if(!user){
-        throw 'Invalid user'
-    }
-
-    const eventTypes = EventTypeDb.findOne({userRole : user.role});
-    if(!eventTypes){ throw 'Invalid user type'}
-
+async function getEventTypeByUser(toFindUserRole) {
+    const eventTypes = await EventTypeDb.find({ userRole: toFindUserRole });
+    if (!eventTypes) { throw 'Invalid user type' }
     return eventTypes;
 }
 

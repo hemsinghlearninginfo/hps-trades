@@ -1,10 +1,11 @@
 ﻿const express = require('express');
 const router = express.Router();
 const eventService = require('./event.service');
+const util = require('../_helpers/util')
 
 // routes
 router.post('/create', create);
-router.post('/getEventTypeByUser', getEventTypeByUser);
+router.get('/geteventtypebyuser', getEventTypeByUser);
 // router.get('/', getAll);
 // router.get('/:id', getById);
 
@@ -17,8 +18,10 @@ function create(req, res, next) {
 }
 
 function getEventTypeByUser(req, res, next) {
-    eventService.getEventTypeByUser(req.body)
-        .then(() => res.json({}))
+    if (req.query.userrole === undefined)
+        throw 'Invalid URL';
+    eventService.getEventTypeByUser(req.query.userrole)
+        .then(types => res.json(types))
         .catch(err => next(err));
 }
 
