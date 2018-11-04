@@ -1,6 +1,7 @@
 import { appConstants } from '../_constants';
+import { dataManager }  from '../dataManager';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = dataManager.getCurrentUser();
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {

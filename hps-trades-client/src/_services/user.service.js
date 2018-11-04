@@ -2,6 +2,7 @@
 import { authHeader } from '../_helpers';
 import { myConfig } from '../config' ;
 import { commonService } from './';
+import {dataManager} from '../dataManager';
 
 export const userService = {
     login,
@@ -28,7 +29,7 @@ function login(username, password) {
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                dataManager.setCurrentUser(user);
             }
 
             return user;
@@ -37,7 +38,7 @@ function login(username, password) {
 
 function logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    dataManager.logoutUser();
 }
 
 function getAll() {

@@ -5,9 +5,7 @@ import { iconConstants } from '../../_constants';
 
 import Components from '../';
 
-
 class UserPreference extends Component {
-
     render() {
         return (
             <Components.PageTemplate iconType={iconConstants.USER_PREFERENCE} heading="User Preferences">
@@ -35,7 +33,6 @@ class UserPreference extends Component {
             </Components.PageTemplate>
         );
     }
-
 }
 
 export default (CSSModules(UserPreference, styles));
