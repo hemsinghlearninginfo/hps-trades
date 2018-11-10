@@ -7,6 +7,7 @@ import { dataManager } from '../dataManager';
 
 export const eventActions = {
     getEventTypesByUser,
+    getAllEventsByUser,
     create,
 };
 
@@ -24,6 +25,22 @@ async function getEventTypesByUser(){
         else { return error; }
     }
 }
+
+async function getAllEventsByUser(){
+    try {
+        const loggedInUser = dataManager.getCurrentUser()._id;
+        const events = await eventService.getAllEventsByUser(loggedInUser);
+        return events;
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
+}
+
 
 function create(formEvent) {
     return dispatch => {

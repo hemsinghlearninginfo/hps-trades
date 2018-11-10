@@ -6,6 +6,7 @@ const util = require('../_helpers/util')
 // routes
 router.post('/create', create);
 router.get('/geteventtypebyuser', getEventTypeByUser);
+router.get('/geteventsbyuser', getAllEventsByUser);
 // router.get('/', getAll);
 // router.get('/:id', getById);
 
@@ -21,6 +22,14 @@ function getEventTypeByUser(req, res, next) {
     if (req.query.userrole === undefined)
         throw 'Invalid URL';
     eventService.getEventTypeByUser(req.query.userrole)
+        .then(types => res.json(types))
+        .catch(err => next(err));
+}
+
+function getAllEventsByUser(req, res, next) {
+    if (req.query.userid === undefined)
+        throw 'Invalid URL';
+    eventService.getAllEventsByUser(req.query.userid)
         .then(types => res.json(types))
         .catch(err => next(err));
 }

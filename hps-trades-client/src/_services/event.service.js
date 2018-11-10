@@ -4,6 +4,7 @@ import { commonService } from './';
 
 export const eventService = {
     getEventTypesByUser,
+    getAllEventsByUser,
     create
 };
 
@@ -13,6 +14,15 @@ function getEventTypesByUser(userRole) {
         headers: authHeaderAppJson()
     };
     return fetch(`${myConfig.ApiUrl}event/geteventtypebyuser/?userrole=${userRole}`, requestOptions)
+        .then(commonService.handleResponse);
+}
+
+function getAllEventsByUser(userId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeaderAppJson()
+    };
+    return fetch(`${myConfig.ApiUrl}event/geteventsbyuser/?userid=${userId}`, requestOptions)
         .then(commonService.handleResponse);
 }
 

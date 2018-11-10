@@ -98,16 +98,6 @@ class Events extends Component {
         if (newEvent.fromDate && newEvent.toDate
             && newEvent.eventType && newEvent.heading
             && newEvent.message) {
-            this.state.newEvent.dateForDisplay = `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`;
-            // this.setState({
-            //     newEvent: {
-            //         dateForDisplay: `${this.state.newEvent.fromDate._d.toLocaleString()} - ${this.state.newEvent.toDate._d.toLocaleString()}`
-            //     }
-            // })
-            this.state.events.push(this.state.newEvent);
-            this.setState(
-                this.state
-            );
             this.setState({
                 isAdd: !this.state.isAdd
             })
@@ -147,30 +137,47 @@ class Events extends Component {
             const { dispatch } = this.props;
             var newEvent = {
                 ...this.state.newEvent,
-                userId : currentUser._id,
-                userRoleId : currentUser.userRole
+                userId: currentUser._id,
+                userRoleId: currentUser.userRole
             }
             dispatch(eventActions.create(newEvent));
+            this.handleDBOperation('getEventList');
         }
-        else if(dbTypeOperation === 'delete'){
+        else if (dbTypeOperation === 'delete') {
 
         }
-        else if(dbTypeOperation === 'getListForEventTypes'){
+        else if (dbTypeOperation === 'getListForEventTypes') {
             eventActions.getEventTypesByUser()
-            .then((responseText) => {
-                return responseText;
-            })
-            .then((response) => {
-                this.setState({ eventTypes: response });
-            });
+                .then((responseText) => {
+                    return responseText;
+                })
+                .then((response) => {
+                    this.setState({ eventTypes: response });
+                });
         }
-        else if(dbTypeOperation === 'getEventList'){
-            
+        else if (dbTypeOperation === 'getEventList') {
+            eventActions.getAllEventsByUser()
+                .then((responseText) => {
+                    return responseText;
+                })
+                .then((response) => {
+                    let events = response.map(function (event) {
+                        return ({
+                            heading: event.heading,
+                            message: event.message,
+                            fromDate: event.fromDate,
+                            toDate: event.toDate,
+                            dateForDisplay: `${moment(event.fromDate).format('Do MMM YYYY, HH:mm A')} - ${moment(event.toDate).format('Do MMM YY, HH:mm A')}`
+                        })
+                    });
+                    this.setState({ events });
+                });
         }
     }
 
     render() {
         const { events, eventTypes, isAdd, newEvent, submitted, isValidDateRange } = this.state;
+        const { requestLoading } = this.props;
         const selectOptionsHTML = eventTypes.map((item) => {
             return (
                 <option key={item._id} value={item._id}>{item.name}</option>
@@ -312,6 +319,7 @@ class Events extends Component {
 
         return (
             <Components.PageTemplate iconType={iconConstants.EVENT} heading="Market Events">
+                {requestLoading && (<Components.Loading message="loading" />)}
                 {newItemHTML}
                 {!isAdd && (
                     <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>

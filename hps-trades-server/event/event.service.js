@@ -11,18 +11,24 @@ module.exports = {
     // getById,
     create,
     getEventTypeByUser,
+    getAllEventsByUser,
 };
 
 // async function getAll() {
 //     return await EventDb.find().select('-hash');
 // }
 
+async function getAllEventsByUser(toFindUserId) {
+    const events = await EventDb.find({ userId: toFindUserId });
+    if (!events) { return []; }
+    return events;
+}
+
 async function getEventTypeByUser(toFindUserRole) {
     const userRole = await UserRoleDb.findOne({ _id: toFindUserRole });
-    if (!userRole) { throw 'Invalid User Role' }
 
     let eventTypes = [];
-    if (userRole.role === dataConstants.userRoles()[0].role) {
+    if (userRole !== null && userRole.role === dataConstants.userRoles()[0].role) {
         eventTypes = await EventTypeDb.find();
         if (!eventTypes) { throw 'Invalid user type' }
     }

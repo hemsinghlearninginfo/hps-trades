@@ -19,7 +19,8 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'UserRole'
     },
-    createdDate: { type: Date, default: Date.now }
+    createdDate: { type: Date, default: Date.now },
+    isDeleted : {type : Boolean, default : false}
 });
 
 schema.set('toJSON', { virtuals: true });
