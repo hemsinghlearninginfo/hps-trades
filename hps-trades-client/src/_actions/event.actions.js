@@ -6,24 +6,9 @@ import { dataManager } from '../dataManager';
 
 
 export const eventActions = {
-    getAllActiveEventTypes,
     getEventTypesByUser,
     create,
 };
-
-async function getAllActiveEventTypes() {
-    try {
-        const eventTypes = await eventService.getAllActiveEventTypes();
-        return eventTypes;
-    }
-    catch (error) {
-        if (responseConstants.INVALID_TOKEN === error) {
-            history.push('/');
-            return '';
-        }
-        else { return error; }
-    }
-}
 
 async function getEventTypesByUser(){
     try {

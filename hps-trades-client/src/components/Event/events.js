@@ -165,7 +165,7 @@ class Events extends Component {
             });
         }
         else if(dbTypeOperation === 'getEventList'){
-
+            
         }
     }
 
