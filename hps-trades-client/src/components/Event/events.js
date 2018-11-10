@@ -48,13 +48,8 @@ class Events extends Component {
     }
 
     componentDidMount() {
-        eventActions.getEventTypesByUser()
-            .then((responseText) => {
-                return responseText;
-            })
-            .then((response) => {
-                this.setState({ eventTypes: response });
-            });
+        this.handleDBOperation('getListForEventTypes');
+        this.handleDBOperation('getEventList');
     }
 
     handleChange(event, ctrl = "") {
@@ -124,6 +119,7 @@ class Events extends Component {
         this.setState({
             events: this.state.events.filter((_, i) => i !== itemIndex)
         });
+        this.handleDBOperation('delete');
     }
 
     addEmptyItem = () => {
@@ -159,7 +155,16 @@ class Events extends Component {
         else if(dbTypeOperation === 'delete'){
 
         }
-        else if(dbTypeOperation === 'getList'){
+        else if(dbTypeOperation === 'getListForEventTypes'){
+            eventActions.getEventTypesByUser()
+            .then((responseText) => {
+                return responseText;
+            })
+            .then((response) => {
+                this.setState({ eventTypes: response });
+            });
+        }
+        else if(dbTypeOperation === 'getEventList'){
 
         }
     }

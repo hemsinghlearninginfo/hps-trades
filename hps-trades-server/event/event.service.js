@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const EventDb = db.Event;
-const UserDb = db.User;
+const UserRoleDb = db.UserRole;
 const EventTypeDb = db.EventType;
 const dataConstants = require('../_helpers/dataConstants');
 
@@ -18,8 +18,18 @@ module.exports = {
 // }
 
 async function getEventTypeByUser(toFindUserRole) {
-    const eventTypes = await EventTypeDb.find({ userRole: toFindUserRole });
-    if (!eventTypes) { throw 'Invalid user type' }
+    const userRole = await UserRoleDb.findOne({ _id: toFindUserRole });
+    if (!userRole) { throw 'Invalid User Role' }
+
+    let eventTypes = [];
+    if (userRole.role === dataConstants.userRoles()[0].role) {
+        eventTypes = await EventTypeDb.find();
+        if (!eventTypes) { throw 'Invalid user type' }
+    }
+    else {
+        eventTypes = await EventTypeDb.find({ userRole: toFindUserRole });
+        if (!eventTypes) { throw 'Invalid user type' }
+    }
     return eventTypes;
 }
 
