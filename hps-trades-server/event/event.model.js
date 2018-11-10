@@ -11,6 +11,14 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'EventType'
     },
+    userId:{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    userRoleId:{
+        type: Schema.Types.ObjectId,
+        ref: 'UserRole'
+    },
     createdDate: { type: Date, default: Date.now }
 });
 

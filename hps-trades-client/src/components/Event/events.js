@@ -9,7 +9,7 @@ import { eventActions } from '../../_actions';
 import styles from './calendar.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
-import { dataManager } from '../../_helpers'
+import { dataManager } from '../../dataManager';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Events extends Component {
@@ -44,9 +44,8 @@ class Events extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteEventItem = this.handleDeleteEventItem.bind(this);
-
+        //this.handleDBOperation = this.handleDBOperation.bind(this);
     }
-
 
     componentDidMount() {
         eventActions.getEventTypesByUser()
@@ -117,10 +116,7 @@ class Events extends Component {
             this.setState({
                 isAdd: !this.state.isAdd
             })
-
-            const { dispatch } = this.props;
-            dispatch(eventActions.create(this.state.newEvent));
-
+            this.handleDBOperation('submit');
         }
     }
 
@@ -147,6 +143,25 @@ class Events extends Component {
 
     showModal = () => {
         this.refs.modal.getDOMNode().modal();
+    }
+
+    handleDBOperation = (dbTypeOperation) => {
+        if (dbTypeOperation === 'submit') {
+            let currentUser = dataManager.getCurrentUser();
+            const { dispatch } = this.props;
+            var newEvent = {
+                ...this.state.newEvent,
+                userId : currentUser._id,
+                userRoleId : currentUser.userRole
+            }
+            dispatch(eventActions.create(newEvent));
+        }
+        else if(dbTypeOperation === 'delete'){
+
+        }
+        else if(dbTypeOperation === 'getList'){
+
+        }
     }
 
     render() {
