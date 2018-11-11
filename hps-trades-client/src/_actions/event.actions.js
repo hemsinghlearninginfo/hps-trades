@@ -8,7 +8,8 @@ import { dataManager } from '../dataManager';
 export const eventActions = {
     getEventTypesByUser,
     getAllEventsByUser,
-    create,
+    createByUser,
+    deleteByUser,
 };
 
 async function getEventTypesByUser(){
@@ -42,14 +43,34 @@ async function getAllEventsByUser(){
 }
 
 
-function create(formEvent) {
+function createByUser(formEvent) {
     return dispatch => {
         dispatch(request(formEvent.heading, formEvent.fromDate, formEvent.toDate));
-        eventService.create(formEvent)
+        eventService.createByUser(formEvent)
             .then(
                 eventCreated => {
                     dispatch(success());
                     dispatch(alertActions.success('Event added successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString() + ' Please reload your page.'));
+                }
+            );
+    };
+    function request(event) { return { type: appConstants.REQUEST, event } }
+    function success(user) { return { type: appConstants.SUCCESS, user } }
+    function failure(error) { return { type: appConstants.FAILURE, error } }
+}
+
+function deleteByUser(id) {
+    return dispatch => {
+        dispatch(request(id));
+        eventService.deleteByUser(id)
+            .then(
+                eventCreated => {
+                    dispatch(success());
+                    dispatch(alertActions.success('Event deleted successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));

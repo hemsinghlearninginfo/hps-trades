@@ -5,7 +5,8 @@ import { commonService } from './';
 export const eventService = {
     getEventTypesByUser,
     getAllEventsByUser,
-    create
+    createByUser,
+    deleteByUser,
 };
 
 function getEventTypesByUser(userRole) {
@@ -26,12 +27,22 @@ function getAllEventsByUser(userId) {
         .then(commonService.handleResponse);
 }
 
-function create(formEvent) {
+function createByUser(formEvent) {
     const requestOptions = {
         method: 'POST',
         headers: authHeaderAppJson(),
         body: JSON.stringify(formEvent)
     };
-    return fetch(`${myConfig.ApiUrl}event/create`, requestOptions)
+    return fetch(`${myConfig.ApiUrl}event/createbyuser`, requestOptions)
+        .then(commonService.handleResponse);
+}
+
+function deleteByUser(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeaderAppJson(),
+    };
+    console.log(`${myConfig.ApiUrl}event/deletebyuser/?id=${id}`);
+    return fetch(`${myConfig.ApiUrl}event/deletebyuser/?id=${id}`, requestOptions)
         .then(commonService.handleResponse);
 }

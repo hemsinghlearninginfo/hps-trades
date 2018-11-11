@@ -9,7 +9,8 @@ const dataConstants = require('../_helpers/dataConstants');
 module.exports = {
     // getAll,
     // getById,
-    create,
+    deleteByUser,
+    createByUser,
     getEventTypeByUser,
     getAllEventsByUser,
 };
@@ -39,9 +40,13 @@ async function getEventTypeByUser(toFindUserRole) {
     return eventTypes;
 }
 
-async function create(newEvent) {
+async function createByUser(newEvent) {
     const eventToAdd = new EventDb(newEvent);
     await eventToAdd.save();
+}
+
+async function deleteByUser(id) {
+    await EventDb.findByIdAndRemove(id);
 }
 
 // async function update(id, userParam) {

@@ -29,6 +29,7 @@ class Events extends Component {
             fromDate: moment().fromNow(),
             toDate: moment().fromNow(),
             newEvent: {
+                id: '',
                 eventType: 'select',
                 heading: '',
                 message: '',
@@ -120,11 +121,11 @@ class Events extends Component {
         }
     }
 
-    handleDeleteEventItem(itemIndex) {
+    handleDeleteEventItem(id) {
         this.setState({
-            events: this.state.events.filter((_, i) => i !== itemIndex)
+            events: this.state.events.filter((obj) => obj.id !== id)
         });
-        this.handleDBOperation('delete');
+        this.handleDBOperation('delete', id);
     }
 
     addEmptyItem = () => {
@@ -138,7 +139,7 @@ class Events extends Component {
                 toDate: moment(),
                 dateForDisplay: ''
             },
-            eventTypeDescription:'',
+            eventTypeDescription: '',
             submitted: false
         });
     }
@@ -147,7 +148,7 @@ class Events extends Component {
         this.refs.modal.getDOMNode().modal();
     }
 
-    handleDBOperation = (dbTypeOperation) => {
+    handleDBOperation = (dbTypeOperation, id = '') => {
         if (dbTypeOperation === 'submit') {
             let currentUser = dataManager.getCurrentUser();
             const { dispatch } = this.props;
@@ -156,11 +157,12 @@ class Events extends Component {
                 userId: currentUser._id,
                 userRoleId: currentUser.userRole
             }
-            dispatch(eventActions.create(newEvent));
+            dispatch(eventActions.createByUser(newEvent));
             this.handleDBOperation('getEventList');
         }
         else if (dbTypeOperation === 'delete') {
-
+            const { dispatch } = this.props;
+            dispatch(eventActions.deleteByUser(id));
         }
         else if (dbTypeOperation === 'getListForEventTypes') {
             eventActions.getEventTypesByUser()
@@ -179,6 +181,7 @@ class Events extends Component {
                 .then((response) => {
                     let events = response.map(function (event) {
                         return ({
+                            id: event._id,
                             heading: event.heading,
                             message: event.message,
                             fromDate: event.fromDate,
@@ -216,7 +219,7 @@ class Events extends Component {
                                 <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
                                     modalClassName=""
                                     title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
-                                    yesButtonClick={this.handleDeleteEventItem.bind(this, index)} cancelButtonLabel="Cancel">
+                                    yesButtonClick={this.handleDeleteEventItem.bind(this, item.id)} cancelButtonLabel="Cancel">
                                 </Components.ConfirmAlert>
                             </div>
                         </div>

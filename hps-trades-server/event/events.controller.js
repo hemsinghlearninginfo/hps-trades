@@ -4,7 +4,8 @@ const eventService = require('./event.service');
 const util = require('../_helpers/util')
 
 // routes
-router.post('/create', create);
+router.post('/createbyuser', createByUser);
+router.get('/deletebyuser', deleteByUser);
 router.get('/geteventtypebyuser', getEventTypeByUser);
 router.get('/geteventsbyuser', getAllEventsByUser);
 // router.get('/', getAll);
@@ -12,8 +13,16 @@ router.get('/geteventsbyuser', getAllEventsByUser);
 
 module.exports = router;
 
-function create(req, res, next) {
-    eventService.create(req.body)
+function createByUser(req, res, next) {
+    eventService.createByUser(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function deleteByUser(req, res, next) {
+    if (req.query.id === undefined)
+        throw 'Invalid URL';
+    eventService.deleteByUser(req.query.id)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
