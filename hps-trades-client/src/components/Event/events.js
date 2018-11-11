@@ -25,6 +25,7 @@ class Events extends Component {
         this.state = {
             events: [],
             eventTypes: [],
+            eventTypeDescription: '',
             fromDate: moment().fromNow(),
             toDate: moment().fromNow(),
             newEvent: {
@@ -44,7 +45,6 @@ class Events extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteEventItem = this.handleDeleteEventItem.bind(this);
-        //this.handleDBOperation = this.handleDBOperation.bind(this);
     }
 
     componentDidMount() {
@@ -71,6 +71,18 @@ class Events extends Component {
                         [name]: value
                     }
                 });
+
+                if (event.target.name === "eventType") {
+                    let eventTypeDescription = this.state.eventTypes.filter(function (f) {
+                        return f.id === value
+                    })
+                        .map(function (obj) {
+                            return obj.description;
+                        });
+                    this.setState({
+                        eventTypeDescription
+                    })
+                }
             }
         }
         else if (ctrl != null) {
@@ -81,6 +93,8 @@ class Events extends Component {
                 }
             });
         }
+
+
     }
 
     handleSubmit(event) {
@@ -97,7 +111,8 @@ class Events extends Component {
 
         if (newEvent.fromDate && newEvent.toDate
             && newEvent.eventType && newEvent.heading
-            && newEvent.message) {
+            && newEvent.message
+            && (newEvent.fromDate < newEvent.toDate)) {
             this.setState({
                 isAdd: !this.state.isAdd
             })
@@ -123,6 +138,7 @@ class Events extends Component {
                 toDate: moment(),
                 dateForDisplay: ''
             },
+            eventTypeDescription:'',
             submitted: false
         });
     }
@@ -176,7 +192,7 @@ class Events extends Component {
     }
 
     render() {
-        const { events, eventTypes, isAdd, newEvent, submitted, isValidDateRange } = this.state;
+        const { events, eventTypes, eventTypeDescription, isAdd, newEvent, submitted, isValidDateRange } = this.state;
         const { requestLoading } = this.props;
         const selectOptionsHTML = eventTypes.map((item) => {
             return (
@@ -281,6 +297,7 @@ class Events extends Component {
                                         submitted && (!newEvent.eventType || newEvent.eventType.toUpperCase() === "select".toUpperCase()) &&
                                         <div className="help-block">Message type is required</div>
                                     }
+                                    <small className="form-text text-muted">{eventTypeDescription}</small>
                                 </div>
                             </div></div>
                         <div className="col-md-3">

@@ -1,3 +1,11 @@
+.myAlert-bottom {
+    position: fixed;
+    bottom: 30px;
+    left: 2%;
+    width: 96%;
+    z-index: 11;
+}
+
 .hideMe {
     -moz-animation: cssAnimation 0s ease-in 5s forwards;
     /* Firefox */
@@ -26,7 +34,7 @@
     }
 }
 
-.dropper{
+.dropper {
     background-color: #f6f9ff6e;
     height: 100%;
     width: 100%;
@@ -110,8 +118,7 @@
     }
 }
 
-
-.logo{
+.logo {
     width: 30px;
     height: auto;
     margin: 0 5px;
@@ -121,10 +128,10 @@
     background-color: #1e3d7b;
 }
 
-.showModal{
+.showModal {
     display: block;
 }
 
-.recaptcha{
+.recaptcha {
     text-align: center;
 }
