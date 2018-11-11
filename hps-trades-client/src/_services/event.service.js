@@ -42,7 +42,6 @@ function deleteByUser(id) {
         method: 'GET',
         headers: authHeaderAppJson(),
     };
-    console.log(`${myConfig.ApiUrl}event/deletebyuser/?id=${id}`);
     return fetch(`${myConfig.ApiUrl}event/deletebyuser/?id=${id}`, requestOptions)
         .then(commonService.handleResponse);
 }

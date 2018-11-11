@@ -121,6 +121,25 @@ class Events extends Component {
         }
     }
 
+    editItem =(id) =>{
+        let foundItem = this.state.events.filter((obj) => obj.id === id)
+        console.log(foundItem);
+        this.setState({
+            isAdd: !this.state.isAdd,
+            newEvent: {
+                id:foundItem.id,
+                type: 'select',
+                heading: foundItem.id,
+                message: foundItem.id,
+                fromDate: moment(foundItem.fromDate),
+                toDate: moment(foundItem.toDate),
+                dateForDisplay: ''
+            },
+            eventTypeDescription: '',
+            submitted: false
+        });
+    }
+
     handleDeleteEventItem(id) {
         this.setState({
             events: this.state.events.filter((obj) => obj.id !== id)
@@ -132,6 +151,7 @@ class Events extends Component {
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {
+                id:'',
                 type: 'select',
                 heading: '',
                 message: '',
@@ -214,7 +234,7 @@ class Events extends Component {
                                 <p><strong>{item.dateForDisplay}</strong></p>
                                 <p><strong>Type: {item.type}</strong></p>
                                 <p className="card-text">{item.message}</p>
-                                <a href="#" className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)} Edit</a>
+                                <a href="#" className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)} Edit</a>
                                 {' '}
                                 <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
                                     modalClassName=""
