@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Router, Route, Redirect, Switch, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import socketIOClient from "socket.io-client";
+
 
 import Wrapper from './hoc/Wrapper';
 import Components from './components';
@@ -19,6 +21,18 @@ class App extends Component {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
+
+    this.state = {
+      response: false,
+      endpoint: 'http://localhost:4000/'
+    };
+
+  }
+
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on("FromAPI", data => console.log(data));
   }
 
   render() {

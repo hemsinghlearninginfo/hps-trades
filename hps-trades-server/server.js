@@ -1,11 +1,16 @@
 ﻿require('rootpath')();
-require('dotenv').config({path: 'process.env'});
+require('dotenv').config({ path: 'process.env' });
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 const jwt = require('_helpers/jwt');
 const errorHandler = require('_helpers/error-handler');
+const pushMethods = require('./socket/pushMethods');
 
 // Seedind DB
 const seed = require('./seed');
@@ -64,9 +69,33 @@ seed.seedDB();
     // global error handler
     app.use(errorHandler);
 
+    const test = async socket => {
+        try {
+            const res = 'time comming from server : ' + (new Date());
+            socket.emit("FromAPI", (res));
+        } catch (error) {
+            console.error(`Error: ${error.code}`);
+        }
+    };
+
+    io.on("connection", socket => {
+        console.log("New client connected"), setInterval(
+          () => test(socket),
+          1000
+        );
+        socket.on("disconnect", () => console.log("Client disconnected"));
+      });
+
+    io.origins((origin, callback) => {
+        if (origin !== 'http://localhost:3000') {
+          return callback('origin not allowed', false);
+        }
+        callback(null, true);
+      });
+
     // start server
     const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
-    const server = app.listen(port, function () {
+    server.listen(port, function () {
         console.log('Server listening on port ' + port);
     });
 }
