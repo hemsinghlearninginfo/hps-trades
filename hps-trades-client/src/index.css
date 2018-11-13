@@ -7,3 +7,7 @@ body {
 .bodyCointainer{
   margin-top: 60px;
 }
+
+.topSpacer{
+  height: 30px;
+}

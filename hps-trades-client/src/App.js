@@ -43,6 +43,7 @@ class App extends Component {
       <Wrapper>
         <HashRouter>
           <Components.Layout>
+            <div className="topSpacer">{' '}</div>
             <Components.Alert type={alert.type} message={alert.message} />
             {/* <Components.MarketClose /> */}
             <Router history={history}>
