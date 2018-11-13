@@ -19,6 +19,7 @@ import { URLToken } from './URL/URLToken';
 import logo from './Utils/logo';
 
 import { Events } from './Event/events';
+import { ShowEvent } from './Event/ShowEvent';
 
 import error404 from './Error/404';
 
@@ -47,6 +48,7 @@ export default class Component {
     static URLToken = URLToken;
 
     static Events = Events;
+    static ShowEvent = ShowEvent;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

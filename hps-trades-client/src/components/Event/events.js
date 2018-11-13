@@ -6,7 +6,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { eventActions } from '../../_actions';
-import styles from './calendar.css';
+import styles from './event.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
 import { dataManager } from '../../dataManager';
