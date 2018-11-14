@@ -1,5 +1,10 @@
 import { dataManager } from '../dataManager'
 
+
+export function header() {
+    return { 'Content-Type':'application/json' };
+}
+
 export function authHeader() {
     // return authorization header with jwt token
     let user = dataManager.getCurrentUser();

@@ -1,4 +1,6 @@
 ﻿{
     "connectionString": "mongodb://localhost/hpstrades",
-    "secret": "HPS-TRADES , SECRET-KEY"
+    "secret": "HPS-TRADES , SECRET-KEY",
+    "SocketEventFromAPI" : "SocketEventFromAPI",
+    "Master_UserRoles" : "dur"
 }

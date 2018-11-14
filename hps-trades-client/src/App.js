@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Router, Route, Redirect, Switch, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
-
 import Wrapper from './hoc/Wrapper';
 import Components from './components';
 import { alertActions } from './_actions';
 import { history } from './_helpers';
 import { PrivateRoute } from './components/Routes/PrivateRoutes';
+import { dataInitialise } from './_helpers/data-initialise';
 import './assets/css/App.css';
 
 class App extends Component {
@@ -21,6 +20,7 @@ class App extends Component {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
+    dataInitialise.init();
   }
 
   render() {

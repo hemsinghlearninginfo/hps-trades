@@ -9,8 +9,11 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const jwt = require('_helpers/jwt');
+const config = require('config.json');
 const errorHandler = require('_helpers/error-handler');
 const pushMethods = require('./socket/pushMethods');
+
+
 
 // Seedind DB
 const seed = require('./seed');
@@ -52,10 +55,24 @@ seed.seedDB();
         next();
     });
 
+    routes();
+
+    ioConnection();
+
+    // start server
+    const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
+    server.listen(port, function () {
+        console.log('Server listening on port ' + port);
+    });
+}
+
+function routes() {
     // api routes for Master Data
     app.use("/eventtype", require('./masters/eventTypes/eventTypes.controller'));
     app.use("/emailtype", require('./masters/emailTypes/emailTypes.controller'));
     app.use("/userrole", require('./masters/userRoles/userRoles.controller'));
+
+    app.use("/mdata", require('./masters/master.controller'));
 
     // api routes for event
     app.use("/event", require('./event/events.controller'));
@@ -68,34 +85,35 @@ seed.seedDB();
 
     // global error handler
     app.use(errorHandler);
+}
+
+function ioConnection() {
 
     const test = async socket => {
         try {
             const res = 'time comming from server : ' + (new Date());
-            socket.emit("FromAPI", (res));
+            socket.emit(config.SocketEventFromAPI, (res));
         } catch (error) {
             console.error(`Error: ${error.code}`);
         }
     };
 
     io.on("connection", socket => {
-        console.log("New client connected"), setInterval(
-          () => test(socket),
-          1000
-        );
-        socket.on("disconnect", () => console.log("Client disconnected"));
-      });
+        console.log("New Socket IO Client Connected"),
+            setInterval(
+                () => {
+                    test(socket)
+                },
+                1000
+            );
+        socket.on("disconnect", () => console.log("Socket IO Client disconnected"));
+    });
 
     io.origins((origin, callback) => {
-        if (origin !== 'http://localhost:3000') {
-          return callback('origin not allowed', false);
+        if (origin !== process.env.HPS_TRADES_MAIN_APP_URL) {
+            return callback('Frontend origin not allowed.', false);
         }
         callback(null, true);
-      });
-
-    // start server
-    const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
-    server.listen(port, function () {
-        console.log('Server listening on port ' + port);
     });
+    
 }

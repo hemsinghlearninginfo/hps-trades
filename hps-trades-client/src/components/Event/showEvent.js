@@ -4,7 +4,6 @@ import socketIOClient from "socket.io-client";
 
 import styles from './event.css';
 import Wrapper from '../../hoc/Wrapper';
-import Components from '../index';
 import { myConfig } from '../../config';
 
 class ShowEvent extends Component {
@@ -20,13 +19,12 @@ class ShowEvent extends Component {
 
     componentDidMount() {
         const socket = socketIOClient(myConfig.ApiUrl);
-        socket.on("FromAPI", data => console.log(data));
+        socket.on(myConfig.SocketEventFromAPI, data => data);
     }
 
     render() {
         return (
             <Wrapper>
-                
                 <div className="notice notice-danger notice-lg">
                     <strong>Notice</strong> notice-danger
                 </div>

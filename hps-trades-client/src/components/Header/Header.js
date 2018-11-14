@@ -40,6 +40,7 @@ class Header extends Component {
 
     render() {
         const user = this.props.authentication.user;
+        console.log(user);
         let userLoginHTML;
         let superAdminHTML;
 

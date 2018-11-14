@@ -5,6 +5,8 @@ export const dataManager = {
     getCurrentUser,
     setCurrentUser,
     logoutUser,
+    getObjectByName,
+    setObjectByName,
 };
 
 export const dataManagerConstants = {
@@ -26,6 +28,19 @@ function setCurrentUser(user) {
 
 function logoutUser() {
     localStorage.removeItem(dataManagerConstants.LOGEED_IN_USER);
+}
+
+function getObjectByName(objName) {
+    if (localStorage[objName] !== undefined) {
+        let data = decrypt(localStorage[objName]);
+        return JSON.parse(data);
+    }
+    return [];
+}
+
+function setObjectByName(objName,data) {
+    data = encrypt(JSON.stringify(data));
+    localStorage.setItem(objName, data);
 }
 
 function encrypt(plainText){

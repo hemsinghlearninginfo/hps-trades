@@ -4,3 +4,4 @@ export * from './store';
 export * from './auth-header';
 export * from './icon';
 export * from './utils';
+export * from './data-initialise';
