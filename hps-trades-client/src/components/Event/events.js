@@ -123,7 +123,6 @@ class Events extends Component {
 
     editItem =(id) =>{
         let foundItem = this.state.events.filter((obj) => obj.id === id)
-        console.log(foundItem);
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {

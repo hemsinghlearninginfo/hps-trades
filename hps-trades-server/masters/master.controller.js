@@ -8,17 +8,18 @@ router.get('/', getAll);
 
 module.exports = router;
 
-async function getAll(req, res, next) {
+function getAll(req, res, next) {
     if (req.query.type === undefined)
         throw 'Invalid master Data';
 
     if (req.query.type === config.Master_UserRoles) {
-        let dataUserRole = await getAllUserRole(req, res, next);
-        return dataUserRole;
+        getAllUserRole(req, res, next)
+            .then(types => res.json(types))
+            .catch(err => next(err));
     }
 }
 
 async function getAllUserRole(req, res, next) {
-    return userRoleService.getAll();
+    return await userRoleService.getAll();
 }
 
