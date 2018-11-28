@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import { myConfig } from './config';
-import { dataInitialise } from './_helpers'
+import { dataInitialiseService } from './_services';
 
 export const dataManager = {
     getCurrentUser,
@@ -34,7 +34,7 @@ function logoutUser() {
 
 function getUserRole() {
     try {
-        let userRoles = getObectByName(myConfig.Master_UserRoles);
+        let userRoles = getObjectByName(myConfig.Master_UserRoles);
         if (userRoles.length == 0) {
             dataInitialiseService.getUserRoles(myConfig.Master_UserRoles)
                 .then((responseText) => {
@@ -90,4 +90,9 @@ function decrypt(cipherText) {
     let decrypt = CryptoJS.AES.decrypt(bytes, myConfig.DataClientSideStore);
     let plain = decrypt.toString(CryptoJS.enc.Utf8);
     return plain;
+}
+
+function getValidDate() {
+    var currentDateTime = new Date();
+    return currentDateTime.setMinutes(currentDateTime.getMinutes() + myConfig.CacheValidateInMinutes);
 }
