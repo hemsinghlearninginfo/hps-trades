@@ -13,8 +13,6 @@ const config = require('config.json');
 const errorHandler = require('_helpers/error-handler');
 const pushMethods = require('./socket/pushMethods');
 
-
-
 // Seedind DB
 const seed = require('./seed');
 seed.seedDB();

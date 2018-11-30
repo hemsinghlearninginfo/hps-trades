@@ -19,7 +19,6 @@ class ShowEvent extends Component {
     }
 
     componentDidMount() {
-
         let responseData = '';
         const socket = socketIOClient(myConfig.ApiUrl);
         socket.on(myConfig.SocketEventFromAPI, data => {
