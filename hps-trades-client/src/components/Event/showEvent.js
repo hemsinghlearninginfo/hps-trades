@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import socketIOClient from "socket.io-client";
+import { myConfig } from '../../config';
 
 import styles from './event.css';
 import Wrapper from '../../hoc/Wrapper';
-import { myConfig } from '../../config';
+import { eventActions } from '../../_actions';
 
 class ShowEvent extends Component {
 
@@ -18,8 +19,12 @@ class ShowEvent extends Component {
     }
 
     componentDidMount() {
+
+        let responseData = '';
         const socket = socketIOClient(myConfig.ApiUrl);
-        socket.on(myConfig.SocketEventFromAPI, data => data);
+        socket.on(myConfig.SocketEventFromAPI, data => {
+            console.log(data);
+        });
     }
 
     render() {

@@ -121,12 +121,12 @@ class Events extends Component {
         }
     }
 
-    editItem =(id) =>{
+    editItem = (id) => {
         let foundItem = this.state.events.filter((obj) => obj.id === id)
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {
-                id:foundItem.id,
+                id: foundItem.id,
                 type: 'select',
                 heading: foundItem.id,
                 message: foundItem.id,
@@ -150,7 +150,7 @@ class Events extends Component {
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {
-                id:'',
+                id: '',
                 type: 'select',
                 heading: '',
                 message: '',
@@ -205,7 +205,8 @@ class Events extends Component {
                             message: event.message,
                             fromDate: event.fromDate,
                             toDate: event.toDate,
-                            dateForDisplay: `${moment(event.fromDate).format('Do MMM YYYY, HH:mm A')} - ${moment(event.toDate).format('Do MMM YY, HH:mm A')}`
+                            dateForDisplay: `${moment(event.fromDate).format('Do MMM YYYY, HH:mm A')} - ${moment(event.toDate).format('Do MMM YY, HH:mm A')}`,
+                            type: event.eventType.name,
                         })
                     });
                     this.setState({ events });

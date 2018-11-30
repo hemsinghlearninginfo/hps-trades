@@ -4,7 +4,6 @@ import { alertActions } from './';
 import { history } from '../_helpers';
 import { dataManager } from '../dataManager';
 
-
 export const eventActions = {
     getEventTypesByUser,
     getAllEventsByUser,
@@ -41,7 +40,6 @@ async function getAllEventsByUser(){
         else { return error; }
     }
 }
-
 
 function createByUser(formEvent) {
     return dispatch => {

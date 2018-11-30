@@ -11,17 +11,28 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'EventType'
     },
-    userId:{
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    userRoleId:{
+    userRoleId: {
         type: Schema.Types.ObjectId,
         ref: 'UserRole'
     },
     createdDate: { type: Date, default: Date.now },
-    isDeleted : {type : Boolean, default : false}
+    isDeleted: { type: Boolean, default: false }
 });
+
+const autoPopulateChilds = function (next) {
+    this.populate('eventType');
+    // this.populate('userId');
+    // this.populate('userRoleId');
+    next();
+};
+
+schema.
+    pre('findOne', autoPopulateChilds).
+    pre('find', autoPopulateChilds);
 
 schema.set('toJSON', { virtuals: true });
 
