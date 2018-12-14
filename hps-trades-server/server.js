@@ -89,7 +89,6 @@ function ioConnection() {
     const getEvent = async socket => {
         try {
             const eventService = require('./event/event.service');
-            let res = null;
             eventService.getEventsWithInCurrentTime()
                 .then((responseText) => {
                     return responseText;

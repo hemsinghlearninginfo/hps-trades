@@ -118,6 +118,7 @@ class Events extends Component {
                 isAdd: !this.state.isAdd
             })
             this.handleDBOperation('submit');
+            this.handleDBOperation('getEventList');
         }
     }
 
@@ -177,7 +178,6 @@ class Events extends Component {
                 userRoleId: currentUser.userRole
             }
             dispatch(eventActions.createByUser(newEvent));
-            this.handleDBOperation('getEventList');
         }
         else if (dbTypeOperation === 'delete') {
             const { dispatch } = this.props;
@@ -272,7 +272,7 @@ class Events extends Component {
                                         onChange={(e) => this.handleChange(e, "fromDate")}
                                         showTimeSelect
                                         timeFormat="HH:mm"
-                                        timeIntervals={1}
+                                        timeIntervals={5}
                                         dateFormat="DD-MM-YY HH:mm A"
                                         timeCaption="time"
                                         preventOpenOnFocus={true}
@@ -294,7 +294,7 @@ class Events extends Component {
                                         onChange={(e) => this.handleChange(e, "toDate")}
                                         showTimeSelect
                                         timeFormat="HH:mm"
-                                        timeIntervals={1}
+                                        timeIntervals={5}
                                         dateFormat="DD-MM-YY HH:mm A"
                                         timeCaption="time"
                                         preventOpenOnFocus={true}
