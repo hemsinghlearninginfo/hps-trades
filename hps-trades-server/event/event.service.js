@@ -11,13 +11,16 @@ module.exports = {
     // getById,
     deleteByUser,
     createByUser,
+    getEventsWithInCurrentTime,
     getEventTypeByUser,
     getAllEventsByUser,
 };
 
-// async function getAll() {
-//     return await EventDb.find().select('-hash');
-// }
+async function getEventsWithInCurrentTime() {
+    var currentDate = new Date();
+    var query = { $and: [ { fromDate: { $lte: currentDate } }, { toDate: { $gte: currentDate } } ] };
+    return await EventDb.find(query);
+}
 
 async function getAllEventsByUser(toFindUserId) {
     const events = await EventDb.find({ userId: toFindUserId });

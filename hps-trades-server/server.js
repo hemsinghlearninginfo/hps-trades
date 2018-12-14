@@ -11,7 +11,6 @@ const io = require('socket.io')(server);
 const jwt = require('_helpers/jwt');
 const config = require('config.json');
 const errorHandler = require('_helpers/error-handler');
-const pushMethods = require('./socket/pushMethods');
 
 // Seedind DB
 const seed = require('./seed');
@@ -87,10 +86,19 @@ function routes() {
 
 function ioConnection() {
 
-    const test = async socket => {
+    const getEvent = async socket => {
         try {
-            const res = 'time comming from server : ' + (new Date());
-            socket.emit(config.SocketEventFromAPI, (res));
+            const eventService = require('./event/event.service');
+            let res = null;
+            eventService.getEventsWithInCurrentTime()
+                .then((responseText) => {
+                    return responseText;
+                })
+                .then((response) => {
+                    if (response.length > 0) {
+                        socket.emit(config.SocketEventFromAPI, (response));
+                    }
+                });
         } catch (error) {
             console.error(`Error: ${error.code}`);
         }
@@ -100,9 +108,9 @@ function ioConnection() {
         console.log("New Socket IO Client Connected"),
             setInterval(
                 () => {
-                    test(socket)
+                    getEvent(socket)
                 },
-                1000
+                10000
             );
         socket.on("disconnect", () => console.log("Socket IO Client disconnected"));
     });
@@ -113,5 +121,5 @@ function ioConnection() {
         }
         callback(null, true);
     });
-    
+
 }
