@@ -31,6 +31,7 @@ class Events extends Component {
             newEvent: {
                 id: '',
                 eventType: 'select',
+                eventTypeId: '',
                 heading: '',
                 message: '',
                 fromDate: moment().fromNow(),
@@ -123,14 +124,15 @@ class Events extends Component {
     }
 
     editItem = (id) => {
-        let foundItem = this.state.events.filter((obj) => obj.id === id)
+        let foundItem = this.state.events.filter((obj) => obj.id === id)[0];
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {
                 id: foundItem.id,
-                type: 'select',
-                heading: foundItem.id,
-                message: foundItem.id,
+                eventTypeId: foundItem.eventTypeId,
+                eventType: foundItem.eventType,
+                heading: foundItem.heading,
+                message: foundItem.message,
                 fromDate: moment(foundItem.fromDate),
                 toDate: moment(foundItem.toDate),
                 dateForDisplay: ''
@@ -138,6 +140,8 @@ class Events extends Component {
             eventTypeDescription: '',
             submitted: false
         });
+        const { newEvent } = this.state;
+        console.log(newEvent);
     }
 
     handleDeleteEventItem(id) {
@@ -206,7 +210,8 @@ class Events extends Component {
                             fromDate: event.fromDate,
                             toDate: event.toDate,
                             dateForDisplay: `${moment(event.fromDate).format('Do MMM YYYY, HH:mm A')} - ${moment(event.toDate).format('Do MMM YY, HH:mm A')}`,
-                            type: event.eventType.name,
+                            eventType: event.eventType.name,
+                            eventTypeId: event.eventType.id,
                         })
                     });
                     this.setState({ events });
@@ -232,7 +237,7 @@ class Events extends Component {
                             <div className="card-body">
                                 <h5 className="card-title">{item.heading}</h5>
                                 <p><strong>{item.dateForDisplay}</strong></p>
-                                <p><strong>Type: {item.type}</strong></p>
+                                <p><strong>Type: {item.eventType}</strong></p>
                                 <p className="card-text">{item.message}</p>
                                 <a href="#" className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)} Edit</a>
                                 {' '}
@@ -312,7 +317,7 @@ class Events extends Component {
                             <div className="form-group">
                                 <label className="control-label"><strong>Type</strong></label>
                                 <div className="col-xs-10">
-                                    <select className="form-control required" name="eventType" value={newEvent.eventType} onChange={this.handleChange}>
+                                    <select className="form-control required" name="eventType" value={newEvent.eventTypeId} onChange={this.handleChange}>
                                         <option>Select Type</option>
                                         {selectOptionsHTML}
                                     </select>
