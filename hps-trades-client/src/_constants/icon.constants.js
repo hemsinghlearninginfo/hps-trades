@@ -11,5 +11,6 @@ export const iconConstants = {
     ADD:'ADD',
     SAVE:'SAVE',
     CANCEL:'CANCEL',
-    ERROR: 'ERROR'
+    ERROR: 'ERROR',
+    CLOSE: 'CLOSE',
 };
