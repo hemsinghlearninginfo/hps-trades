@@ -31,7 +31,6 @@ class Events extends Component {
             newEvent: {
                 id: '',
                 eventType: 'select',
-                eventTypeId: '',
                 heading: '',
                 message: '',
                 fromDate: moment().fromNow(),
@@ -117,7 +116,7 @@ class Events extends Component {
             && (newEvent.fromDate < newEvent.toDate)) {
             this.setState({
                 isAdd: !this.state.isAdd
-            })
+            });
             this.handleDBOperation('submit');
             this.handleDBOperation('getEventList');
         }
@@ -125,12 +124,12 @@ class Events extends Component {
 
     editItem = (id) => {
         let foundItem = this.state.events.filter((obj) => obj.id === id)[0];
+        let foundEventType = this.state.eventTypes.filter((obj) => obj.name === foundItem.eventType)[0];
         this.setState({
             isAdd: !this.state.isAdd,
             newEvent: {
                 id: foundItem.id,
-                eventTypeId: foundItem.eventTypeId,
-                eventType: foundItem.eventType,
+                eventType: foundEventType.id,
                 heading: foundItem.heading,
                 message: foundItem.message,
                 fromDate: moment(foundItem.fromDate),
@@ -141,7 +140,6 @@ class Events extends Component {
             submitted: false
         });
         const { newEvent } = this.state;
-        console.log(newEvent);
     }
 
     handleDeleteEventItem(id) {
@@ -176,8 +174,14 @@ class Events extends Component {
         if (dbTypeOperation === 'submit') {
             let currentUser = dataManager.getCurrentUser();
             const { dispatch } = this.props;
+            const addedEvent = this.state.newEvent;
             var newEvent = {
-                ...this.state.newEvent,
+                id : addedEvent.id,
+                heading: addedEvent.heading,
+                message: addedEvent.message,
+                fromDate: addedEvent.fromDate,
+                toDate: addedEvent.toDate,
+                eventType: addedEvent.eventType,
                 userId: currentUser._id,
                 userRoleId: currentUser.userRole
             }
@@ -211,7 +215,6 @@ class Events extends Component {
                             toDate: event.toDate,
                             dateForDisplay: `${moment(event.fromDate).format('Do MMM YYYY, HH:mm A')} - ${moment(event.toDate).format('Do MMM YY, HH:mm A')}`,
                             eventType: event.eventType.name,
-                            eventTypeId: event.eventType.id,
                         })
                     });
                     this.setState({ events });
@@ -222,6 +225,7 @@ class Events extends Component {
     render() {
         const { events, eventTypes, eventTypeDescription, isAdd, newEvent, submitted, isValidDateRange } = this.state;
         const { requestLoading } = this.props;
+        
         const selectOptionsHTML = eventTypes.map((item) => {
             return (
                 <option key={item._id} value={item._id}>{item.name}</option>
@@ -264,7 +268,7 @@ class Events extends Component {
 
         let newItemHTML = isAdd && (
             <div className="addBox">
-                <div className="addBoxHeading">Add New Event Message</div>
+                <div className="addBoxHeading">{(newEvent !== null && newEvent.id !== '') ? 'Edit Event Message' : 'Add New Event Message'}</div>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="col-md-3">
@@ -317,7 +321,7 @@ class Events extends Component {
                             <div className="form-group">
                                 <label className="control-label"><strong>Type</strong></label>
                                 <div className="col-xs-10">
-                                    <select className="form-control required" name="eventType" value={newEvent.eventTypeId} onChange={this.handleChange}>
+                                    <select className="form-control required" name="eventType" value={newEvent.eventType} onChange={this.handleChange}>
                                         <option>Select Type</option>
                                         {selectOptionsHTML}
                                     </select>

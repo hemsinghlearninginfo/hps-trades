@@ -18,7 +18,7 @@ module.exports = {
 
 async function getEventsWithInCurrentTime() {
     var currentDate = new Date();
-    var query = { $and: [ { fromDate: { $lte: currentDate } }, { toDate: { $gte: currentDate } } ] };
+    var query = { $and: [{ fromDate: { $lte: currentDate } }, { toDate: { $gte: currentDate } }] };
     return await EventDb.find(query);
 }
 
@@ -44,8 +44,13 @@ async function getEventTypeByUser(toFindUserRole) {
 }
 
 async function createByUser(newEvent) {
-    const eventToAdd = new EventDb(newEvent);
-    await eventToAdd.save();
+    if (newEvent.id !== '') {
+        await newEvent.update({ _id: newEvent.id }, newEvent, { upsert: true })
+    }
+    else {
+        const eventToAdd = new EventDb(newEvent);
+        await eventToAdd.save();
+    }
 }
 
 async function deleteByUser(id) {
