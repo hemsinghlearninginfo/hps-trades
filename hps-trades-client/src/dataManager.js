@@ -9,10 +9,36 @@ export const dataManager = {
     getUserRole,
     getObjectByName,
     setObjectByName,
+    getUserAlerts,
 };
 
 export const dataManagerConstants = {
-    LOGEED_IN_USER: 'LOGEED_IN_USER'
+    LOGEED_IN_USER: 'LOGEED_IN_USER',
+    LOGEED_IN_ALERT: 'LOGEED_IN_ALERT'
+}
+
+function getUserAlerts(alertData) {
+    let userAlerts = [];
+    if (localStorage[dataManagerConstants.LOGEED_IN_ALERT] !== undefined) {
+        userAlerts = JSON.parse(decrypt(localStorage[dataManagerConstants.LOGEED_IN_ALERT]));
+    }
+
+    if(userAlerts.length > 0){
+        userAlerts.forEach(function(v){
+            let searchItem = alertData.filter(function(f){ 
+                return f.id === v.id;
+             });
+             if(searchItem.length == 0){
+                alertData.push(v);
+             }
+        });
+    }
+
+    let encryptAlertData = encrypt(JSON.stringify(alertData));
+    localStorage.removeItem(dataManagerConstants.LOGEED_IN_ALERT);
+    localStorage.setItem(dataManagerConstants.LOGEED_IN_ALERT, encryptAlertData);
+
+    return alertData;
 }
 
 function getCurrentUser() {

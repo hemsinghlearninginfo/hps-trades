@@ -7,6 +7,7 @@ import styles from './event.css';
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
 import Wrapper from '../../hoc/Wrapper';
+import { dataManager } from '../../dataManager';
 import { eventActions } from '../../_actions';
 
 class ShowEvent extends Component {
@@ -28,11 +29,17 @@ class ShowEvent extends Component {
                     heading: item.heading,
                     message: item.message,
                     id: item.id,
-                    useRoleId: item.userRoleId
+                    useRoleId: item.userRoleId,
+                    isCloseClicked : false,
                 };
             });
-            this.setState({ eventData })
+            var displayAlerts = dataManager.getUserAlerts(eventData);
+            this.setState({ eventData : displayAlerts })
         });
+    }
+
+    closeAlert = (id) => {
+        console.log('id : ', id);
     }
 
     render() {
@@ -41,12 +48,12 @@ class ShowEvent extends Component {
         if (eventData.length > 0) {
             eventHTML = eventData.map((item, index) => {
                 return ((!item.isClose) ?
-                    (<div className="notice notice-danger notice-lg"  key={index}>
+                    (<div className="notice notice-danger notice-lg" key={index}>
                         <strong>{item.heading}</strong> {item.message}
                     </div>)
                     : (<div className="notice notice-info" key={index}>
                         <strong>{item.heading}</strong> {item.message}
-                        <div className="closeButton"><a>{getIcon(iconConstants.CLOSE)}</a></div>
+                        <div className="closeButton"><a title="Close Alert" onClick={this.closeAlert.bind(this, item.id)}>{getIcon(iconConstants.CLOSE)}</a></div>
                     </div>))
             });
         }

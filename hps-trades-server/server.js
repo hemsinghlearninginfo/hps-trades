@@ -11,6 +11,7 @@ const io = require('socket.io')(server);
 const jwt = require('_helpers/jwt');
 const config = require('config.json');
 const errorHandler = require('_helpers/error-handler');
+const util = require('_helpers/util');
 
 // Seedind DB
 const seed = require('./seed');
@@ -95,7 +96,7 @@ function ioConnection() {
                 })
                 .then((response) => {
                     if (response.length > 0) {
-                        socket.emit(config.SocketEventFromAPI, (response));
+                        socket.emit(config.SocketEventFromAPI, response);
                     }
                 });
         } catch (error) {
