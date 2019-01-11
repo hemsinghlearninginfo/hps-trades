@@ -164,3 +164,7 @@ body {
 .userPreferenceTable tbody td:nth-child(1) {
     font-weight: bold;
 }
+
+.userMapping thead tr th{
+    text-align: left;
+}

@@ -33,6 +33,7 @@ class ShowEvent extends Component {
                     isCloseClicked : false,
                 };
             });
+            console.log(dataManager.getCurrentUser());
             var displayAlerts = dataManager.getUserAlerts(eventData);
             this.setState({ eventData : displayAlerts })
         });

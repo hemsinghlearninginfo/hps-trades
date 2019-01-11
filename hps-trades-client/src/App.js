@@ -37,6 +37,7 @@ class App extends Component {
               <Switch>
                 {/* <PrivateRoute exact path="/" component={Components.Home} /> */}
                 <PrivateRoute exact path="/userpreference" component={Components.UserPreference} />
+                <PrivateRoute exact path="/usermapping" component={Components.UserMapping} />
                 <Route exact path="/" component={Components.Home} />
                 <Route exact path="/tkn" component={Components.URLToken} />
                 <Route exact path="/fpwd" component={Components.ForgotPassword} />

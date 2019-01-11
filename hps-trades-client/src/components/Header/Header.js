@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
-import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaCogs, FaCalendar, FaUsersCog } from 'react-icons/fa';
+import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaCogs, FaCalendar, FaUsersCog, FaUserFriends } from 'react-icons/fa';
 
 import { myConfig } from '../../config';
 import CSSModules from 'react-css-modules';
@@ -81,6 +81,9 @@ class Header extends Component {
                         </DropdownItem>
                     <DropdownItem className="item" href="/login">
                         <FaUsersCog /> Users
+                    </DropdownItem>
+                    <DropdownItem className="item" href="/usermapping">
+                        <FaUserFriends /> Users Mapping
                     </DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>

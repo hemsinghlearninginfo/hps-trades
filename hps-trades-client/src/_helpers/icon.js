@@ -2,7 +2,8 @@ import React from 'react';
 import { iconConstants } from '../_constants';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative, FaCalendar,
-    FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan, FaExclamationCircle, FaTimesCircle
+    FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan, FaExclamationCircle, FaTimesCircle,
+    FaUserFriends
 }
     from 'react-icons/fa';
 
@@ -50,6 +51,9 @@ export function getIcon(iconType) {
             break;
         case iconConstants.CLOSE:
             iconsHTML = <FaTimesCircle />;
+            break;
+        case iconConstants.USER_MAPPING:
+            iconsHTML = <FaUserFriends />;
             break;
         default:
             iconsHTML = <FaAngrycreative />
