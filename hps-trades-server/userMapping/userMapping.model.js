@@ -15,6 +15,16 @@ const schema = new Schema({
     createdDate: { type: Date, default: Date.now },
 });
 
+const autoPopulateChilds = function (next) {
+    this.populate('masterUserId');
+    this.populate('childUserId');
+    next();
+};
+
+schema.
+    pre('findOne', autoPopulateChilds).
+    pre('find', autoPopulateChilds);
+
 schema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('UserMapping', schema);

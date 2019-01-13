@@ -1,5 +1,5 @@
 import { appConstants } from '../_constants';
-import { dataManager }  from '../dataManager';
+import { dataManager } from '../dataManager';
 
 let user = dataManager.getCurrentUser();
 const initialState = user ? { loggedIn: true, user } : {};
@@ -9,6 +9,11 @@ export function authentication(state = initialState, action) {
     case appConstants.LOGIN_REQUEST:
       return {
         loggingIn: true,
+        user: action.user
+      };
+    case appConstants.GETALL_USERMAPPING_REQUEST:
+      return {
+        loggedIn: true,
         user: action.user
       };
     case appConstants.LOGIN_SUCCESS:

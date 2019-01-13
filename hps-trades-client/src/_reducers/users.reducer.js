@@ -2,7 +2,7 @@ import { appConstants } from '../_constants';
 
 export function users(state = {}, action) {
   switch (action.type) {
-    case appConstants.GETALL_REQUEST:
+    case appConstants.GETALL_REQUEST || appConstants.GETALL_USERMAPPING_REQUEST:
       return {
         loading: true
       };

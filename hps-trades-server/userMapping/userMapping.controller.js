@@ -4,7 +4,7 @@ const userMapping = require('./userMapping.service');
 
 // routes
 router.post('/addUpdate', addUpdate);
-router.post('/get', get);
+router.get('/', getAll);
 
 module.exports = router;
 
@@ -14,7 +14,7 @@ function addUpdate(req, res, next) {
     .catch(err => next(err));
 }
 
-function get(req, res, next) {
+function getAll(req, res, next) {
   userMapping.get(req.body)
     .then(() => res.json({}))
     .catch(err => next(err));

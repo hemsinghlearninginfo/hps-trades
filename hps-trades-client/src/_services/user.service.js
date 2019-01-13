@@ -12,7 +12,9 @@ export const userService = {
     getById,
     update,
     forgotPasswordToEmail,
-    delete: _delete
+    delete: _delete,
+    getAllUsermapping,
+    getAllWithType,
 };
 
 function login(username, password) {
@@ -97,20 +99,19 @@ function _delete(id) {
     return fetch(myConfig.ApiUrl + 'users/' +  id, requestOptions).then(commonService.handleResponse);
 }
 
-// function handleResponse(response) {
-//     return response.text().then(text => {
-//         const data = text && JSON.parse(text);
-//         if (!response.ok) {
-//             if (response.status === 401) {
-//                 // auto logout if 401 response returned from api
-//                 logout();
-//                 window.location.reload(true);
-//             }
 
-//             const error = (data && data.message) || response.statusText;
-//             return Promise.reject(error);
-//         }
+function getAllUsermapping() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    return fetch(myConfig.ApiUrl + 'usermapping/', requestOptions).then(commonService.handleResponse);
+}
 
-//         return data;
-//     });
-// }
+function getAllWithType() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+    return fetch(myConfig.ApiUrl + 'users/getallwithtype/', requestOptions).then(commonService.handleResponse);
+}

@@ -12,6 +12,7 @@ module.exports = {
     forgotPasswordToEmail,
     isValidForgotpasswordLink,
     getAll,
+    getAllWithType,
     getById,
     create,
     update,
@@ -31,7 +32,7 @@ async function authenticate({ username, password }) {
                 };
             }
             else {
-                throw 'Your account is not activated, please check you email and click on activation link.'; 
+                throw 'Your account is not activated, please check you email and click on activation link.';
             }
         }
     }
@@ -68,6 +69,27 @@ async function isValidForgotpasswordLink({ link }) {
 
 async function getAll() {
     return await UserDb.find().select('-hash');
+}
+
+async function getAllWithType() {
+    let userWithType = [];
+    for (let i = 1; i < dataConstants.userRoles().length; i++) {
+        const userRole = await UserRoleDb.findOne({ role: dataConstants.userRoles()[i].role });
+        const users = await UserDb.find({
+            $and: [{ isRegistrationActive: true }, { userRole: userRole.id }]
+        },
+            { _id: 1, firstName: 1, lastName: 1 }
+        );
+        Object.keys(users).forEach(function (key) {
+            userWithType.push({
+                id: users[key].id,
+                firstName: users[key].firstName,
+                lastName: users[key].lastName,
+                type: userRole.role,
+            });
+        });
+    }
+    return userWithType;
 }
 
 async function getById(id) {

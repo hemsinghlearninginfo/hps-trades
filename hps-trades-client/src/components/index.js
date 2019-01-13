@@ -20,7 +20,7 @@ import { URLToken } from './URL/URLToken';
 import logo from './Utils/logo';
 
 import { Events } from './Event/events';
-import { ShowEvent } from './Event/ShowEvent';
+import { ShowEvent } from './Event/showEvent';
 
 import error404 from './Error/404';
 

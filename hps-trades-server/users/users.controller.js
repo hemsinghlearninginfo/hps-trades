@@ -8,6 +8,7 @@ router.post('/forgotpasswordtoemail', forgotPasswordToEmail);
 router.post('/isvalidforgotpasswordlink', isValidForgotpasswordLink);
 router.post('/register', register);
 router.get('/', getAll);
+router.get('/getallwithtype', getAllWithType);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
@@ -66,5 +67,11 @@ function update(req, res, next) {
 function _delete(req, res, next) {
     userService.delete(req.params.id)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getAllWithType(req, res, next) {
+    userService.getAllWithType()
+        .then((userWithType) => userWithType ? res.json(userWithType) : res.sendStatus(404))
         .catch(err => next(err));
 }

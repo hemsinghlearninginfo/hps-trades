@@ -1,4 +1,4 @@
-import { appConstants } from '../_constants';
+import { appConstants, responseConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { emailActions } from './';
@@ -10,8 +10,10 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getAllWithType,
     forgotPasswordToEmail,
     delete: _delete,
+    getAllUsermapping,
 };
 
 function login(username, password) {
@@ -116,4 +118,31 @@ function _delete(id) {
     function request(id) { return { type: appConstants.DELETE_REQUEST, id } }
     function success(id) { return { type: appConstants.DELETE_SUCCESS, id } }
     function failure(id, error) { return { type: appConstants.DELETE_FAILURE, id, error } }
+}
+
+async function getAllUsermapping(){
+    try {
+        const userMappings = await userService.getAllUsermapping();
+        return userMappings;
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
+}
+
+async function getAllWithType(){
+    try {
+        return await userService.getAllWithType();
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
 }

@@ -94,8 +94,6 @@ class Events extends Component {
                 }
             });
         }
-
-
     }
 
     handleSubmit(event) {
