@@ -78,13 +78,14 @@ async function getAllWithType() {
         const users = await UserDb.find({
             $and: [{ isRegistrationActive: true }, { userRole: userRole.id }]
         },
-            { _id: 1, firstName: 1, lastName: 1 }
+            { _id: 1, firstName: 1, lastName: 1, username : 1 }
         );
         Object.keys(users).forEach(function (key) {
             userWithType.push({
                 id: users[key].id,
                 firstName: users[key].firstName,
                 lastName: users[key].lastName,
+                email: users[key].username,
                 type: userRole.role,
             });
         });

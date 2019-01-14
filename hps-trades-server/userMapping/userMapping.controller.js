@@ -15,8 +15,8 @@ function addUpdate(req, res, next) {
 }
 
 function getAll(req, res, next) {
-  userMapping.get(req.body)
-    .then(() => res.json({}))
-    .catch(err => next(err));
+  userMapping.getAll()
+        .then((userMapping) => userMapping ? res.json(userMapping) : res.sendStatus(404))
+        .catch(err => next(err));
 }
 

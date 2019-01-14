@@ -7,12 +7,14 @@ const util = require('../_helpers/util');
 
 module.exports = {
     addUpdate,
-    get,
+    getAll,
 };
 
 async function addUpdate(userMappingData) {
     //userMappingData
-    let userMappingDataObject = new EmailDb();
+    let userMappingDataObject = new UserMappingDb();
+    userMappingDataObject.masterUserId = userMappingData.masterUserId;
+    userMappingDataObject.childUserId = userMappingData.childUserId;
     try {
         await userMappingDataObject.save();
     } catch (error) {
@@ -20,10 +22,9 @@ async function addUpdate(userMappingData) {
     }
 }
 
-async function get() {
-    //userMappingData
+async function getAll() {
     try {
-        return await UserMappingDb.find({});
+        return await UserMappingDb.find();
     } catch (error) {
         console.log(error);
     }

@@ -12,6 +12,8 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    comment: { type: String, default: null },
+    isActive: { type: Boolean, default: true },
     createdDate: { type: Date, default: Date.now },
 });
 

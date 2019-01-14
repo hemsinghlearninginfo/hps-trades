@@ -10,10 +10,11 @@ export const userActions = {
     logout,
     register,
     getAll,
-    getAllWithType,
     forgotPasswordToEmail,
     delete: _delete,
     getAllUsermapping,
+    getAllWithType,
+    addUpdateUserMapping,
 };
 
 function login(username, password) {
@@ -145,4 +146,26 @@ async function getAllWithType(){
         }
         else { return error; }
     }
+}
+
+function addUpdateUserMapping(userMapping) {
+    return dispatch => {
+        dispatch(request(userMapping));
+
+        userService.addUpdateUserMapping(userMapping)
+            .then(
+                user => {
+                    dispatch(success());
+                    dispatch(alertActions.success('User mapping added successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(user) { return { type: appConstants.GETALL_REQUEST, user } }
+    function success(user) { return { type: appConstants.GETALL_SUCCESS, user } }
+    function failure(error) { return { type: appConstants.GETALL_FAILURE, error } }
 }

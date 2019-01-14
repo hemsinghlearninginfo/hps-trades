@@ -1,5 +1,5 @@
 //import config  from 'config';
-import { authHeader } from '../_helpers';
+import { authHeader, authHeaderAppJson } from '../_helpers';
 import { myConfig } from '../config' ;
 import { commonService } from './';
 import {dataManager} from '../dataManager';
@@ -15,6 +15,7 @@ export const userService = {
     delete: _delete,
     getAllUsermapping,
     getAllWithType,
+    addUpdateUserMapping,
 };
 
 function login(username, password) {
@@ -88,7 +89,6 @@ function update(user) {
     return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(commonService.handleResponse);
 }
 
-
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     const requestOptions = {
@@ -99,13 +99,12 @@ function _delete(id) {
     return fetch(myConfig.ApiUrl + 'users/' +  id, requestOptions).then(commonService.handleResponse);
 }
 
-
 function getAllUsermapping() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(myConfig.ApiUrl + 'usermapping/', requestOptions).then(commonService.handleResponse);
+    return fetch(`${myConfig.ApiUrl}usermapping/`, requestOptions).then(commonService.handleResponse);
 }
 
 function getAllWithType() {
@@ -113,5 +112,17 @@ function getAllWithType() {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(myConfig.ApiUrl + 'users/getallwithtype/', requestOptions).then(commonService.handleResponse);
+    return fetch(`${myConfig.ApiUrl}users/getallwithtype/`, requestOptions).then(commonService.handleResponse);
+}
+
+
+function addUpdateUserMapping(userMapping) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeaderAppJson(),
+        body: JSON.stringify(userMapping)
+    };
+    return fetch(`${myConfig.ApiUrl}usermapping/addUpdate`, requestOptions)
+        .then(commonService.handleResponse);
+
 }
