@@ -69,6 +69,7 @@ function routes() {
     app.use("/eventtype", require('./masters/eventTypes/eventTypes.controller'));
     app.use("/emailtype", require('./masters/emailTypes/emailTypes.controller'));
     app.use("/userrole", require('./masters/userRoles/userRoles.controller'));
+    app.use("/market", require('./masters/market/market.controller'));
 
     app.use("/mdata", require('./masters/master.controller'));
 

@@ -7,6 +7,7 @@ export const iconConstants = {
     LEGAL:'LEGAL',
     MACHINE:'MACHINE',
     EVENT : 'EVENT',
+    STOCK : 'STOCK',
     EDIT:'EDIT',
     DELETE:'DELETE',
     ADD:'ADD',
