@@ -19,6 +19,7 @@ class UserMapping extends Component {
 
         this.state = {
             isAddNew: false,
+            isEditNew: false,
             mappings: [],
             users: [],
             newMapping: {
@@ -123,8 +124,25 @@ class UserMapping extends Component {
         return isUnique;
     }
 
+    editUserMapping = (id) => {
+        const { mappings } = this.state;
+        let foundUser = mappings.filter(function (user) {
+            return (user.id === id);
+        })[0];
+        if (foundUser !== null) {
+            this.setState({
+                isEditNew: true,
+                newMapping: {
+                    user: foundUser.childUserId,
+                    master: foundUser.masterUserId,
+                },
+                isSubmitted: false,
+            });
+        }
+    }
+
     render() {
-        const { isAddNew, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
+        const { isAddNew, isEditNew, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
 
         const selectMasterOptionsHTML = users.map((item) => {
             return (
@@ -138,7 +156,7 @@ class UserMapping extends Component {
             )
         });
 
-        const addNewFormHTML = (isAddNew &&
+        const addNewFormHTML = ((isAddNew || isEditNew) &&
             <form name="form" onSubmit={this.handleSubmit}>
                 <div className="table-responsive">
                     <table className="table">
@@ -201,7 +219,7 @@ class UserMapping extends Component {
             </form>
         )
 
-        const addNewButtonHTML = (!isAddNew &&
+        const addNewButtonHTML = (!isAddNew && !isEditNew &&
             <button className="btn btn-sm btn-success" onClick={this.addNew}>Add New</button>
         )
 
@@ -209,7 +227,7 @@ class UserMapping extends Component {
         if (mappings.length > 0) {
             userMappingHTML = mappings.map((item) => {
                 return (<tr key={item.id} className="danger">
-                    <td><button className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
+                    <td><button type="button" className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`} onClick={this.editUserMapping.bind(this, item.id)}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
                     <td>{item.masterUserName}</td>
                     <td>{item.childUserName}</td>
                     <td>{item.isActive ? 'true' : 'false'}</td>

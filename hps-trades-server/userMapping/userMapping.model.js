@@ -12,7 +12,7 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    comment: { type: String, default: null },
+    comment: { type: String, default: '' },
     isActive: { type: Boolean, default: true },
     createdDate: { type: Date, default: Date.now },
 });
