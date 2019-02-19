@@ -19,12 +19,12 @@ class UserMapping extends Component {
 
         this.state = {
             isAddNew: false,
-            isEditNew: false,
             mappings: [],
             users: [],
             newMapping: {
                 user: '',
                 master: '',
+                comment: ''
             },
             isSubmitted: false,
             isNewMappingUnique: false,
@@ -32,6 +32,7 @@ class UserMapping extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.activeInActiveUser = this.activeInActiveUser.bind(this);
     }
 
     componentDidMount() {
@@ -55,6 +56,7 @@ class UserMapping extends Component {
                         masterUserName: `${user.masterUserId.firstName} ${user.masterUserId.lastName} (${user.masterUserId.username})`,
                         childUserId: user.childUserId.id,
                         childUserName: `${user.childUserId.firstName} ${user.childUserId.lastName} (${user.childUserId.username})`,
+                        markForActiveAndActive: false,
                     })
                 });
                 this.setState({ mappings });
@@ -124,25 +126,103 @@ class UserMapping extends Component {
         return isUnique;
     }
 
-    editUserMapping = (id) => {
-        const { mappings } = this.state;
-        let foundUser = mappings.filter(function (user) {
-            return (user.id === id);
-        })[0];
-        if (foundUser !== null) {
-            this.setState({
-                isEditNew: true,
-                newMapping: {
-                    user: foundUser.childUserId,
-                    master: foundUser.masterUserId,
-                },
-                isSubmitted: false,
-            });
+    activeInActiveUser = (otherObjectState, index) => {
+        const { mappings, newMapping } = this.state;
+        for (let i = 0; i < mappings.length; i++) {
+            mappings[i].markForActiveAndActive = otherObjectState;
         }
+        if (index >= 0) {
+            mappings[index].markForActiveAndActive = !mappings[index].markForActiveAndActive;
+            newMapping.user = mappings[index].childUserId;
+            newMapping.master = mappings[index].masterUserId;
+            newMapping.comment = mappings[index].comment;
+        }
+        else {
+            newMapping.user = '';
+            newMapping.master = '';
+            newMapping.comment = '';
+        }
+        this.setState({
+            mappings,
+            newMapping,
+            isSubmitted: false,
+            isNewMappingUnique: false
+        });
+    }
+
+    formDesign = (isNewUser, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML) => {
+        return (<form name="form" onSubmit={this.handleSubmit}>
+            <div className="table-responsive">
+                <table className="table userMappingTable">
+                    <thead>
+                        <tr>
+                            <th colSpan="4" className="text-center">{(isNewUser ? 'Add New' : 'Edit') + ' User Mapping with Master'}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            isSubmitted && newMapping.master && newMapping.user
+                            && newMapping.master === newMapping.user &&
+                            <tr>
+                                <td colSpan="4">
+                                    <div className="help-block">Master and child can't be same.</div>
+                                </td>
+                            </tr>
+                        }
+                        {
+                            isSubmitted && newMapping.master && newMapping.user
+                            && !isNewMappingUnique &&
+                            <tr>
+                                <td colSpan="4">
+                                    <div className="help-block">User and Master mapping is already exists.</div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>Master</td>
+                            <td>
+                                <select className="form-control required" name="master" value={newMapping.master} onChange={this.handleChange}>
+                                    <option>Select Master</option>
+                                    {selectMasterOptionsHTML}
+                                </select>
+                                {
+                                    isSubmitted && !newMapping.master &&
+                                    <div className="help-block">Select Master is required</div>
+                                }
+                            </td>
+                            <td rowSpan="2">Comment</td>
+                            <td rowSpan="2"><textarea rows="5" cols="80"></textarea></td>
+
+                        </tr>
+                        <tr>
+                            <td>User</td>
+                            <td>
+                                <select className="form-control required" name="user" value={newMapping.user} onChange={this.handleChange}>
+                                    <option>Select User</option>
+                                    {selectOptionsHTML}
+                                </select>
+                                {
+                                    isSubmitted && !newMapping.user &&
+                                    <div className="help-block">Select User is required</div>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="text-right" colSpan="4">
+                                <button className="btn btn-sm btn-success" type="submit">Update</button>
+                                <button className="btn btn-sm btn-success" type="submit">Save</button>
+                                {' '}
+                                <button className="btn btn-sm btn-danger" type="button" onClick={this.addNew}>Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>);
     }
 
     render() {
-        const { isAddNew, isEditNew, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
+        const { isAddNew, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
 
         const selectMasterOptionsHTML = users.map((item) => {
             return (
@@ -156,83 +236,26 @@ class UserMapping extends Component {
             )
         });
 
-        const addNewFormHTML = ((isAddNew || isEditNew) &&
-            <form name="form" onSubmit={this.handleSubmit}>
-                <div className="table-responsive">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th colSpan="5">Add New User Mapping with Master</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                isSubmitted && newMapping.master && newMapping.user
-                                && newMapping.master === newMapping.user &&
-                                <tr>
-                                    <td colSpan="5">
-                                        <div className="help-block">Master and child can't be same.</div>
-                                    </td>
-                                </tr>
-                            }
-                            {
-                                isSubmitted && newMapping.master && newMapping.user
-                                && !isNewMappingUnique &&
-                                <tr>
-                                    <td colSpan="5">
-                                        <div className="help-block">User and Master mapping is already exists.</div>
-                                    </td>
-                                </tr>
-                            }
-                            <tr>
-                                <td>Master</td>
-                                <td>
-                                    <select className="form-control required" name="master" value={newMapping.master} onChange={this.handleChange}>
-                                        <option>Select Master</option>
-                                        {selectMasterOptionsHTML}
-                                    </select>
-                                    {
-                                        isSubmitted && !newMapping.master &&
-                                        <div className="help-block">Select Master is required</div>
-                                    }
-                                </td>
-                                <td>User</td>
-                                <td>
-                                    <select className="form-control required" name="user" value={newMapping.user} onChange={this.handleChange}>
-                                        <option>Select User</option>
-                                        {selectOptionsHTML}
-                                    </select>
-                                    {
-                                        isSubmitted && !newMapping.user &&
-                                        <div className="help-block">Select User is required</div>
-                                    }
-                                </td>
-                                <td className="text-right">
-                                    <button className="btn btn-sm btn-success" type="submit">Save</button>
-                                    {' '}
-                                    <button className="btn btn-sm btn-danger" type="button" onClick={this.addNew}>Cancel</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
-        )
+        const addNewFormHTML = (isAddNew && this.formDesign(true, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML));
 
-        const addNewButtonHTML = (!isAddNew && !isEditNew &&
+        const addNewButtonHTML = (!isAddNew &&
             <button className="btn btn-sm btn-success" onClick={this.addNew}>Add New</button>
         )
 
         let userMappingHTML = ''
         if (mappings.length > 0) {
-            userMappingHTML = mappings.map((item) => {
-                return (<tr key={item.id} className="danger">
-                    <td><button type="button" className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`} onClick={this.editUserMapping.bind(this, item.id)}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
-                    <td>{item.masterUserName}</td>
-                    <td>{item.childUserName}</td>
-                    <td>{item.isActive ? 'true' : 'false'}</td>
-                    <td>{item.comment}</td>
-                </tr>)
+            userMappingHTML = mappings.map((item, index) => {
+                return (
+                    (!item.markForActiveAndActive && <tr key={item.id} className="danger">
+                        <td><button className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`} onClick={this.activeInActiveUser.bind(this, false, index)}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
+                        <td>{item.masterUserName}</td>
+                        <td>{item.childUserName}</td>
+                        <td>{item.isActive ? 'true' : 'false'}</td>
+                        <td>{item.comment}</td>
+                    </tr>) ||
+                    (item.markForActiveAndActive && <tr key={item.id} className="danger">
+                        <td colSpan="5">{this.formDesign(false, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML)}</td>
+                    </tr>));
             });
         }
 
