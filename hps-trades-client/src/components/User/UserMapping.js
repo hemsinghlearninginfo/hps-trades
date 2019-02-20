@@ -19,6 +19,7 @@ class UserMapping extends Component {
 
         this.state = {
             isAddNew: false,
+            isEdit: false,
             mappings: [],
             users: [],
             newMapping: {
@@ -39,7 +40,6 @@ class UserMapping extends Component {
         this.getAllMapping();
         this.getAllUsers();
     }
-
 
     getAllMapping = () => {
         userActions.getAllUsermapping()
@@ -86,12 +86,25 @@ class UserMapping extends Component {
 
     addNew = () => {
         this.setState({
-            isAddNew: !this.state.isAddNew,
+            isAddNew: true,
+            isEdit: false,
             newMapping: {
                 user: '',
                 master: '',
             },
             isSubmitted: false,
+        });
+    }
+
+    cancel = () => {
+        const { mappings } = this.state;
+        for (let i = 0; i < mappings.length; i++) {
+            mappings[i].markForActiveAndActive = false;
+        }
+        this.setState({
+            isAddNew: false,
+            isEdit: false,
+            mappings
         });
     }
 
@@ -127,6 +140,7 @@ class UserMapping extends Component {
     }
 
     activeInActiveUser = (otherObjectState, index) => {
+
         const { mappings, newMapping } = this.state;
         for (let i = 0; i < mappings.length; i++) {
             mappings[i].markForActiveAndActive = otherObjectState;
@@ -143,6 +157,8 @@ class UserMapping extends Component {
             newMapping.comment = '';
         }
         this.setState({
+            isAddNew: false,
+            isEdit: true,
             mappings,
             newMapping,
             isSubmitted: false,
@@ -209,10 +225,9 @@ class UserMapping extends Component {
                         </tr>
                         <tr>
                             <td className="text-right" colSpan="4">
-                                <button className="btn btn-sm btn-success" type="submit">Update</button>
-                                <button className="btn btn-sm btn-success" type="submit">Save</button>
+                                <button className="btn btn-sm btn-success" type="submit">{(isNewUser ? 'Save' : 'Update')}</button>
                                 {' '}
-                                <button className="btn btn-sm btn-danger" type="button" onClick={this.addNew}>Cancel</button>
+                                <button className="btn btn-sm btn-danger" type="button" onClick={this.cancel}>Cancel</button>
                             </td>
                         </tr>
                     </tbody>
@@ -222,7 +237,7 @@ class UserMapping extends Component {
     }
 
     render() {
-        const { isAddNew, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
+        const { isAddNew, isEdit, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
 
         const selectMasterOptionsHTML = users.map((item) => {
             return (
@@ -253,7 +268,7 @@ class UserMapping extends Component {
                         <td>{item.isActive ? 'true' : 'false'}</td>
                         <td>{item.comment}</td>
                     </tr>) ||
-                    (item.markForActiveAndActive && <tr key={item.id} className="danger">
+                    (item.markForActiveAndActive && !isAddNew && isEdit && <tr key={item.id} className="danger">
                         <td colSpan="5">{this.formDesign(false, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML)}</td>
                     </tr>));
             });
