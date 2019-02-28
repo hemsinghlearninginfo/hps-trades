@@ -23,9 +23,10 @@ class UserMapping extends Component {
             mappings: [],
             users: [],
             newMapping: {
+                id: null,
                 user: '',
                 master: '',
-                comment: ''
+                comment: '',
             },
             isSubmitted: false,
             isNewMappingUnique: false,
@@ -89,8 +90,10 @@ class UserMapping extends Component {
             isAddNew: true,
             isEdit: false,
             newMapping: {
+                id: null,
                 user: '',
                 master: '',
+                comment: '',
             },
             isSubmitted: false,
         });
@@ -147,11 +150,13 @@ class UserMapping extends Component {
         }
         if (index >= 0) {
             mappings[index].markForActiveAndActive = !mappings[index].markForActiveAndActive;
+            newMapping.id = mappings[index].id;
             newMapping.user = mappings[index].childUserId;
             newMapping.master = mappings[index].masterUserId;
             newMapping.comment = mappings[index].comment;
         }
         else {
+            newMapping.id = null;
             newMapping.user = '';
             newMapping.master = '';
             newMapping.comment = '';
@@ -253,7 +258,7 @@ class UserMapping extends Component {
 
         const addNewFormHTML = (isAddNew && this.formDesign(true, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML));
 
-        const addNewButtonHTML = (!isAddNew &&
+        const addNewButtonHTML = (!isAddNew && !isEdit &&
             <button className="btn btn-sm btn-success" onClick={this.addNew}>Add New</button>
         )
 
