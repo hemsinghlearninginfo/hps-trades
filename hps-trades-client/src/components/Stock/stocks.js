@@ -93,24 +93,21 @@ class Stocks extends Component {
             }
             else {
                 const { name, value } = event.target;
-                this.setState({
+                if(name.indexOf("is")!= -1){
+                    this.setState({
+                        addUpdateStock: {
+                            ...addUpdateStock,
+                            [name]: !addUpdateStock[name]
+                        }
+                      });
+                }
+                else{this.setState({
                     addUpdateStock: {
                         ...addUpdateStock,
                         [name]: value
                     }
                 });
-
-                // if (event.target.name === "eventType") {
-                //     let eventTypeDescription = this.state.eventTypes.filter(function (f) {
-                //         return f.id === value
-                //     })
-                //         .map(function (obj) {
-                //             return obj.description;
-                //         });
-                //     this.setState({
-                //         eventTypeDescription
-                //     })
-                // }
+            }
             }
         }
         else if (ctrl != null) {
