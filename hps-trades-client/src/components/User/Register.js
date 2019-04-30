@@ -15,6 +15,12 @@ class Register extends Component {
 
     constructor(props) {
         super(props);
+        
+        const user = this.props.authentication.user;
+        if (user == null || user.token == null) {
+            this.props.history.push('/');
+        }
+
         this.state = {
             user: {
                 firstName: '',

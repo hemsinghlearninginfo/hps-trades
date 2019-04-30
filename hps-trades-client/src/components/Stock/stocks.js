@@ -28,9 +28,11 @@ class Stocks extends Component {
             stocks: [],
             marketTypes: [],
             addUpdateStock: this.addNewObject(),
+            submitted: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -93,21 +95,22 @@ class Stocks extends Component {
             }
             else {
                 const { name, value } = event.target;
-                if(name.indexOf("is")!= -1){
+                if (name.indexOf("is") != -1) {
                     this.setState({
                         addUpdateStock: {
                             ...addUpdateStock,
                             [name]: !addUpdateStock[name]
                         }
-                      });
+                    });
                 }
-                else{this.setState({
-                    addUpdateStock: {
-                        ...addUpdateStock,
-                        [name]: value
-                    }
-                });
-            }
+                else {
+                    this.setState({
+                        addUpdateStock: {
+                            ...addUpdateStock,
+                            [name]: value
+                        }
+                    });
+                }
             }
         }
         else if (ctrl != null) {
@@ -120,9 +123,25 @@ class Stocks extends Component {
         }
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+        this.setState({ submitted: true });
+        const { addUpdateStock } = this.state;
+
+        const isSomeCheck = addUpdateStock.isFuture || addUpdateStock.isIndex || addUpdateStock.isDerivates;
+        if (
+            (isSomeCheck && addUpdateStock.market && addUpdateStock.name && addUpdateStock.symbol) &&
+            ((addUpdateStock.isFuture || addUpdateStock.isIndex) && (addUpdateStock.expiryDate && addUpdateStock.quantity && addUpdateStock.unit)
+                || (addUpdateStock.isDerivates && addUpdateStock.derivatesType)
+            )
+        ) {
+            alert('done');
+        }
+        
+    }
 
     render() {
-        const { isAdd, addUpdateStock, marketTypes } = this.state;
+        const { isAdd, addUpdateStock, submitted, marketTypes } = this.state;
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
             return (
@@ -141,14 +160,26 @@ class Stocks extends Component {
                                 <option>Select Type</option>
                                 {marketSelectOptionsHTML}
                             </select>
+                            {
+                                submitted && !addUpdateStock.market &&
+                                <div className="help-block">Stock Name is required</div>
+                            }
                         </div>
                         <div className="form-group col-md-6">
                             <label className="control-label"><strong>Company Name</strong></label>
                             <input className="form-control required" name="name" type="text" value={addUpdateStock.name} onChange={this.handleChange} />
+                            {
+                                submitted && !addUpdateStock.name &&
+                                <div className="help-block">Company Name is required</div>
+                            }
                         </div>
                         <div className="form-group col-md-3">
                             <label className="control-label"><strong>Symbol</strong></label>
                             <input className="form-control required" name="symbol" type="text" value={addUpdateStock.symbol} onChange={this.handleChange} />
+                            {
+                                submitted && !addUpdateStock.symbol &&
+                                <div className="help-block">Symbol Name is required</div>
+                            }
                         </div>
                     </div>
                     <div className="row col-md-12">
@@ -168,24 +199,37 @@ class Stocks extends Component {
                             <div className="form-group col-md-3">
                                 <label className="control-label"><strong>Expiry Date</strong></label>
                                 <label className="calCtrl" onClick={e => e.preventDefault()}>
-                                    <DatePicker className="form-control"
+                                    <DatePicker
+                                        className="form-control"
                                         minDate={moment()}
                                         selected={addUpdateStock.expiryDate}
-                                        onChange={(e) => this.handleChange(e, "toDate")}
+                                        onChange={(e) => this.handleChange(e, "expiryDate")}
                                         dateFormat="DD-MM-YY"
                                         preventOpenOnFocus={true}
                                     />
                                 </label>
+                                {
+                                    submitted && (addUpdateStock.isFuture || addUpdateStock.isIndex) && !addUpdateStock.expiryDate &&
+                                    <div className="help-block">Expiry Date is required</div>
+                                }
                             </div>
                         )}
                         {(addUpdateStock.isFuture || addUpdateStock.isIndex) && (<div className="form-group col-md-3">
                             <label className="control-label"><strong>Quantity</strong></label>
                             <input className="form-control required" name="quantity" type="text" value={addUpdateStock.quantity} onChange={this.handleChange} />
+                            {
+                                submitted && (addUpdateStock.isFuture || addUpdateStock.isIndex) && !addUpdateStock.quantity &&
+                                <div className="help-block">Quantity is required</div>
+                            }
                         </div>
                         )}
                         {(addUpdateStock.isFuture || addUpdateStock.isIndex) && (<div className="form-group col-md-3">
                             <label className="control-label"><strong>Unit</strong></label>
-                            <input className="form-control required" name="uni" type="text" value={addUpdateStock.unit} onChange={this.handleChange} />
+                            <input className="form-control required" name="unit" type="text" value={addUpdateStock.unit} onChange={this.handleChange} />
+                            {
+                                submitted && (addUpdateStock.isFuture || addUpdateStock.isIndex) && !addUpdateStock.unit &&
+                                <div className="help-block">Unit is required</div>
+                            }
                         </div>
                         )}
                     </div>
@@ -200,11 +244,15 @@ class Stocks extends Component {
                         {addUpdateStock.isDerivates && (
                             <div className="form-group col-md-3">
                                 <label className="control-label"><strong>Derivates Type</strong></label>
-                                <select className="form-control required" name="market" value={addUpdateStock.market} onChange={this.handleChange}>
+                                <select className="form-control required" name="derivatesType" value={addUpdateStock.market} onChange={this.handleChange}>
                                     <option>Select Type</option>
                                     <option key="CE">Call</option>
                                     <option key="PE">Put</option>
                                 </select>
+                                {
+                                    submitted && addUpdateStock.isDerivates && !addUpdateStock.market &&
+                                    <div className="help-block">Derivates Type is required</div>
+                                }
                             </div>
                         )}
                     </div>
