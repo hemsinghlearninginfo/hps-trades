@@ -16,11 +16,6 @@ class Stocks extends Component {
     constructor(props) {
         super(props);
 
-        const user = this.props.authentication.user;
-        if (user == null || user.token == null) {
-            this.props.history.push('/');
-        }
-
         this.state = {
             isError: false,
             isAdd: false,
@@ -36,7 +31,13 @@ class Stocks extends Component {
     }
 
     componentDidMount() {
-        this.handleDBOperation('MarketType');
+        const user = this.props.authentication.user;
+        if (user === null || user.token === null || user.lenth === 0) {
+            this.props.history.push('/');
+        }
+        else {
+            this.handleDBOperation('MarketType');
+        }
     }
 
     addNewObject = () => {
@@ -57,7 +58,7 @@ class Stocks extends Component {
 
 
     handleDBOperation = (operation) => {
-        if (operation == 'MarketType') {
+        if (operation === 'MarketType') {
             stockActions.getMarket()
                 .then((responseText) => {
                     return responseText;
@@ -290,7 +291,7 @@ class Stocks extends Component {
             <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks">
                 <div className="mainContainer">
                     {!isAdd && (
-                        <div className="row"><a href="#" className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</a></div>
+                        <div className="row"><a className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</a></div>
                     )}
                     {formHTML}
                 </div>

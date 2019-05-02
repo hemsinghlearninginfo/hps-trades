@@ -2,7 +2,7 @@ import { appConstants, responseConstants } from '../_constants';
 import { stockService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
-import { dataManager } from '../dataManager';
+//import { dataManager } from '../dataManager';
 
 export const stockActions = {
     getMarket,

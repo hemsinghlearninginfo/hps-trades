@@ -44,7 +44,7 @@ class ResetPassword extends Component {
 
         this.setState({ submitted: true });
         const { password, confirmPassword } = this.state;
-        const { dispatch } = this.props;
+        //const { dispatch } = this.props;
 
         if (password && confirmPassword) {
             // var forgotPasswordToEmail = {

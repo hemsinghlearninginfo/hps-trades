@@ -1,5 +1,5 @@
 import { emailService } from '../_services';
-import { appConstants, responseConstants, messageConstants } from '../_constants';
+import { appConstants, responseConstants } from '../_constants';
 import { alertActions } from './';
 import { history } from '../_helpers';
 

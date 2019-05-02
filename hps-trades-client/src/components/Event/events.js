@@ -17,11 +17,6 @@ class Events extends Component {
     constructor(props) {
         super(props);
 
-        const user = this.props.authentication.user;
-        if (user == null || user.token == null) {
-            this.props.history.push('/');
-        }
-
         this.state = {
             events: [],
             eventTypes: [],
@@ -49,13 +44,19 @@ class Events extends Component {
     }
 
     componentDidMount() {
-        this.handleDBOperation('getListForEventTypes');
-        this.handleDBOperation('getEventList');
+        const user = this.props.authentication.user;
+        if (user == null || user.token == null) {
+            this.props.history.push('/');
+        }
+        else {
+            this.handleDBOperation('getListForEventTypes');
+            this.handleDBOperation('getEventList');
+        }
     }
 
     handleChange(event, ctrl = "") {
         const { newEvent } = this.state;
-        if (event != null) {
+        if (event !== null) {
             if (event._isAMomentObject !== null && event._isAMomentObject && ctrl !== "") {
                 this.setState({
                     newEvent: {
@@ -137,7 +138,6 @@ class Events extends Component {
             eventTypeDescription: '',
             submitted: false
         });
-        const { newEvent } = this.state;
     }
 
     handleDeleteEventItem(id) {
@@ -174,7 +174,7 @@ class Events extends Component {
             const { dispatch } = this.props;
             const addedEvent = this.state.newEvent;
             var newEvent = {
-                id : addedEvent.id,
+                id: addedEvent.id,
                 heading: addedEvent.heading,
                 message: addedEvent.message,
                 fromDate: addedEvent.fromDate,
@@ -223,7 +223,7 @@ class Events extends Component {
     render() {
         const { events, eventTypes, eventTypeDescription, isAdd, newEvent, submitted, isValidDateRange } = this.state;
         const { requestLoading } = this.props;
-        
+
         const selectOptionsHTML = eventTypes.map((item) => {
             return (
                 <option key={item._id} value={item._id}>{item.name}</option>
@@ -241,7 +241,7 @@ class Events extends Component {
                                 <p><strong>{item.dateForDisplay}</strong></p>
                                 <p><strong>Type: {item.eventType}</strong></p>
                                 <p className="card-text">{item.message}</p>
-                                <a href="#" className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)} Edit</a>
+                                <a className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)} Edit</a>
                                 {' '}
                                 <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="Delete" buttonIcon={getIcon(iconConstants.DELETE)}
                                     modalClassName=""
@@ -369,7 +369,7 @@ class Events extends Component {
                 {requestLoading && (<Components.Loading message="loading" />)}
                 {newItemHTML}
                 {!isAdd && (
-                    <a href="#" className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>
+                    <a className="btn btn-info btn-sm" title="Add New Event" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add new event</a>
                 )}
                 <div className="row">
                     {eventItemsHTML}

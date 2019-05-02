@@ -1,4 +1,4 @@
-import { authHeader, authHeaderAppJson } from '../_helpers';
+import { authHeaderAppJson } from '../_helpers';
 import { myConfig } from '../config';
 import { commonService } from './';
 

@@ -28,7 +28,7 @@ function getUserAlerts(alertData) {
             let searchItem = alertData.filter(function(f){ 
                 return f.id === v.id;
              });
-             if(searchItem.length == 0){
+             if(searchItem.length === 0){
                 alertData.push(v);
              }
         });
@@ -61,7 +61,7 @@ function logoutUser() {
 function getUserRole() {
     try {
         let userRoles = getObjectByName(myConfig.Master_UserRoles);
-        if (userRoles.length == 0) {
+        if (userRoles.length === 0) {
             dataInitialiseService.getUserRoles(myConfig.Master_UserRoles)
                 .then((responseText) => {
                     return responseText;

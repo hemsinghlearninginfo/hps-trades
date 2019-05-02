@@ -12,11 +12,6 @@ class UserMapping extends Component {
     constructor(props) {
         super(props);
 
-        const user = this.props.authentication.user;
-        if (user == null || user.token == null) {
-            this.props.history.push('/');
-        }
-
         this.state = {
             isAddNew: false,
             isEdit: false,
@@ -38,8 +33,14 @@ class UserMapping extends Component {
     }
 
     componentDidMount() {
-        this.getAllMapping();
-        this.getAllUsers();
+        const user = this.props.authentication.user;
+        if (user == null || user.token == null) {
+            this.props.history.push('/');
+        }
+        else {
+            this.getAllMapping();
+            this.getAllUsers();
+        }
     }
 
     getAllMapping = () => {
@@ -246,7 +247,7 @@ class UserMapping extends Component {
 
         const selectMasterOptionsHTML = users.map((item) => {
             return (
-                item.type == 'Master' && <option key={item.id} value={item.id}>{item.type + ' - ' + item.firstName + ' ' + item.lastName + ' (' + item.email + ')'}</option>
+                item.type === 'Master' && <option key={item.id} value={item.id}>{item.type + ' - ' + item.firstName + ' ' + item.lastName + ' (' + item.email + ')'}</option>
             )
         });
 

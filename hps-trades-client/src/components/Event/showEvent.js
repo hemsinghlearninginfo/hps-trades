@@ -8,7 +8,7 @@ import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
 import Wrapper from '../../hoc/Wrapper';
 import { dataManager } from '../../dataManager';
-import { eventActions } from '../../_actions';
+//import { eventActions } from '../../_actions';
 
 class ShowEvent extends Component {
 

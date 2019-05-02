@@ -58,7 +58,6 @@ export function getIcon(iconType) {
         case iconConstants.STOCK:
             iconsHTML = <FaAtom />;
             break;
-            FaAtom
         default:
             iconsHTML = <FaAngrycreative />
     }
