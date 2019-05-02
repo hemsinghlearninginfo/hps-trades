@@ -15,7 +15,7 @@ class Register extends Component {
 
     constructor(props) {
         super(props);
-        
+
         const user = this.props.authentication.user;
         if (user == null || user.token == null) {
             this.props.history.push('/');
@@ -69,7 +69,6 @@ class Register extends Component {
             password: user.password
         });
     }
-
 
     handleSubmit(event) {
         event.preventDefault();

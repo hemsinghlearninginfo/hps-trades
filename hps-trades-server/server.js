@@ -55,7 +55,7 @@ seed.seedDB();
 
     routes();
 
-    ioConnection();
+    //ioConnection();
 
     // start server
     const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
@@ -72,6 +72,9 @@ function routes() {
     app.use("/market", require('./masters/market/market.controller'));
 
     app.use("/mdata", require('./masters/master.controller'));
+
+    //api routes for stock operations
+    app.use("/stock", require('./stock/stock.controller'));
 
     // api routes for event
     app.use("/event", require('./event/events.controller'));

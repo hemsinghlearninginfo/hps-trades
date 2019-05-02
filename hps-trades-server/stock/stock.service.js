@@ -8,7 +8,8 @@ const StockDb = db.Stock;
 const dataConstants = require('../_helpers/dataConstants');
 
 module.exports = {
-     getAll,
+    getAll,
+    add,
     // getById,
     // deleteByUser,
     // createByUser,
@@ -23,6 +24,18 @@ async function getAll() {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+async function add(stockParam) {
+    // validate
+    if (await StockDb.findOne({ symbol: stockParam.symbol })) {
+        throw 'Stock "' + stockParam.symbol + '" is already added.';
+    }
+
+    // save user
+    const stock = new StockDb(stockParam);
+    await stock.save();
 }
 
 // async function getEventsWithInCurrentTime() {

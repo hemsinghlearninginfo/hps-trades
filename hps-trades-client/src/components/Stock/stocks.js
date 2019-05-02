@@ -9,7 +9,6 @@ import { stockActions } from '../../_actions';
 import styles from './stock.css'
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
-import { dataManager } from '../../dataManager';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Stocks extends Component {
@@ -23,6 +22,7 @@ class Stocks extends Component {
         }
 
         this.state = {
+            isError: false,
             isAdd: false,
             isEdit: false,
             stocks: [],
@@ -95,7 +95,7 @@ class Stocks extends Component {
             }
             else {
                 const { name, value } = event.target;
-                if (name.indexOf("is") != -1) {
+                if (name.indexOf("is") !== -1) {
                     this.setState({
                         addUpdateStock: {
                             ...addUpdateStock,
@@ -126,22 +126,40 @@ class Stocks extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.setState({ submitted: true });
+        const { dispatch } = this.props;
         const { addUpdateStock } = this.state;
 
-        const isSomeCheck = addUpdateStock.isFuture || addUpdateStock.isIndex || addUpdateStock.isDerivates;
-        if (
-            (isSomeCheck && addUpdateStock.market && addUpdateStock.name && addUpdateStock.symbol) &&
-            ((addUpdateStock.isFuture || addUpdateStock.isIndex) && (addUpdateStock.expiryDate && addUpdateStock.quantity && addUpdateStock.unit)
-                || (addUpdateStock.isDerivates && addUpdateStock.derivatesType)
-            )
-        ) {
-            alert('done');
+        if ((!(addUpdateStock.market || addUpdateStock.name || addUpdateStock.symbol)) ||
+            (((addUpdateStock.isFuture || addUpdateStock.isIndex) && (addUpdateStock.expiryDate === "" || addUpdateStock.quantity === "" || addUpdateStock.unit === ""))
+                || (addUpdateStock.isDerivates && addUpdateStock.derivatesType === "")
+            )) {
+            this.setState({ isError: true });
         }
-        
+        else {
+            this.setState({ isError: false });
+            let submitStock = this.getFinalObjectToSubmit(addUpdateStock);
+            dispatch(stockActions.add(submitStock));
+        }
+    }
+
+    getFinalObjectToSubmit = (addUpdateStock) => {
+        return ({
+            id: addUpdateStock.id,
+            market: addUpdateStock.market,
+            name: addUpdateStock.name,
+            symbol: addUpdateStock.symbol,
+            isIndex: addUpdateStock.isIndex,
+            isFuture: addUpdateStock.isFuture,
+            quantity: (addUpdateStock.isIndex || addUpdateStock.isFuture) ? addUpdateStock.quantity : null,
+            unit: (addUpdateStock.isIndex || addUpdateStock.isFuture) ? addUpdateStock.unit : null,
+            expiryDate: (addUpdateStock.isIndex || addUpdateStock.isFuture) ? addUpdateStock.expiryDate : null,
+            isDerivates: addUpdateStock.isDerivates,
+            derivatesType: addUpdateStock.isDerivates ? addUpdateStock.derivatesType : null,
+        });
     }
 
     render() {
-        const { isAdd, addUpdateStock, submitted, marketTypes } = this.state;
+        const { isAdd, addUpdateStock, submitted, isError, marketTypes } = this.state;
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
             return (
@@ -152,6 +170,7 @@ class Stocks extends Component {
         const formHTML = isAdd && (<div className="row">
             <div className="addBox w-100">
                 <div className="addBoxHeading">{(addUpdateStock !== null && addUpdateStock.id !== '') ? 'Edit Stock Details' : 'Add New Stock Details'}</div>
+                {isError && <div className="errorBox">Please add all required fields.</div>}
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className="row col-md-12">
                         <div className="form-group col-md-3">
@@ -244,13 +263,13 @@ class Stocks extends Component {
                         {addUpdateStock.isDerivates && (
                             <div className="form-group col-md-3">
                                 <label className="control-label"><strong>Derivates Type</strong></label>
-                                <select className="form-control required" name="derivatesType" value={addUpdateStock.market} onChange={this.handleChange}>
+                                <select className="form-control required" name="derivatesType" value={addUpdateStock.derivatesType} onChange={this.handleChange}>
                                     <option>Select Type</option>
                                     <option key="CE">Call</option>
                                     <option key="PE">Put</option>
                                 </select>
                                 {
-                                    submitted && addUpdateStock.isDerivates && !addUpdateStock.market &&
+                                    submitted && addUpdateStock.isDerivates && !addUpdateStock.derivatesType &&
                                     <div className="help-block">Derivates Type is required</div>
                                 }
                             </div>

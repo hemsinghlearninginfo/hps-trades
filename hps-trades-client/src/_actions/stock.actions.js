@@ -6,6 +6,7 @@ import { dataManager } from '../dataManager';
 
 export const stockActions = {
     getMarket,
+    add,
     // getEventTypesByUser,
     // getAllEventsByUser,
     // createByUser,
@@ -24,6 +25,28 @@ async function getMarket(){
         }
         else { return error; }
     }
+}
+
+
+function add(stock) {
+    return dispatch => {
+        dispatch(request(stock));
+        stockService.add(stock)
+            .then(
+                stock => {
+                    dispatch(success());
+                    dispatch(alertActions.success('Stock Add successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(stock) { return { type: appConstants.REQUEST,  stock } }
+    function success(stock) { return { type: appConstants.SUCCESS,  stock } }
+    function failure(error) { return { type: appConstants.FAILURE, error } }
 }
 
 // async function getAllEventsByUser(){
