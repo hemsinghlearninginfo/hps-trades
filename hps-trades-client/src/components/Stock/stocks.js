@@ -291,7 +291,7 @@ class Stocks extends Component {
             <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks">
                 <div className="mainContainer">
                     {!isAdd && (
-                        <div className="row"><a className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</a></div>
+                        <div className="row"><button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</button></div>
                     )}
                     {formHTML}
                 </div>
