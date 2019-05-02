@@ -37,6 +37,7 @@ class Stocks extends Component {
         }
         else {
             this.handleDBOperation('MarketType');
+            this.handleDBOperation('getAll');
         }
     }
 
@@ -72,6 +73,15 @@ class Stocks extends Component {
                         });
                     });
                     this.setState({ marketTypes });
+                });
+        }
+        else if (operation === "getAll") {
+            stockActions.getAll()
+                .then((responseText) => {
+                    return responseText;
+                })
+                .then((stocks) => {
+                    this.setState({ stocks });
                 });
         }
     }
@@ -160,7 +170,7 @@ class Stocks extends Component {
     }
 
     render() {
-        const { isAdd, addUpdateStock, submitted, isError, marketTypes } = this.state;
+        const { isAdd, addUpdateStock, submitted, isError, marketTypes, stocks } = this.state;
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
             return (
@@ -287,6 +297,32 @@ class Stocks extends Component {
             </div>
         </div>);
 
+        let allStocks = '';
+        if (stocks.length > 0) {
+            allStocks = stocks.map((item, index) => {
+                return (
+                    <div className="row">
+                        <div className="card stockCard">
+                            <div className="card-body">
+                                <h5 className="card-title">{item.symbol} - ({item.name})</h5>
+                                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>);
+            });
+
+            // allStocks = !isAdd && (<div className="row">
+            //     <div className="card stockCard">
+            //         <div class="card-body">
+            //             <h5 class="card-title">Special title treatment</h5>
+            //             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            //             <a href="#" class="btn btn-primary">Go somewhere</a>
+            //         </div>
+            //     </div>
+            // </div>);
+        }
+
         return (
             <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks">
                 <div className="mainContainer">
@@ -294,6 +330,7 @@ class Stocks extends Component {
                         <div className="row"><button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</button></div>
                     )}
                     {formHTML}
+                    {allStocks}
                 </div>
             </Components.PageTemplate>
         );

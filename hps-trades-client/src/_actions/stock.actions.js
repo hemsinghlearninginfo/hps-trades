@@ -7,6 +7,7 @@ import { history } from '../_helpers';
 export const stockActions = {
     getMarket,
     add,
+    getAll,
     // getEventTypesByUser,
     // getAllEventsByUser,
     // createByUser,
@@ -47,6 +48,20 @@ function add(stock) {
     function request(stock) { return { type: appConstants.REQUEST,  stock } }
     function success(stock) { return { type: appConstants.SUCCESS,  stock } }
     function failure(error) { return { type: appConstants.FAILURE, error } }
+}
+
+async function getAll(){
+    try {
+        const stocks = await stockService.getAll();
+        return stocks;
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
 }
 
 // async function getAllEventsByUser(){
