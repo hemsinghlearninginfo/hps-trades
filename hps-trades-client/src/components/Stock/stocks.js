@@ -305,6 +305,12 @@ class Stocks extends Component {
                         <div className="card stockCard">
                             <div className="card-body">
                                 <h5 className="card-title"><strong>{item.market.name}:</strong> {item.symbol} - ({item.name})</h5>
+                                <div className="row">
+                                    <div className="col">IsFuture : {item.isFuture ? 'Yes' : 'No'}, IsIndex :{item.isIndex ? 'Yes' : 'No'}</div>
+                                    <div className="col">Expiry Date : {item.expiryDate != null ? moment(item.expiryDate).format('DD MMM, YYYY') : null}</div>
+                                    <div className="col">Quantity : {item.quantity != null ? item.quantity : null}</div>
+                                    <div className="col">Unit : {item.unit != null ? item.unit : null}</div>
+                                </div>
                                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
                                 <a href="#" className="btn btn-primary">Go somewhere</a>
                             </div>
