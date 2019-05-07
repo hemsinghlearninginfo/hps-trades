@@ -150,6 +150,9 @@ class Stocks extends Component {
             this.setState({ isError: false });
             let submitStock = this.getFinalObjectToSubmit(addUpdateStock);
             dispatch(stockActions.add(submitStock));
+            this.setState({ isAdd: false, stocks: [] });
+            this.handleDBOperation('getAll');
+            this.forceUpdate();
         }
     }
 
@@ -171,6 +174,7 @@ class Stocks extends Component {
 
     render() {
         const { isAdd, addUpdateStock, submitted, isError, marketTypes, stocks } = this.state;
+        const { requestLoading } = this.props;
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
             return (
@@ -299,34 +303,58 @@ class Stocks extends Component {
 
         let allStocks = '';
         if (stocks.length > 0) {
-            allStocks = stocks.map((item, index) => {
+            var itemsAllStocks = stocks.map((item, index) => {
                 return (
-                    <div className="row">
-                        <div className="card stockCard">
-                            <div className="card-body">
-                                <h5 className="card-title"><strong>{item.market.name}:</strong> {item.symbol} - ({item.name})</h5>
-                                <div className="row">
-                                    <div className="col">IsFuture : {item.isFuture ? 'Yes' : 'No'}, IsIndex :{item.isIndex ? 'Yes' : 'No'}</div>
-                                    <div className="col">Expiry Date : {item.expiryDate != null ? moment(item.expiryDate).format('DD MMM, YYYY') : null}</div>
-                                    <div className="col">Quantity : {item.quantity != null ? item.quantity : null}</div>
-                                    <div className="col">Unit : {item.unit != null ? item.unit : null}</div>
-                                </div>
-                                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>);
+                    <tr id={item.id}>
+                        <td>
+                            <a className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)}</a>
+                            {' '}
+                            <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="" buttonIcon={getIcon(iconConstants.DELETE)}
+                                modalClassName=""
+                                title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
+                                cancelButtonLabel="Cancel">
+                            </Components.ConfirmAlert>
+                        </td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}><strong>{item.market.name}</strong></td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.symbol} - ({item.name})</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isFuture ? 'Yes' : 'No'}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isIndex ? 'Yes' : 'No'}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.expiryDate != null ? moment(item.expiryDate).format('DD MMM, YYYY') : null}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.quantity != null ? item.quantity : null}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.unit != null ? item.unit : null}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isDerivates ? 'Yes' : 'No'}</td>
+                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.derivatesType != null ? item.derivatesType : null}</td>
+                    </tr>
+                );
             });
+            allStocks = <table class="table table-hover bg-white border shadow">
+                <thead>
+                    <tr className="font-weight-bold bg-info text-light">
+                        <td>Action</td>
+                        <td>Market</td>
+                        <td>Symbol</td>
+                        <td>Is Future</td>
+                        <td>Is Index</td>
+                        <td>Expiry Date</td>
+                        <td>Quantity</td>
+                        <td>Unit</td>
+                        <td>Is Derivate</td>
+                        <td>Derivate Type</td>
+                    </tr>
+                </thead>
+                <tbody>{itemsAllStocks}</tbody>
+            </table>
         }
 
         return (
             <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks">
+                {requestLoading && (<Components.Loading message="loading" />)}
                 <div className="mainContainer">
-                    {!isAdd && (
-                        <div className="row"><button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</button></div>
-                    )}
                     {formHTML}
                     {allStocks}
+                    {!isAdd && (
+                        <div className="row justify-content-center"><button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</button></div>
+                    )}
                 </div>
             </Components.PageTemplate>
         );

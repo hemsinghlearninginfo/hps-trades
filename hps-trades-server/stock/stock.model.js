@@ -10,7 +10,7 @@ const schema = new Schema({
     name: { type: String, required: true },
     symbol: { type: String, required: true },
     expiryDate: { type: Date, default: null },
-    quantity: { type: Number, default: 1 },
+    quantity: { type: String, default: null },
     unit: { type: String, default: '' },
 
     isIndex: { type: Boolean, default: false },
@@ -18,7 +18,7 @@ const schema = new Schema({
     isDerivates: { type: Boolean, default: false },
     derivatesType: { type: String, default: '' },
 
-    isActive: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
     createdDate: { type: Date, default: Date.now },
 
