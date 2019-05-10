@@ -7,6 +7,7 @@ export const utils = {
     decrypt,
     validateEmail,
     validatePassword,
+    scrollToTop
 };
 
 function getQueryString(props, queryStringName){
@@ -50,3 +51,7 @@ function validatePassword(value) {
     return re.test(value);
 }
 
+
+function scrollToTop(){
+    window.scroll({top: 0, left: 0, behavior: 'smooth' });
+}

@@ -6,6 +6,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { stockActions } from '../../_actions';
+import { utils } from '../../_helpers';
 import styles from './stock.css'
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
@@ -17,6 +18,7 @@ class Stocks extends Component {
         super(props);
 
         this.state = {
+            isStockAlreadyAdded: false,
             isError: false,
             isAdd: false,
             isEdit: false,
@@ -57,7 +59,6 @@ class Stocks extends Component {
         }
     }
 
-
     handleDBOperation = (operation) => {
         if (operation === 'MarketType') {
             stockActions.getMarket()
@@ -90,6 +91,7 @@ class Stocks extends Component {
         this.setState({
             isAdd: !this.state.isAdd,
             addUpdateStock: this.addNewObject(),
+            submitted: false
         });
     }
 
@@ -147,13 +149,32 @@ class Stocks extends Component {
             this.setState({ isError: true });
         }
         else {
-            this.setState({ isError: false });
-            let submitStock = this.getFinalObjectToSubmit(addUpdateStock);
-            dispatch(stockActions.add(submitStock));
-            this.setState({ isAdd: false, stocks: [] });
-            this.handleDBOperation('getAll');
-            this.forceUpdate();
+            if (this.isStockUnique()) {
+                this.setState({ isError: false, isStockAlreadyAdded: false });
+                let submitStock = this.getFinalObjectToSubmit(addUpdateStock);
+                dispatch(stockActions.add(submitStock));
+                this.setState({ isAdd: false, stocks: [] });
+                this.handleDBOperation('getAll');
+                this.forceUpdate();
+            }
+            else {
+                this.setState({ isStockAlreadyAdded: true });
+            }
         }
+    }
+
+    isStockUnique() {
+        let isUnique = true;
+        const { stocks, addUpdateStock } = this.state;
+        if (stocks.length > 0) {
+            let foundStock = stocks.filter(function (stock) {
+                return (stock.market.id === addUpdateStock.market && stock.symbol === addUpdateStock.symbol) ? true : false;
+            });
+            if (foundStock !== null && foundStock.length > 0) {
+                isUnique = false;
+            }
+        }
+        return isUnique;
     }
 
     getFinalObjectToSubmit = (addUpdateStock) => {
@@ -172,8 +193,29 @@ class Stocks extends Component {
         });
     }
 
+    editItem = (id) => {
+        let foundItem = this.state.stocks.filter((obj) => obj.id === id)[0];
+        this.setState({
+            isAdd: true,
+            addUpdateStock: {
+                id: foundItem.id,
+                market: foundItem.market.id,
+                name: foundItem.name,
+                symbol: foundItem.symbol,
+                isIndex: foundItem.isIndex,
+                isFuture: foundItem.isFuture,
+                expiryDate: moment(foundItem.expiryDate === null ? moment() : foundItem.expiryDate),
+                quantity: foundItem.quantity,
+                unit: foundItem.unit,
+                isDerivates: foundItem.isDerivates,
+                derivatesType: foundItem.derivatesType,
+            }
+        });
+        utils.scrollToTop();
+    }
+
     render() {
-        const { isAdd, addUpdateStock, submitted, isError, marketTypes, stocks } = this.state;
+        const { isAdd, addUpdateStock, submitted, isError, marketTypes, stocks, isStockAlreadyAdded } = this.state;
         const { requestLoading } = this.props;
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
@@ -186,11 +228,12 @@ class Stocks extends Component {
             <div className="addBox w-100">
                 <div className="addBoxHeading">{(addUpdateStock !== null && addUpdateStock.id !== '') ? 'Edit Stock Details' : 'Add New Stock Details'}</div>
                 {isError && <div className="errorBox">Please add all required fields.</div>}
+                {isStockAlreadyAdded && <div className="errorBox">Stock details is already added, please verify again.</div>}
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className="row col-md-12">
                         <div className="form-group col-md-3">
                             <label className="control-label"><strong>Type</strong></label>
-                            <select className="form-control required" name="market" value={addUpdateStock.market} onChange={this.handleChange}>
+                            <select className="form-control required" name="market" value={addUpdateStock.market} defaultValue={addUpdateStock.market} onChange={this.handleChange}>
                                 <option>Select Type</option>
                                 {marketSelectOptionsHTML}
                             </select>
@@ -220,12 +263,12 @@ class Stocks extends Component {
                         <div className="form-group col-md-3">
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isFuture" value={addUpdateStock.isFuture} onChange={this.handleChange} />
+                                <input type="checkbox" name="isFuture" value={addUpdateStock.isFuture} checked={this.state.addUpdateStock.isFuture} onChange={this.handleChange} />
                                 <strong>&nbsp;Is Future</strong>
                             </label>
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isIndex" value={addUpdateStock.isIndex} onChange={this.handleChange} />
+                                <input type="checkbox" name="isIndex" value={addUpdateStock.isIndex} checked={addUpdateStock.isIndex} onChange={this.handleChange} />
                                 <strong>&nbsp;Is Index</strong>
                             </label>
                         </div>
@@ -271,7 +314,7 @@ class Stocks extends Component {
                         <div className="form-group col-md-3">
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isDerivates" value={addUpdateStock.isDerivates} onChange={this.handleChange} />
+                                <input type="checkbox" name="isDerivates" value={addUpdateStock.isDerivates} checked={addUpdateStock.isDerivates} onChange={this.handleChange} />
                                 <strong>&nbsp; Is Derivate</strong>
                             </label>
                         </div>
@@ -291,10 +334,10 @@ class Stocks extends Component {
                         )}
                     </div>
                     <div className="form-group">
-                        <div className="col-xs-offset-2 col-xs-2 pull-right">
-                            <button type="submit" className="btn btn-sm btn-primary" onClick={this.handleAddEventItem}>{getIcon(iconConstants.SAVE)} Save</button>
+                        <div className="pull-right">
+                            <button type="submit" className="btn btn-sm btn-primary">{getIcon(iconConstants.SAVE)} Save</button>
                             {' '}
-                            <button type="button" className="btn btn-sm btn-warning" onClick={this.addEmptyItem}>{getIcon(iconConstants.CANCEL)} Cancel</button>
+                            <button type="button" className="btn btn-sm btn-warning">{getIcon(iconConstants.CANCEL)} Cancel</button>
                         </div>
                     </div>
                 </form>
@@ -302,12 +345,13 @@ class Stocks extends Component {
         </div>);
 
         let allStocks = '';
+        let itemsAllStocks = '';
         if (stocks.length > 0) {
-            var itemsAllStocks = stocks.map((item, index) => {
+            itemsAllStocks = stocks.map((item, index) => {
                 return (
-                    <tr id={item.id}>
+                    <tr key={item.id}>
                         <td>
-                            <a className="btn btn-sm btn-warning" title="Edit">{getIcon(iconConstants.EDIT)}</a>
+                            <a className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)}</a>
                             {' '}
                             <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="" buttonIcon={getIcon(iconConstants.DELETE)}
                                 modalClassName=""
@@ -315,48 +359,50 @@ class Stocks extends Component {
                                 cancelButtonLabel="Cancel">
                             </Components.ConfirmAlert>
                         </td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}><strong>{item.market.name}</strong></td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.symbol} - ({item.name})</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isFuture ? 'Yes' : 'No'}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isIndex ? 'Yes' : 'No'}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.expiryDate != null ? moment(item.expiryDate).format('DD MMM, YYYY') : null}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.quantity != null ? item.quantity : null}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.unit != null ? item.unit : null}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isDerivates ? 'Yes' : 'No'}</td>
-                        <td class={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.derivatesType != null ? item.derivatesType : null}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}><strong>{item.market.name}</strong></td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.symbol} - ({item.name})</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isFuture ? 'Yes' : 'No'}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isIndex ? 'Yes' : 'No'}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.expiryDate != null ? moment(item.expiryDate).format('DD MMM, YYYY') : null}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.quantity != null ? item.quantity : null}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.unit != null ? item.unit : null}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.isDerivates ? 'Yes' : 'No'}</td>
+                        <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.derivatesType != null ? item.derivatesType : null}</td>
                     </tr>
                 );
             });
-            allStocks = <table class="table table-hover bg-white border shadow">
-                <thead>
-                    <tr className="font-weight-bold bg-info text-light">
-                        <td>Action</td>
-                        <td>Market</td>
-                        <td>Symbol</td>
-                        <td>Is Future</td>
-                        <td>Is Index</td>
-                        <td>Expiry Date</td>
-                        <td>Quantity</td>
-                        <td>Unit</td>
-                        <td>Is Derivate</td>
-                        <td>Derivate Type</td>
-                    </tr>
-                </thead>
-                <tbody>{itemsAllStocks}</tbody>
-            </table>
         }
+        else {
+            itemsAllStocks = <tr><td colSpan="10">No stock added.</td></tr>;
+        }
+        allStocks = <div className="table-responsive"><table className="table table-hover bg-white border shadow">
+            <thead>
+                <tr className="font-weight-bold bg-info text-light">
+                    <td>{!isAdd && (
+                        <button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New</button>
+                    )}{isAdd && 'Action'}</td>
+                    <td className="align-middle">Market</td>
+                    <td className="align-middle">Symbol</td>
+                    <td className="align-middle">Is Future</td>
+                    <td className="align-middle">Is Index</td>
+                    <td className="align-middle">Expiry Date</td>
+                    <td className="align-middle">Quantity</td>
+                    <td className="align-middle">Unit</td>
+                    <td className="align-middle">Is Derivate</td>
+                    <td className="align-middle">Derivate Type</td>
+                </tr>
+            </thead>
+            <tbody>{itemsAllStocks}</tbody>
+        </table></div>
 
         return (
-            <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks">
+            <Components.PageTemplate iconType={iconConstants.STOCK} heading="Market Stocks" >
                 {requestLoading && (<Components.Loading message="loading" />)}
                 <div className="mainContainer">
                     {formHTML}
                     {allStocks}
-                    {!isAdd && (
-                        <div className="row justify-content-center"><button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New Stock Details</button></div>
-                    )}
                 </div>
-            </Components.PageTemplate>
+            </Components.PageTemplate >
         );
     }
 }
