@@ -6,7 +6,7 @@ import { history } from '../_helpers';
 
 export const stockActions = {
     getMarket,
-    add,
+    addUpdate,
     getAll,
     // getEventTypesByUser,
     // getAllEventsByUser,
@@ -29,14 +29,14 @@ async function getMarket(){
 }
 
 
-function add(stock) {
+function addUpdate(stock) {
     return dispatch => {
         dispatch(request(stock));
-        stockService.add(stock)
+        stockService.addUpdate(stock)
             .then(
                 stock => {
                     dispatch(success());
-                    dispatch(alertActions.success('Stock Add successful'));
+                    dispatch(alertActions.success('Stock saved successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));

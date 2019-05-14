@@ -10,7 +10,7 @@ const util = require('../_helpers/util');
 //router.get('/geteventsbyuser', getAllEventsByUser);
 router.get('/', getAll);
 router.get('/getallactive', getAllActive);
-router.post('/create', create);
+router.post('/addupdate', addUpdate);
 // router.get('/:id', getById);
 
 module.exports = router;
@@ -27,8 +27,8 @@ function getAllActive(req, res, next) {
         .catch(err => next(err));
 }
 
-function create(req, res, next) {
-    stockService.add(req.body)
+function addUpdate(req, res, next) {
+    stockService.addUpdate(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

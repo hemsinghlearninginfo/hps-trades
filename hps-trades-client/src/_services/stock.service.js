@@ -4,7 +4,7 @@ import { commonService } from './';
 
 export const stockService = {
     getMarket,
-    add,
+    addUpdate,
     getAll,
     // getEventTypesByUser,
     // getAllEventsByUser,
@@ -22,13 +22,13 @@ function getMarket() {
 }
 
 
-function add(stock) {
+function addUpdate(stock) {
     const requestOptions = {
         method: 'POST',
         headers: authHeaderAppJson(),
         body: JSON.stringify(stock)
     };
-    return fetch(`${myConfig.ApiUrl}stock/create`, requestOptions)
+    return fetch(`${myConfig.ApiUrl}stock/addupdate`, requestOptions)
         .then(commonService.handleResponse);
 }
 

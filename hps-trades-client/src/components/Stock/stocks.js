@@ -30,6 +30,8 @@ class Stocks extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDBOperation('MarketType');
+        this.handleDBOperation('getAll');
     }
 
     componentDidMount() {
@@ -46,7 +48,7 @@ class Stocks extends Component {
     addNewObject = () => {
         return {
             id: '',
-            market: '',
+            market: 'Select Type',
             name: '',
             symbol: '',
             expiryDate: '',
@@ -55,7 +57,7 @@ class Stocks extends Component {
             unit: '',
             isIndex: false,
             isDerivates: false,
-            derivatesType: ''
+            derivatesType: 'Select Type',
         }
     }
 
@@ -87,10 +89,10 @@ class Stocks extends Component {
         }
     }
 
-    addEmptyItem = () => {
+    isAddUpdateNewItem = (isAction) => {
         this.setState({
-            isAdd: !this.state.isAdd,
-            addUpdateStock: this.addNewObject(),
+            isAdd: isAction ? !this.state.isAdd : isAction,
+            addUpdateStock: isAction ? this.addNewObject() : null,
             submitted: false
         });
     }
@@ -152,7 +154,7 @@ class Stocks extends Component {
             if (this.isStockUnique()) {
                 this.setState({ isError: false, isStockAlreadyAdded: false });
                 let submitStock = this.getFinalObjectToSubmit(addUpdateStock);
-                dispatch(stockActions.add(submitStock));
+                dispatch(stockActions.addUpdate(submitStock));
                 this.setState({ isAdd: false, stocks: [] });
                 this.handleDBOperation('getAll');
                 this.forceUpdate();
@@ -167,10 +169,14 @@ class Stocks extends Component {
         let isUnique = true;
         const { stocks, addUpdateStock } = this.state;
         if (stocks.length > 0) {
+            let isAdd = addUpdateStock.id === "" ? true : false;
             let foundStock = stocks.filter(function (stock) {
                 return (stock.market.id === addUpdateStock.market && stock.symbol === addUpdateStock.symbol) ? true : false;
             });
-            if (foundStock !== null && foundStock.length > 0) {
+            if (isAdd && foundStock !== null && foundStock.length > 0) {
+                isUnique = false;
+            }
+            else if(!isAdd && foundStock !== null && foundStock.length > 1){
                 isUnique = false;
             }
         }
@@ -220,7 +226,7 @@ class Stocks extends Component {
 
         let marketSelectOptionsHTML = marketTypes.map((item) => {
             return (
-                <option key={item.id} value={item.id}>{item.name}</option>
+                <option key={item.id} value={item.id || ''}>{item.name}</option>
             )
         });
 
@@ -233,7 +239,7 @@ class Stocks extends Component {
                     <div className="row col-md-12">
                         <div className="form-group col-md-3">
                             <label className="control-label"><strong>Type</strong></label>
-                            <select className="form-control required" name="market" value={addUpdateStock.market} defaultValue={addUpdateStock.market} onChange={this.handleChange}>
+                            <select className="form-control required" name="market" value={addUpdateStock.market || ''} onChange={this.handleChange}>
                                 <option>Select Type</option>
                                 {marketSelectOptionsHTML}
                             </select>
@@ -244,7 +250,7 @@ class Stocks extends Component {
                         </div>
                         <div className="form-group col-md-6">
                             <label className="control-label"><strong>Company Name</strong></label>
-                            <input className="form-control required" name="name" type="text" value={addUpdateStock.name} onChange={this.handleChange} />
+                            <input className="form-control required" name="name" type="text" value={addUpdateStock.name || ''} onChange={this.handleChange} />
                             {
                                 submitted && !addUpdateStock.name &&
                                 <div className="help-block">Company Name is required</div>
@@ -252,7 +258,7 @@ class Stocks extends Component {
                         </div>
                         <div className="form-group col-md-3">
                             <label className="control-label"><strong>Symbol</strong></label>
-                            <input className="form-control required" name="symbol" type="text" value={addUpdateStock.symbol} onChange={this.handleChange} />
+                            <input className="form-control required" name="symbol" type="text" value={addUpdateStock.symbol || ''} onChange={this.handleChange} />
                             {
                                 submitted && !addUpdateStock.symbol &&
                                 <div className="help-block">Symbol Name is required</div>
@@ -263,12 +269,12 @@ class Stocks extends Component {
                         <div className="form-group col-md-3">
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isFuture" value={addUpdateStock.isFuture} checked={this.state.addUpdateStock.isFuture} onChange={this.handleChange} />
+                                <input type="checkbox" name="isFuture" value={addUpdateStock.isFuture || false} checked={this.state.addUpdateStock.isFuture} onChange={this.handleChange} />
                                 <strong>&nbsp;Is Future</strong>
                             </label>
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isIndex" value={addUpdateStock.isIndex} checked={addUpdateStock.isIndex} onChange={this.handleChange} />
+                                <input type="checkbox" name="isIndex" value={addUpdateStock.isIndex || false} checked={addUpdateStock.isIndex} onChange={this.handleChange} />
                                 <strong>&nbsp;Is Index</strong>
                             </label>
                         </div>
@@ -293,7 +299,7 @@ class Stocks extends Component {
                         )}
                         {(addUpdateStock.isFuture || addUpdateStock.isIndex) && (<div className="form-group col-md-3">
                             <label className="control-label"><strong>Quantity</strong></label>
-                            <input className="form-control required" name="quantity" type="text" value={addUpdateStock.quantity} onChange={this.handleChange} />
+                            <input className="form-control required" name="quantity" type="text" value={addUpdateStock.quantity || ''} onChange={this.handleChange} />
                             {
                                 submitted && (addUpdateStock.isFuture || addUpdateStock.isIndex) && !addUpdateStock.quantity &&
                                 <div className="help-block">Quantity is required</div>
@@ -302,7 +308,7 @@ class Stocks extends Component {
                         )}
                         {(addUpdateStock.isFuture || addUpdateStock.isIndex) && (<div className="form-group col-md-3">
                             <label className="control-label"><strong>Unit</strong></label>
-                            <input className="form-control required" name="unit" type="text" value={addUpdateStock.unit} onChange={this.handleChange} />
+                            <input className="form-control required" name="unit" type="text" value={addUpdateStock.unit || ''} onChange={this.handleChange} />
                             {
                                 submitted && (addUpdateStock.isFuture || addUpdateStock.isIndex) && !addUpdateStock.unit &&
                                 <div className="help-block">Unit is required</div>
@@ -314,14 +320,14 @@ class Stocks extends Component {
                         <div className="form-group col-md-3">
                             <br />
                             <label className="control-label">
-                                <input type="checkbox" name="isDerivates" value={addUpdateStock.isDerivates} checked={addUpdateStock.isDerivates} onChange={this.handleChange} />
+                                <input type="checkbox" name="isDerivates" value={addUpdateStock.isDerivates || false} checked={addUpdateStock.isDerivates} onChange={this.handleChange} />
                                 <strong>&nbsp; Is Derivate</strong>
                             </label>
                         </div>
                         {addUpdateStock.isDerivates && (
                             <div className="form-group col-md-3">
                                 <label className="control-label"><strong>Derivates Type</strong></label>
-                                <select className="form-control required" name="derivatesType" value={addUpdateStock.derivatesType} onChange={this.handleChange}>
+                                <select className="form-control required" name="derivatesType" value={addUpdateStock.derivatesType || ''} onChange={this.handleChange}>
                                     <option>Select Type</option>
                                     <option key="CE">Call</option>
                                     <option key="PE">Put</option>
@@ -337,7 +343,7 @@ class Stocks extends Component {
                         <div className="pull-right">
                             <button type="submit" className="btn btn-sm btn-primary">{getIcon(iconConstants.SAVE)} Save</button>
                             {' '}
-                            <button type="button" className="btn btn-sm btn-warning">{getIcon(iconConstants.CANCEL)} Cancel</button>
+                            <button type="button" className="btn btn-sm btn-warning" onClick={() => this.isAddUpdateNewItem(false)}>{getIcon(iconConstants.CANCEL)} Cancel</button>
                         </div>
                     </div>
                 </form>
@@ -379,7 +385,7 @@ class Stocks extends Component {
             <thead>
                 <tr className="font-weight-bold bg-info text-light">
                     <td>{!isAdd && (
-                        <button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={this.addEmptyItem} >{getIcon(iconConstants.ADD)} Add New</button>
+                        <button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={() => this.isAddUpdateNewItem(true)}>{getIcon(iconConstants.ADD)} Add New</button>
                     )}{isAdd && 'Action'}</td>
                     <td className="align-middle">Market</td>
                     <td className="align-middle">Symbol</td>
