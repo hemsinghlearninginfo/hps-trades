@@ -8,6 +8,7 @@ import { ForgotPassword } from './User/ForgotPassword';
 import { ResetPassword } from './User/ResetPassword';
 import { UserPreference } from './User/UserPreference';
 import UserMapping from './User/UserMapping';
+import UsersStatus from './User/UsersStatus';
 import TNC from './Legal/TNC';
 import PP from './Legal/PP';
 
@@ -39,6 +40,7 @@ export default class Component {
     static Register = Register;
     static UserPreference = UserPreference;
     static UserMapping = UserMapping;
+    static UsersStatus = UsersStatus;
     static ForgotPassword = ForgotPassword;
     static ResetPassword = ResetPassword;
 
