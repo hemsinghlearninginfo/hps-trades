@@ -361,7 +361,7 @@ class Stocks extends Component {
                             {' '}
                             <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="" buttonIcon={getIcon(iconConstants.DELETE)}
                                 modalClassName=""
-                                title="Confirm" message="Are you sure to delete?" yesButtonLabel="Ok"
+                                title="Confirm" message={"Are you sure to delete " + item.symbol + "-" + item.name + "?"} yesButtonLabel="Ok"
                                 cancelButtonLabel="Cancel">
                             </Components.ConfirmAlert>
                         </td>
@@ -385,7 +385,7 @@ class Stocks extends Component {
             <thead>
                 <tr className="font-weight-bold bg-info text-light">
                     <td>{!isAdd && (
-                        <button className="btn btn-info btn-sm" title="Add New Stock Details" onClick={() => this.isAddUpdateNewItem(true)}>{getIcon(iconConstants.ADD)} Add New</button>
+                        <button className="btn btn-primary btn-sm" title="Add New Stock Details" onClick={() => this.isAddUpdateNewItem(true)}>{getIcon(iconConstants.ADD)} Add New</button>
                     )}{isAdd && 'Action'}</td>
                     <td className="align-middle">Market</td>
                     <td className="align-middle">Symbol</td>

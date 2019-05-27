@@ -6,7 +6,7 @@ import { Login } from './User/Login';
 import { Register } from './User/Register';
 import { ForgotPassword } from './User/ForgotPassword';
 import { ResetPassword } from './User/ResetPassword';
-import UserPreference from './User/UserPreference';
+import { UserPreference } from './User/UserPreference';
 import UserMapping from './User/UserMapping';
 import TNC from './Legal/TNC';
 import PP from './Legal/PP';

@@ -172,3 +172,13 @@ body {
 .userMappingTable{
     background-color: #d7e4da !important;
 }
+
+.userPreferenceTable tbody tr td{
+    vertical-align: middle;
+}
+
+.userPreferenceTableInput{
+    display: inline;
+    width: auto;
+
+}

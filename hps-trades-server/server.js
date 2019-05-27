@@ -55,7 +55,7 @@ seed.seedDB();
 
     routes();
 
-    //ioConnection();
+    ioConnection();
 
     // start server
     const port = process.env.NODE_ENV === 'production' ? 80 : 4000;

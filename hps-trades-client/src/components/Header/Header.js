@@ -41,7 +41,6 @@ class Header extends Component {
 
     render() {
         const user = this.props.authentication.user;
-        console.log(user);
         let userLoginHTML;
         let superAdminHTML;
 
@@ -80,8 +79,8 @@ class Header extends Component {
                     <DropdownItem className="item" href="/event">
                         <FaCalendar /> Events
                         </DropdownItem>
-                    <DropdownItem className="item" href="/login">
-                        <FaUsersCog /> Users
+                    <DropdownItem className="item" href="/usersstatus">
+                        <FaUsersCog /> Users Status
                     </DropdownItem>
                     <DropdownItem className="item" href="/usermapping">
                         <FaUserFriends /> Users Mapping
