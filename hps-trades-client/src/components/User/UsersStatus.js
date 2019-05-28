@@ -14,23 +14,11 @@ class UsersStatus extends Component {
         super(props);
 
         this.state = {
-            isAddNew: false,
-            isEdit: false,
-            mappings: [],
+            filterText: '',
             users: [],
-            newMapping: {
-                id: null,
-                user: '',
-                master: '',
-                comment: '',
-            },
-            isSubmitted: false,
-            isNewMappingUnique: false,
+            filteredUsers: [],
         }
-
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
-        // this.activeInActiveUser = this.activeInActiveUser.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
     componentDidMount() {
@@ -49,10 +37,18 @@ class UsersStatus extends Component {
                 return responseText;
             })
             .then((response) => {
-                this.setState({ users: response });
+                this.setState({ users: response, filteredUsers: response });
             });
     }
 
+    handleSearchChange() {
+        let filterText = this.refs.filterTextInput.value;
+        this.setState({ filterText });
+        const { users, filteredUsers } = this.state;
+        if (filterText !== '') {
+            this.setState({ filteredUsers: this.state.users.filter(item => (item.username.indexOf(filterText) > -1 || item.firstName.indexOf(filterText) > -1 || item.lastName.indexOf(filterText) > -1)) });
+        }
+    }
 
     handleChange(event) {
         // const { name, value } = event.target;
@@ -65,165 +61,9 @@ class UsersStatus extends Component {
         // });
     }
 
-    // addNew = () => {
-    //     this.setState({
-    //         isAddNew: true,
-    //         isEdit: false,
-    //         newMapping: {
-    //             id: null,
-    //             user: '',
-    //             master: '',
-    //             comment: '',
-    //         },
-    //         isSubmitted: false,
-    //     });
-    // }
-
-    // cancel = () => {
-    //     const { mappings } = this.state;
-    //     for (let i = 0; i < mappings.length; i++) {
-    //         mappings[i].markForActiveAndActive = false;
-    //     }
-    //     this.setState({
-    //         isAddNew: false,
-    //         isEdit: false,
-    //         mappings
-    //     });
-    // }
-
-    // handleSubmit(event) {
-    //     event.preventDefault();
-    //     const { newMapping } = this.state;
-    //     let isNewMappingUnique = this.isUnique();
-    //     this.setState({ isSubmitted: true, isNewMappingUnique });
-    //     if (newMapping.user && newMapping.master && newMapping.user !== newMapping.master && isNewMappingUnique) {
-    //         var userMapping = {
-    //             masterUserId: newMapping.master,
-    //             childUserId: newMapping.user,
-    //         }
-    //         const { dispatch } = this.props;
-    //         dispatch(userActions.addUpdateUserMapping(userMapping));
-    //         this.addNew();
-    //         this.getAllMapping();
-    //     }
-    // }
-
-    // isUnique = () => {
-    //     let isUnique = true;
-    //     const { mappings, newMapping } = this.state;
-    //     if (mappings.length > 0) {
-    //         let foundUser = mappings.filter(function (user) {
-    //             return (user.masterUserId === newMapping.master && user.childUserId === newMapping.user) ? true : false;
-    //         });
-    //         if (foundUser !== null && foundUser.length > 0) {
-    //             isUnique = false;
-    //         }
-    //     }
-    //     return isUnique;
-    // }
-
-    // activeInActiveUser = (otherObjectState, index) => {
-
-    //     const { mappings, newMapping } = this.state;
-    //     for (let i = 0; i < mappings.length; i++) {
-    //         mappings[i].markForActiveAndActive = otherObjectState;
-    //     }
-    //     if (index >= 0) {
-    //         mappings[index].markForActiveAndActive = !mappings[index].markForActiveAndActive;
-    //         newMapping.id = mappings[index].id;
-    //         newMapping.user = mappings[index].childUserId;
-    //         newMapping.master = mappings[index].masterUserId;
-    //         newMapping.comment = mappings[index].comment;
-    //     }
-    //     else {
-    //         newMapping.id = null;
-    //         newMapping.user = '';
-    //         newMapping.master = '';
-    //         newMapping.comment = '';
-    //     }
-    //     this.setState({
-    //         isAddNew: false,
-    //         isEdit: true,
-    //         mappings,
-    //         newMapping,
-    //         isSubmitted: false,
-    //         isNewMappingUnique: false
-    //     });
-    // }
-
-    // formDesign = (isNewUser, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML) => {
-    //     return (<form name="form" onSubmit={this.handleSubmit}>
-    //         <div className="table-responsive">
-    //             <table className="table userMappingTable">
-    //                 <thead>
-    //                     <tr>
-    //                         <th colSpan="4" className="text-center">{(isNewUser ? 'Add New' : 'Edit') + ' User Mapping with Master'}</th>
-    //                     </tr>
-    //                 </thead>
-    //                 <tbody>
-    //                     {
-    //                         isSubmitted && newMapping.master && newMapping.user
-    //                         && newMapping.master === newMapping.user &&
-    //                         <tr>
-    //                             <td colSpan="4">
-    //                                 <div className="help-block">Master and child can't be same.</div>
-    //                             </td>
-    //                         </tr>
-    //                     }
-    //                     {
-    //                         isSubmitted && newMapping.master && newMapping.user
-    //                         && !isNewMappingUnique &&
-    //                         <tr>
-    //                             <td colSpan="4">
-    //                                 <div className="help-block">User and Master mapping is already exists.</div>
-    //                             </td>
-    //                         </tr>
-    //                     }
-    //                     <tr>
-    //                         <td>Master</td>
-    //                         <td>
-    //                             <select className="form-control required" name="master" value={newMapping.master} onChange={this.handleChange}>
-    //                                 <option>Select Master</option>
-    //                                 {selectMasterOptionsHTML}
-    //                             </select>
-    //                             {
-    //                                 isSubmitted && !newMapping.master &&
-    //                                 <div className="help-block">Select Master is required</div>
-    //                             }
-    //                         </td>
-    //                         <td rowSpan="2">Comment</td>
-    //                         <td rowSpan="2"><textarea rows="5" cols="80"></textarea></td>
-
-    //                     </tr>
-    //                     <tr>
-    //                         <td>User</td>
-    //                         <td>
-    //                             <select className="form-control required" name="user" value={newMapping.user} onChange={this.handleChange}>
-    //                                 <option>Select User</option>
-    //                                 {selectOptionsHTML}
-    //                             </select>
-    //                             {
-    //                                 isSubmitted && !newMapping.user &&
-    //                                 <div className="help-block">Select User is required</div>
-    //                             }
-    //                         </td>
-    //                     </tr>
-    //                     <tr>
-    //                         <td className="text-right" colSpan="4">
-    //                             <button className="btn btn-sm btn-success" type="submit">{(isNewUser ? 'Save' : 'Update')}</button>
-    //                             {' '}
-    //                             <button className="btn btn-sm btn-danger" type="button" onClick={this.cancel}>Cancel</button>
-    //                         </td>
-    //                     </tr>
-    //                 </tbody>
-    //             </table>
-    //         </div>
-    //     </form>);
-    // }
-
     render() {
-        const { users } = this.state;
-        let userHTMLTable = users.map((item, index) => {
+        const { filteredUsers, filterText } = this.state;
+        let userHTMLTable = filteredUsers.map((item, index) => {
             return (
                 <tr key={item.id}>
                     <td>{item.username}</td>
@@ -235,46 +75,10 @@ class UsersStatus extends Component {
             );
         });
 
-        // const { isAddNew, isEdit, users, newMapping, isSubmitted, mappings, isNewMappingUnique } = this.state;
-
-        // const selectMasterOptionsHTML = users.map((item) => {
-        //     return (
-        //         item.type === 'Master' && <option key={item.id} value={item.id}>{item.type + ' - ' + item.firstName + ' ' + item.lastName + ' (' + item.email + ')'}</option>
-        //     )
-        // });
-
-        // const selectOptionsHTML = users.map((item) => {
-        //     return (
-        //         <option key={item.id} value={item.id}>{item.type + ' - ' + item.firstName + ' ' + item.lastName + ' (' + item.email + ')'}</option>
-        //     )
-        // });
-
-        // const addNewFormHTML = (isAddNew && this.formDesign(true, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML));
-
-        // const addNewButtonHTML = (!isAddNew && !isEdit &&
-        //     <button className="btn btn-sm btn-success" onClick={this.addNew}>Add New</button>
-        // )
-
-        // let userMappingHTML = ''
-        // if (mappings.length > 0) {
-        //     userMappingHTML = mappings.map((item, index) => {
-        //         return (
-        //             (!item.markForActiveAndActive && <tr key={item.id} className="danger">
-        //                 <td><button className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`} onClick={this.activeInActiveUser.bind(this, false, index)}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
-        //                 <td>{item.masterUserName}</td>
-        //                 <td>{item.childUserName}</td>
-        //                 <td>{item.isActive ? 'true' : 'false'}</td>
-        //                 <td>{item.comment}</td>
-        //             </tr>) ||
-        //             (item.markForActiveAndActive && !isAddNew && isEdit && <tr key={item.id} className="danger">
-        //                 <td colSpan="5">{this.formDesign(false, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML)}</td>
-        //             </tr>));
-        //     });
-        // }
-
         return (
             <Components.PageTemplate iconType={iconConstants.USERS_STATUS} heading="User Status">
                 <div className="table-responsive">
+                    <div><input type="text" className="form-control form-control-sm" placeholder="Search data by username, name and role..." value={filterText} ref="filterTextInput" onChange={this.handleSearchChange.bind(this)} /></div>
                     <table className="table table-hover bg-white border shadow table-bordered">
                         <thead>
                             <tr className="font-weight-bold bg-info text-light">
@@ -289,8 +93,6 @@ class UsersStatus extends Component {
                             {userHTMLTable}
                         </tbody>
                     </table>
-                    {/* {addNewFormHTML}
-                    {addNewButtonHTML} */}
                 </div>
             </Components.PageTemplate>
         );
