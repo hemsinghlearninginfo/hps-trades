@@ -70,20 +70,31 @@ function register(user) {
     function failure(error) { return { type: appConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
-    return dispatch => {
-        dispatch(request());
+async function getAll() {
+    try {
+        return await userService.getAll();
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
 
-        userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
-            );
-    };
+    // return dispatch => {
+    //     dispatch(request());
 
-    function request() { return { type: appConstants.GETALL_REQUEST } }
-    function success(users) { return { type: appConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: appConstants.GETALL_FAILURE, error } }
+    //     userService.getAll()
+    //         .then(
+    //             users => dispatch(success(users)),
+    //             error => dispatch(failure(error.toString()))
+    //         );
+    // };
+
+    // function request() { return { type: appConstants.GETALL_REQUEST } }
+    // function success(users) { return { type: appConstants.GETALL_SUCCESS, users } }
+    // function failure(error) { return { type: appConstants.GETALL_FAILURE, error } }
 }
 
 function forgotPasswordToEmail(username) {

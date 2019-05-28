@@ -73,7 +73,6 @@ function getUserRole() {
                         valid: getValidDate()
                     };
                     dataManager.setObjectByName(myConfig.Master_UserRoles, obj);
-                    //console.log('USR : ', dataManager.getObjectByName(myConfig.Master_UserRoles));
                 });
         }
         return userRoles.data;
