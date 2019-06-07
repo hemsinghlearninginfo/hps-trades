@@ -4,11 +4,11 @@ import { commonService } from './';
 
 
 export const dataInitialiseService = {
-    getUserRoles,
+    getMasterData,
 };
 
 
-function getUserRoles(type) {
+async function getMasterData(type) {
     const requestOptions = {
         method: 'GET',
         headers: header()

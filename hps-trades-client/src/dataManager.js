@@ -23,14 +23,14 @@ function getUserAlerts(alertData) {
         userAlerts = JSON.parse(decrypt(localStorage[dataManagerConstants.LOGEED_IN_ALERT]));
     }
 
-    if(userAlerts.length > 0){
-        userAlerts.forEach(function(v){
-            let searchItem = alertData.filter(function(f){ 
+    if (userAlerts.length > 0) {
+        userAlerts.forEach(function (v) {
+            let searchItem = alertData.filter(function (f) {
                 return f.id === v.id;
-             });
-             if(searchItem.length === 0){
+            });
+            if (searchItem.length === 0) {
                 alertData.push(v);
-             }
+            }
         });
     }
 
@@ -60,22 +60,30 @@ function logoutUser() {
 
 function getUserRole() {
     try {
-        let userRoles = getObjectByName(myConfig.Master_UserRoles);
-        if (userRoles.length === 0) {
-            dataInitialiseService.getUserRoles(myConfig.Master_UserRoles)
-                .then((responseText) => {
-                    return responseText;
-                })
-                .then((response) => {
-                    var obj = {
-                        type: myConfig.Master_UserRoles,
-                        data: response,
-                        valid: getValidDate()
-                    };
-                    dataManager.setObjectByName(myConfig.Master_UserRoles, obj);
-                });
-        }
-        return userRoles.data;
+        return dataInitialiseService.getMasterData(myConfig.Master_UserRoles);
+        // let userRoles = getObjectByName(myConfig.Master_UserRoles);
+        // if (userRoles.length === 0) {
+
+        //     const response = await dataInitialiseService.getMasterData(myConfig.Master_UserRoles);
+        //     var obj = await {
+        //         type: myConfig.Master_UserRoles,
+        //         data: response.JSON(),
+        //         valid: getValidDate()
+        //     };
+        //     dataManager.setObjectByName(myConfig.Master_UserRoles, obj);
+        //     return getObjectByName(myConfig.Master_UserRoles).data;
+        //     // dataInitialiseService.getMasterData(myConfig.Master_UserRoles)
+        //     //     .then((response) => {
+        //     //         var obj = {
+        //     //             type: myConfig.Master_UserRoles,
+        //     //             data: response,
+        //     //             valid: getValidDate()
+        //     //         };
+        //     //         dataManager.setObjectByName(myConfig.Master_UserRoles, obj);
+        //     //     });
+        //     // return await getObjectByName(myConfig.Master_UserRoles).data;
+        // }
+        // return await userRoles.data;
     }
     catch (error) {
         return error;
