@@ -15,6 +15,7 @@ export const userActions = {
     getAllUsermapping,
     getAllWithType,
     addUpdateUserMapping,
+    updateIsRegistration,
 };
 
 function login(username, password) {
@@ -179,4 +180,25 @@ function addUpdateUserMapping(userMapping) {
     function request(user) { return { type: appConstants.GETALL_REQUEST, user } }
     function success(user) { return { type: appConstants.GETALL_SUCCESS, user } }
     function failure(error) { return { type: appConstants.GETALL_FAILURE, error } }
+}
+
+function updateIsRegistration(users) {
+    return dispatch => {
+        dispatch(request(users));
+        userService.updateIsRegistration(users)
+            .then(
+                users => {
+                    dispatch(success());
+                    dispatch(alertActions.success('Registration Is Active successfully'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(user) { return { type: appConstants.REGISTER_REQUEST, user } }
+    function success(user) { return { type: appConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: appConstants.REGISTER_FAILURE, error } }
 }

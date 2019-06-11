@@ -7,6 +7,7 @@ router.post('/authenticate', authenticate);
 router.post('/forgotpasswordtoemail', forgotPasswordToEmail);
 router.post('/isvalidforgotpasswordlink', isValidForgotpasswordLink);
 router.post('/register', register);
+router.put('/updateisregistration', updateIsRegistration);
 router.get('/', getAll);
 router.get('/getallwithtype', getAllWithType);
 router.get('/current', getCurrent);
@@ -73,5 +74,11 @@ function _delete(req, res, next) {
 function getAllWithType(req, res, next) {
     userService.getAllWithType()
         .then((userWithType) => userWithType ? res.json(userWithType) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function updateIsRegistration(req, res, next) {
+    userService.updateIsRegistration(req.body)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }

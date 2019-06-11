@@ -1,8 +1,8 @@
 //import config  from 'config';
 import { authHeader, authHeaderAppJson } from '../_helpers';
-import { myConfig } from '../config' ;
+import { myConfig } from '../config';
 import { commonService } from './';
-import {dataManager} from '../dataManager';
+import { dataManager } from '../dataManager';
 
 export const userService = {
     login,
@@ -16,6 +16,7 @@ export const userService = {
     getAllUsermapping,
     getAllWithType,
     addUpdateUserMapping,
+    updateIsRegistration,
 };
 
 function login(username, password) {
@@ -49,7 +50,6 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
-
     return fetch(myConfig.ApiUrl + 'users', requestOptions).then(commonService.handleResponse);
 }
 
@@ -85,7 +85,6 @@ function update(user) {
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
     return fetch(myConfig.ApiUrl + 'users/' + user.id, requestOptions).then(commonService.handleResponse);
 }
 
@@ -95,8 +94,7 @@ function _delete(id) {
         method: 'DELETE',
         headers: authHeader()
     };
-
-    return fetch(myConfig.ApiUrl + 'users/' +  id, requestOptions).then(commonService.handleResponse);
+    return fetch(myConfig.ApiUrl + 'users/' + id, requestOptions).then(commonService.handleResponse);
 }
 
 function getAllUsermapping() {
@@ -126,3 +124,13 @@ function addUpdateUserMapping(userMapping) {
         .then(commonService.handleResponse);
 
 }
+
+function updateIsRegistration(users) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeaderAppJson(),
+        body: JSON.stringify(users)
+    };
+    return fetch(`${myConfig.ApiUrl}users/updateisregistration`, requestOptions)
+        .then(commonService.handleResponse);
+  }

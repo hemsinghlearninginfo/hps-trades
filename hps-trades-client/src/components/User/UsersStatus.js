@@ -42,6 +42,7 @@ class UsersStatus extends Component {
                 this.setState({ users: response, filteredUsers: response });
             });
     }
+    
     getUserRoles = () => {
         dataManager.getUserRole()
             .then((userRoles) => {
@@ -63,17 +64,20 @@ class UsersStatus extends Component {
         if (itemIndex !== -1) {
             users[itemIndex].isRegistrationActive = !users[itemIndex].isRegistrationActive;
             this.setState({ users });
-            this.handleSearchChange();
+            //this.handleSearchChange();
         }
     }
 
     handleSubmit() {
         const { users } = this.state;
+        const { dispatch } = this.props;
+        dispatch(userActions.updateIsRegistration(users));
     }
 
     render() {
         const { filteredUsers, filterText, userRoles } = this.state;
-        let userHTMLTable = filteredUsers.map((item, index) => {
+        let userHTMLTable = '';
+        userHTMLTable = filteredUsers.map((item, index) => {
             return (
                 <tr key={item.id}>
                     <td>{item.username}</td>
