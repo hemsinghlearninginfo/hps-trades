@@ -8,6 +8,7 @@ import { userActions } from '../../_actions';
 import { dataManager } from '../../dataManager';
 import styles from './User.css';
 import { iconConstants } from '../../_constants';
+import { myConfig } from '../../config';
 
 class UsersStatus extends Component {
 
@@ -42,7 +43,7 @@ class UsersStatus extends Component {
                 this.setState({ users: response, filteredUsers: response });
             });
     }
-    
+
     getUserRoles = () => {
         dataManager.getUserRole()
             .then((userRoles) => {
@@ -76,13 +77,24 @@ class UsersStatus extends Component {
 
     render() {
         const { filteredUsers, filterText, userRoles } = this.state;
+
         let userHTMLTable = '';
         userHTMLTable = filteredUsers.map((item, index) => {
+            let roleOptionHTML = userRoles.map((roleItem) => {
+                return (
+                    roleItem.role !== myConfig.System_UserRoles && <option key={roleItem.id} value={roleItem.id}>{roleItem.role}</option>
+                )
+            });
             return (
+                (userRoles.filter(ur => { return ur.id === item.userRole })[0].role !== myConfig.System_UserRoles) &&
                 <tr key={item.id}>
                     <td>{item.username}</td>
                     <td>{item.firstName + ' ' + item.lastName}</td>
-                    <td>{userRoles.filter(ur => { return ur.id === item.userRole })[0].role}</td>
+                    <td>
+                        <select className="form-control required" name="user" value={item.userRole}>
+                            {roleOptionHTML}
+                        </select>
+                    </td>
                     <td>
                         <div className="form-check">
                             <label className="form-check-label">

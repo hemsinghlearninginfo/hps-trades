@@ -5,4 +5,5 @@ export const myConfig = {
     SocketEventFromAPI:'SocketEventFromAPI',
     CacheValidateInMinutes:30,
     Master_UserRoles : 'dur',
+    System_UserRoles : 'SysAdmin',
 };
