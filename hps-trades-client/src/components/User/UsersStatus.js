@@ -23,6 +23,7 @@ class UsersStatus extends Component {
         }
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleCheckBox = this.handleCheckBox.bind(this);
+        this.handleUserRole = this.handleUserRole.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -69,6 +70,16 @@ class UsersStatus extends Component {
         }
     }
 
+    handleUserRole(id, event) {
+        const { value } = event.target;
+        const { users } = this.state;
+        let itemIndex = this.state.users.findIndex(item => item.id === id);
+        if (itemIndex !== -1) {
+            users[itemIndex].userRole = value;
+            this.setState({ users });
+        }
+    }
+
     handleSubmit() {
         const { users } = this.state;
         const { dispatch } = this.props;
@@ -91,7 +102,7 @@ class UsersStatus extends Component {
                     <td>{item.username}</td>
                     <td>{item.firstName + ' ' + item.lastName}</td>
                     <td>
-                        <select className="form-control required" name="user" value={item.userRole}>
+                        <select className="form-control required" name="userRole" value={item.userRole} onChange={e => this.handleUserRole(item.id, e)}>
                             {roleOptionHTML}
                         </select>
                     </td>

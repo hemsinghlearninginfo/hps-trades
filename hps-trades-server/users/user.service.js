@@ -156,7 +156,7 @@ async function updateIsRegistration(users) {
     users.forEach(function (userItem) {
         UserDb.update(
             { _id: userItem.id },
-            { $set: { isRegistrationActive: userItem.isRegistrationActive } },
+            { $set: { isRegistrationActive: userItem.isRegistrationActive, userRole: userItem.userRole } },
             function (err) {
                 if (err) throw err;
             }

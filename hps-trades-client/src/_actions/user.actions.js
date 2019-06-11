@@ -189,7 +189,7 @@ function updateIsRegistration(users) {
             .then(
                 users => {
                     dispatch(success());
-                    dispatch(alertActions.success('Registration Is Active successfully'));
+                    dispatch(alertActions.success('User updated successfully'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
