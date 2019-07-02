@@ -377,14 +377,8 @@ class Stocks extends Component {
             itemsAllStocks = stocks.map((item, index) => {
                 return (
                     <tr key={item.id} className={!item.isActive ? "inActive" : item.isDeleted ? "deleted" : ""}>
-                        <td>
+                        <td className="align-middle text-center">
                             <a className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)}</a>
-                            {' '}
-                            <Components.ConfirmAlert buttonClassName="btn btn-sm btn-dange" buttonLabel="" buttonIcon={getIcon(iconConstants.DELETE)}
-                                modalClassName=""
-                                title="Confirm" message={"Are you sure to delete " + item.symbol + "-" + item.name + "?"} yesButtonLabel="Ok"
-                                cancelButtonLabel="Cancel">
-                            </Components.ConfirmAlert>
                         </td>
                         <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}><strong>{item.market.name}</strong></td>
                         <td className={"align-middle " + (!item.isActive ? "text-muted" : "")}>{item.symbol} - ({item.name})</td>
@@ -405,7 +399,7 @@ class Stocks extends Component {
         allStocks = <div className="table-responsive"><table className="table table-hover bg-white border shadow">
             <thead>
                 <tr className="font-weight-bold bg-info text-light">
-                    <td>{!isAdd && (
+                    <td className="align-middle text-center">{!isAdd && (
                         <button className="btn btn-primary btn-sm" title="Add New Stock Details" onClick={() => this.isAddUpdateNewItem(true)}>{getIcon(iconConstants.ADD)} Add New</button>
                     )}{isAdd && 'Action'}</td>
                     <td className="align-middle">Market</td>

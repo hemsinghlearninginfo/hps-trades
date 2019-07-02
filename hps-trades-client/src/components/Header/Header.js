@@ -43,6 +43,7 @@ class Header extends Component {
         const user = this.props.authentication.user;
         let userLoginHTML;
         let superAdminHTML;
+        let stockHTML;
 
         if (user == null || user.token == null) {
             userLoginHTML = (
