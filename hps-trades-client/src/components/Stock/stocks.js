@@ -58,6 +58,8 @@ class Stocks extends Component {
             isIndex: false,
             isDerivates: false,
             derivatesType: 'Select Type',
+            isActive: true,
+            isDeleted: false
         }
     }
 
@@ -93,7 +95,8 @@ class Stocks extends Component {
         this.setState({
             isAdd: isAction ? !this.state.isAdd : isAction,
             addUpdateStock: isAction ? this.addNewObject() : null,
-            submitted: false
+            submitted: false,
+            isStockAlreadyAdded: false
         });
     }
 
@@ -160,7 +163,7 @@ class Stocks extends Component {
                 this.forceUpdate();
             }
             else {
-                this.setState({ isStockAlreadyAdded: true });
+                this.setState({ isStockAlreadyAdded: true, submitted: false });
             }
         }
     }
@@ -176,7 +179,7 @@ class Stocks extends Component {
             if (isAdd && foundStock !== null && foundStock.length > 0) {
                 isUnique = false;
             }
-            else if(!isAdd && foundStock !== null && foundStock.length > 1){
+            else if (!isAdd && foundStock !== null && foundStock.length > 1) {
                 isUnique = false;
             }
         }
@@ -196,6 +199,8 @@ class Stocks extends Component {
             expiryDate: (addUpdateStock.isIndex || addUpdateStock.isFuture) ? addUpdateStock.expiryDate : null,
             isDerivates: addUpdateStock.isDerivates,
             derivatesType: addUpdateStock.isDerivates ? addUpdateStock.derivatesType : null,
+            isActive: addUpdateStock.isActive,
+            isDeleted: addUpdateStock.isDeleted
         });
     }
 
@@ -215,6 +220,8 @@ class Stocks extends Component {
                 unit: foundItem.unit,
                 isDerivates: foundItem.isDerivates,
                 derivatesType: foundItem.derivatesType,
+                isActive: foundItem.isActive,
+                isDeleted: foundItem.isDeleted
             }
         });
         utils.scrollToTop();
@@ -339,6 +346,20 @@ class Stocks extends Component {
                             </div>
                         )}
                     </div>
+                    <div className="row col-md-12">
+                        <div className="form-group col-md-3">
+                            <label className="control-label">
+                                <input type="checkbox" name="isActive" value={addUpdateStock.isActive || false} checked={addUpdateStock.isActive} onChange={this.handleChange} />
+                                <strong>&nbsp; Is Stock Active</strong>
+                            </label>
+                        </div>
+                        <div className="form-group col-md-3">
+                            <label className="control-label">
+                                <input type="checkbox" name="isDeleted" value={addUpdateStock.isDeleted || false} checked={addUpdateStock.isDeleted} onChange={this.handleChange} />
+                                <strong>&nbsp; Is Stock Delete</strong>
+                            </label>
+                        </div>
+                    </div>
                     <div className="form-group">
                         <div className="pull-right">
                             <button type="submit" className="btn btn-sm btn-primary">{getIcon(iconConstants.SAVE)} Save</button>
@@ -355,7 +376,7 @@ class Stocks extends Component {
         if (stocks.length > 0) {
             itemsAllStocks = stocks.map((item, index) => {
                 return (
-                    <tr key={item.id}>
+                    <tr key={item.id} className={!item.isActive ? "inActive" : item.isDeleted ? "deleted" : ""}>
                         <td>
                             <a className="btn btn-sm btn-warning" title="Edit" onClick={this.editItem.bind(this, item.id)}>{getIcon(iconConstants.EDIT)}</a>
                             {' '}

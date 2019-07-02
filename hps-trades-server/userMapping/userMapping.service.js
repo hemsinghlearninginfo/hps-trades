@@ -12,9 +12,16 @@ module.exports = {
 
 async function addUpdate(userMappingData) {
     //userMappingData
-    let userMappingDataObject = new UserMappingDb();
+    let userMappingDataObject = null;
+    if (userMappingData.id === null) {
+        userMappingDataObject = new UserMappingDb();
+    }
+    else{
+        userMappingDataObject = await UserMappingDb.findById(userMappingData.id);
+    }
     userMappingDataObject.masterUserId = userMappingData.masterUserId;
     userMappingDataObject.childUserId = userMappingData.childUserId;
+    userMappingDataObject.comment = userMappingData.comment;
     try {
         await userMappingDataObject.save();
     } catch (error) {

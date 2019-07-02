@@ -178,3 +178,11 @@ label {
     width: 100%;
     margin-top: 10px;
 }
+
+.deleted{
+    background-color: #f7dada;
+}
+
+.inActive{
+    background-color: #e6e5e5;
+}

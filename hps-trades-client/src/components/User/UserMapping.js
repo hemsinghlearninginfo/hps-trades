@@ -6,6 +6,7 @@ import Components from '../index';
 import { userActions } from '../../_actions';
 import styles from './User.css';
 import { iconConstants } from '../../_constants';
+import { getIcon } from '../../_helpers/';
 
 class UserMapping extends Component {
 
@@ -29,7 +30,7 @@ class UserMapping extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.activeInActiveUser = this.activeInActiveUser.bind(this);
+        this.markAsEdit = this.markAsEdit.bind(this);
     }
 
     componentDidMount() {
@@ -119,13 +120,15 @@ class UserMapping extends Component {
         this.setState({ isSubmitted: true, isNewMappingUnique });
         if (newMapping.user && newMapping.master && newMapping.user !== newMapping.master && isNewMappingUnique) {
             var userMapping = {
+                id: newMapping.id,
                 masterUserId: newMapping.master,
                 childUserId: newMapping.user,
+                comment: newMapping.comment,
             }
             const { dispatch } = this.props;
             dispatch(userActions.addUpdateUserMapping(userMapping));
-            this.addNew();
             this.getAllMapping();
+            this.setState({ isAddNew: false, isEdit: false });
         }
     }
 
@@ -136,31 +139,22 @@ class UserMapping extends Component {
             let foundUser = mappings.filter(function (user) {
                 return (user.masterUserId === newMapping.master && user.childUserId === newMapping.user) ? true : false;
             });
-            if (foundUser !== null && foundUser.length > 0) {
+            if (foundUser !== null && foundUser.length > 0 && newMapping.id !== foundUser[0].id) {
                 isUnique = false;
             }
         }
         return isUnique;
     }
 
-    activeInActiveUser = (otherObjectState, index) => {
-
+    markAsEdit = (index) => {
         const { mappings, newMapping } = this.state;
-        for (let i = 0; i < mappings.length; i++) {
-            mappings[i].markForActiveAndActive = otherObjectState;
-        }
         if (index >= 0) {
             mappings[index].markForActiveAndActive = !mappings[index].markForActiveAndActive;
             newMapping.id = mappings[index].id;
             newMapping.user = mappings[index].childUserId;
             newMapping.master = mappings[index].masterUserId;
             newMapping.comment = mappings[index].comment;
-        }
-        else {
-            newMapping.id = null;
-            newMapping.user = '';
-            newMapping.master = '';
-            newMapping.comment = '';
+            newMapping.isActive = mappings[index].isActive;
         }
         this.setState({
             isAddNew: false,
@@ -213,8 +207,7 @@ class UserMapping extends Component {
                                 }
                             </td>
                             <td rowSpan="2">Comment</td>
-                            <td rowSpan="2"><textarea rows="5" cols="80"></textarea></td>
-
+                            <td rowSpan="2"><textarea rows="5" cols="80" name="comment" value={newMapping.comment} onChange={this.handleChange}></textarea></td>
                         </tr>
                         <tr>
                             <td>User</td>
@@ -260,7 +253,8 @@ class UserMapping extends Component {
         const addNewFormHTML = (isAddNew && this.formDesign(true, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML));
 
         const addNewButtonHTML = (!isAddNew && !isEdit &&
-            <button className="btn btn-sm btn-success" onClick={this.addNew}>Add New</button>
+            <button className="btn btn-primary btn-sm" title="Add New User Mapping Details" onClick={this.addNew}>{getIcon(iconConstants.ADD)}Add New</button>
+            || 'Action'
         )
 
         let userMappingHTML = ''
@@ -268,7 +262,7 @@ class UserMapping extends Component {
             userMappingHTML = mappings.map((item, index) => {
                 return (
                     (!item.markForActiveAndActive && <tr key={item.id} className="danger">
-                        <td><button className={`btn btn-sm ${item.isActive ? 'btn-danger' : 'btn-success'}`} onClick={this.activeInActiveUser.bind(this, false, index)}>{item.isActive ? 'Mark inActive' : 'Mark Active'}</button></td>
+                        <td><a className="btn btn-sm btn-warning" title="Edit" onClick={this.markAsEdit.bind(this, index)}>{getIcon(iconConstants.EDIT)}</a></td>
                         <td>{item.masterUserName}</td>
                         <td>{item.childUserName}</td>
                         <td>{item.isActive ? 'true' : 'false'}</td>
@@ -279,18 +273,21 @@ class UserMapping extends Component {
                     </tr>));
             });
         }
+        else {
+            userMappingHTML = <tr><td colSpan="5">No Data Found...</td></tr>
+        }
 
         return (
             <Components.PageTemplate iconType={iconConstants.USER_MAPPING} heading="User Mapping">
-                <div>
-                    <table className="table table-bordered userMapping">
+                <div className="table-responsive">
+                    <table className="table table-hover bg-white border shadow userMapping">
                         <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Master</th>
-                                <th>User</th>
-                                <th>Active</th>
-                                <th>Comment</th>
+                            <tr className="font-weight-bold bg-info text-light">
+                                <td className="align-middle">{addNewButtonHTML}</td>
+                                <td className="align-middle">Master</td>
+                                <td className="align-middle">User</td>
+                                <td className="align-middle">Active</td>
+                                <td className="align-middle">Comment</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -298,7 +295,6 @@ class UserMapping extends Component {
                         </tbody>
                     </table>
                     {addNewFormHTML}
-                    {addNewButtonHTML}
                 </div>
             </Components.PageTemplate>
         );
