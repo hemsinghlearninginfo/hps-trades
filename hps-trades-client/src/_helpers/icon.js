@@ -3,7 +3,7 @@ import { iconConstants } from '../_constants';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaGavel, FaCog, FaAngrycreative, FaCalendar,
     FaPencilAlt, FaTrashAlt, FaPlusSquare, FaSave, FaBan, FaExclamationCircle, FaTimesCircle,
-    FaUserFriends, FaAtom, FaUsersCog
+    FaUserFriends, FaAtom, FaUsersCog, FaChartLine, FaBook
 }
     from 'react-icons/fa';
 
@@ -60,6 +60,9 @@ export function getIcon(iconType) {
             break;
         case iconConstants.STOCK:
             iconsHTML = <FaAtom />;
+            break;
+        case iconConstants.PAPERTRADE:
+            iconsHTML = <FaBook />;
             break;
         default:
             iconsHTML = <FaAngrycreative />

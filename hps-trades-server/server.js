@@ -85,6 +85,7 @@ function routes() {
     // api routes for User
     app.use('/users', require('./users/users.controller'));
     app.use('/usermapping', require('./userMapping/userMapping.controller'));
+    app.use('/userRules', require('./userRules/userRule.controller'));
 
     // global error handler
     app.use(errorHandler);

@@ -40,6 +40,7 @@ class App extends Component {
                 <PrivateRoute exact path="/usermapping" component={Components.UserMapping} />
                 <PrivateRoute exact path="/usersstatus" component={Components.UsersStatus} />
                 <PrivateRoute exact path="/stocks" component={Components.Stocks} />
+                <PrivateRoute exact path="/papertrade" component={Components.PaperTrade} />
                 <Route exact path="/" component={Components.Home} />
                 <Route exact path="/tkn" component={Components.URLToken} />
                 <Route exact path="/fpwd" component={Components.ForgotPassword} />

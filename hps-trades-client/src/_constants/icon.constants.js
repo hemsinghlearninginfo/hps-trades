@@ -16,4 +16,5 @@ export const iconConstants = {
     CANCEL: 'CANCEL',
     ERROR: 'ERROR',
     CLOSE: 'CLOSE',
+    PAPERTRADE :'PAPERTRADE'
 };

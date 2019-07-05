@@ -14,6 +14,7 @@ import PP from './Legal/PP';
 
 import loading from './Utils/loading';
 import alert from './Utils/alert';
+import modal from './Utils/modal';
 import ConfirmAlert from './Utils/confirmAlert';
 import GoogleReCaptcha from './Utils/GoogleReCaptcha';
 import { URLToken } from './URL/URLToken';
@@ -23,6 +24,8 @@ import logo from './Utils/logo';
 import { Events } from './Event/events';
 import { Stocks } from './Stock/stocks';
 import { ShowEvent } from './Event/showEvent';
+
+import { PaperTrade } from './Trading/paper';
 
 import error404 from './Error/404';
 
@@ -51,10 +54,13 @@ export default class Component {
     static ConfirmAlert = ConfirmAlert;
     static GoogleReCaptcha = GoogleReCaptcha;
     static URLToken = URLToken;
+    static ModalWindow = modal;
 
     static Events = Events;
     static Stocks = Stocks;
     static ShowEvent = ShowEvent;
+
+    static PaperTrade = PaperTrade;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

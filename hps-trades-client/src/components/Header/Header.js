@@ -14,8 +14,10 @@ import {
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
-import { FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaCogs, FaCalendar, 
-    FaUsersCog, FaUserFriends, FaAtom } from 'react-icons/fa';
+import {
+    FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaCogs, FaCalendar,
+    FaUsersCog, FaUserFriends, FaAtom, FaChartLine, FaBook
+} from 'react-icons/fa';
 
 import { myConfig } from '../../config';
 import CSSModules from 'react-css-modules';
@@ -73,9 +75,7 @@ class Header extends Component {
 
         superAdminHTML = (
             <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                    <FaCogs />Utils
-                    </DropdownToggle>
+                <DropdownToggle nav caret><FaCogs />Utils</DropdownToggle>
                 <DropdownMenu right className="dropDownMenu">
                     <DropdownItem className="item" href="/event">
                         <FaCalendar /> Events
@@ -93,6 +93,15 @@ class Header extends Component {
             </UncontrolledDropdown>
         )
 
+        stockHTML = (<UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret><FaChartLine />Stocks</DropdownToggle>
+            <DropdownMenu right className="dropDownMenu">
+                <DropdownItem className="item" href="/papertrade">
+                    <FaBook /> Paper Trade
+                </DropdownItem>
+            </DropdownMenu>
+        </UncontrolledDropdown>)
+
         return (
             <div>
                 <Navbar className="changeHeader" color="light" light expand="md">
@@ -100,6 +109,7 @@ class Header extends Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
+                            {stockHTML}
                             {superAdminHTML}
                             {userLoginHTML}
                         </Nav>

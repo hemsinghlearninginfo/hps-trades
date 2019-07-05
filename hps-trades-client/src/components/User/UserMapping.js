@@ -253,8 +253,8 @@ class UserMapping extends Component {
         const addNewFormHTML = (isAddNew && this.formDesign(true, isSubmitted, isNewMappingUnique, newMapping, selectMasterOptionsHTML, selectOptionsHTML));
 
         const addNewButtonHTML = (!isAddNew && !isEdit &&
-            <button className="btn btn-primary btn-sm" title="Add New User Mapping Details" onClick={this.addNew}>{getIcon(iconConstants.ADD)}Add New</button>
-            || 'Action'
+            (<button className="btn btn-primary btn-sm" title="Add New User Mapping Details" onClick={this.addNew}>{getIcon(iconConstants.ADD)}Add New</button>
+            || 'Action')
         )
 
         let userMappingHTML = ''

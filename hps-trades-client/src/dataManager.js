@@ -125,7 +125,7 @@ function decrypt(cipherText) {
     return plain;
 }
 
-function getValidDate() {
-    var currentDateTime = new Date();
-    return currentDateTime.setMinutes(currentDateTime.getMinutes() + myConfig.CacheValidateInMinutes);
-}
+// function getValidDate() {
+//     var currentDateTime = new Date();
+//     return currentDateTime.setMinutes(currentDateTime.getMinutes() + myConfig.CacheValidateInMinutes);
+// }

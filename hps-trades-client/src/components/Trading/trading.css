@@ -1,0 +1,188 @@
+.actions {
+    text-align: center;
+    width: 100px !important;
+}
+
+.actions a {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+button {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.marketClose {
+    z-index: 10;
+    position: fixed;
+    top: 1px;
+    left: 50%;
+    width: 30em;
+    margin-left: -15em;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #f8d7da, #8c8b8b, #f8d7da);
+    background-image: -moz-linear-gradient(left, #f8d7da, #8c8b8b, #f8d7da);
+    background-image: -ms-linear-gradient(left, #f8d7da, #8c8b8b, #f8d7da);
+    background-image: -o-linear-gradient(left, #f8d7da, #8c8b8b, #f8d7da);
+}
+
+th {
+    text-align: center;
+}
+
+.noDataFound {
+    text-align: center;
+    font-size: 9pt;
+    color: red;
+}
+
+.form-control {
+    color: black;
+    border-radius: 0px;
+}
+
+.date {
+    width: 168px;
+}
+
+.heading {
+    width: 180px;
+}
+
+.type {
+    width: 120px;
+}
+
+.errorBox {
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    background-color: beige;
+    color: red;
+    text-align: center;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
+    padding-right: 0px !important;
+}
+
+.react-datepicker__day--today {
+    background-color: #4267b2;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.eventCards {
+    margin: 5px 0 5px 0;
+    padding: 5px;
+}
+
+label {
+    margin-bottom: 2px;
+}
+
+.react-datepicker-popper {
+    z-index: 110;
+    width: 315px;
+}
+
+.react-datepicker__time-list {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.infoAlert {
+    border-color: #B4E1E4;
+    background: #81c7e1;
+    color: #fff;
+}
+
+.criticalAlert {
+    border-color: #B63E5A;
+    background: #E26868;
+    color: #fff;
+}
+
+.notice {
+    padding: 15px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 5px 8px -6px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 8px -6px rgba(0, 0, 0, .2);
+}
+
+.notice-sm {
+    padding: 10px;
+    font-size: 80%;
+}
+
+.notice-lg {
+    padding: 35px;
+    font-size: large;
+}
+
+.notice-success {
+    border-color: #80D651;
+}
+
+.notice-success>strong {
+    color: #80D651;
+}
+
+.notice-info {
+    border-color: #45ABCD;
+}
+
+.notice-info>strong {
+    color: #45ABCD;
+}
+
+.notice-warning {
+    border-color: #FEAF20;
+}
+
+.notice-warning>strong {
+    color: #FEAF20;
+}
+
+.notice-danger {
+    border-color: #d73814;
+}
+
+.notice-danger>strong {
+    color: #d73814;
+}
+
+.closeButton {
+    float: right;
+}
+
+.react-datepicker-ignore-onclickoutside {
+    border-left: 2px solid red;
+}
+
+.calCtrl,
+.calCtrl>div>.react-datepicker-wrapper, .calCtrl>div>.react-datepicker-wrapper div {
+    width: 100%;
+}
+
+.stockCard{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.deleted{
+    background-color: #f7dada;
+}
+
+.inActive{
+    background-color: #e6e5e5;
+}
