@@ -4,6 +4,7 @@ const userRuleService = require('./userRule.service');
 
 // routes
 router.get('/', getAll);
+router.post('/addUpdate', addUpdate);
 
 // router.post('/authenticate', authenticate);
 // router.post('/forgotpasswordtoemail', forgotPasswordToEmail);
@@ -23,6 +24,12 @@ function getAll(req, res, next) {
         .then(userRules => res.json(userRules))
         .catch(err => next(err));
 }
+
+function addUpdate(req, res, next) {
+    userRuleService.addUpdate(req.body)
+      .then(() => res.json({}))
+      .catch(err => next(err));
+  }
 
 
 // function authenticate(req, res, next) {

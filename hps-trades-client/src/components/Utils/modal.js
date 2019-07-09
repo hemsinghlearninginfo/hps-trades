@@ -8,7 +8,9 @@ const Modal = ({ heading, handleClose, show, children }) => {
                 <div className="modal-heading">
                     <span> {heading} </span><span className="modal-close" onClick={handleClose}>X</span >
                 </div>
-                {children}
+                <div className="modal-children">
+                    {children}
+                </div>
             </section>
         </div>
     </Wrapper>

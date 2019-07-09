@@ -26,6 +26,8 @@ import { Stocks } from './Stock/stocks';
 import { ShowEvent } from './Event/showEvent';
 
 import { PaperTrade } from './Trading/paper';
+import { ShowRules } from './Trading/showRules';
+import { AddRule } from './Trading/addRule';
 
 import error404 from './Error/404';
 
@@ -61,6 +63,8 @@ export default class Component {
     static ShowEvent = ShowEvent;
 
     static PaperTrade = PaperTrade;
+    static ShowRules = ShowRules;
+    static AddRule = AddRule;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

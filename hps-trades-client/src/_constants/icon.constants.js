@@ -16,5 +16,7 @@ export const iconConstants = {
     CANCEL: 'CANCEL',
     ERROR: 'ERROR',
     CLOSE: 'CLOSE',
-    PAPERTRADE :'PAPERTRADE'
+    PAPERTRADE: 'PAPERTRADE',
+    WINDOWMAXIMIZE: 'window-maximize',
+    WINDOWRESTORE : 'window-restore'
 };

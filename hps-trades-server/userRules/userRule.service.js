@@ -1,13 +1,12 @@
-﻿const config = require('config.json');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+﻿
 const db = require('_helpers/db');
 const UserDb = db.User;
 const UserRuleDb = db.UserRule;
-const dataConstants = require('../_helpers/dataConstants');
+
 
 module.exports = {
     getAll,
+    addUpdate,
     // getAllWithType,
     // getById,
     // create,
@@ -18,8 +17,28 @@ module.exports = {
 
 
 async function getAll() {
-    return await UserDb.find().select('-hash');
+    return await UserRuleDb.find().select('-hash');
 }
+
+async function addUpdate(userRuleData) {
+    let userRuleDataObject = null;
+    if (userRuleData.id === undefined) {
+        userRuleDataObject = new UserRuleDb();
+    }
+    else{
+        userRuleDataObject = await UserRuleDb.findById(userRuleData.id);
+    }
+    userRuleDataObject.username = userRuleData.username;
+    userRuleDataObject.heading = userRuleData.heading;
+    userRuleDataObject.description = userRuleData.description;
+    userRuleDataObject.ruleType = userRuleData.ruleType;
+    try {
+        await userRuleDataObject.save();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 // async function getAllWithType() {
 //     let userWithType = [];

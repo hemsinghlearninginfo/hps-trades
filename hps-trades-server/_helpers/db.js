@@ -14,5 +14,6 @@ module.exports = {
     Email: require('../emails/email.model'),
     Event: require('../event/event.model'),
     Stock: require('../stock/stock.model'),
-    
+
+    UserRule: require('../userRules/userRule.model'),
 };

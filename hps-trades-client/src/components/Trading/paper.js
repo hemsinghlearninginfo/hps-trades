@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import styles from './trading.css'
 import { iconConstants } from '../../_constants';
-// import { getIcon } from '../../_helpers/';
+import { getIcon } from '../../_helpers/';
 // import { stockActions } from '../../_actions';
 // import { utils } from '../../_helpers';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,16 +20,28 @@ class PaperTrade extends Component {
 
         this.state = {
             isError: false,
-            showModal: false
+            showModal: false,
+            //addRule : false,
+            showAddRuleModal: false,
+            showAddRule: false,
+            isMaximizeWindow: false,
         };
     }
 
-    showModal = () => {
-        this.setState({ show: true });
+    // showModal = () => {
+    //     this.setState({ show: true });
+    // }
+
+    // hideModal = () => {
+    //     this.setState({ show: false });
+    // }
+
+    showAddRuleModal = () => {
+        this.setState({ showAddRule: true });
     }
 
-    hideModal = () => {
-        this.setState({ show: false });
+    hideAddRuleModal = () => {
+        this.setState({ showAddRule: false });
     }
 
     componentDidMount() {
@@ -39,17 +51,27 @@ class PaperTrade extends Component {
         }
     }
 
+    windowSize = (objWindowSize) => {
+        this.setState({ isMaximizeWindow: (objWindowSize === iconConstants.WINDOWMAXIMIZE) });
+    }
+
     render() {
+        const { isMaximizeWindow } = this.state;
         const { requestLoading } = this.props;
         return (
             <Components.PageTemplate iconType={iconConstants.PAPERTRADE} heading="Paper Trading" >
                 {requestLoading && (<Components.Loading message="loading" />)}
-                <div className="mainContainer">
-                    <Components.ModalWindow heading="test heading" show={this.state.show} handleClose={this.hideModal} >
-                        <p>Modal</p>
-                        <p>Data</p>
+                <div className={"mainContainer" + (isMaximizeWindow ? " trade-list-full" : "")}>
+                    <Components.ModalWindow heading="Add Rule" show={this.state.showAddRule} handleClose={this.hideAddRuleModal} >
+                        <Components.AddRule />
                     </Components.ModalWindow>
-                    <button type='button' onClick={this.showModal}>Open</button>
+                    {!isMaximizeWindow && (<button type="button" className="btn btn-sm btn-warning" title="Maximize" onClick={() => this.windowSize(iconConstants.WINDOWMAXIMIZE)}>{getIcon(iconConstants.WINDOWMAXIMIZE)}</button>)}
+                    {isMaximizeWindow && (<button type="button" className="btn btn-sm btn-warning" title="Restore" onClick={() => this.windowSize(iconConstants.WINDOWRESTORE)}>{getIcon(iconConstants.WINDOWRESTORE)}</button>)}
+                    <div className="float-right">
+                        <Components.ShowRules />
+                        {' '}
+                        <button type="button" className="btn btn-sm btn-primary" onClick={this.showAddRuleModal}>+ Rule</button>
+                    </div>
                     <div className="table-responsive-sm text-nowrap">
                         <table className="table table-sm table-striped table-bordered">
                             <thead>

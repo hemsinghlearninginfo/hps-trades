@@ -9,7 +9,7 @@ const schema = new Schema({
     },
     heading : {type : String , default: ''},
     description : {type : String , default: ''},
-    color : {type : String, default : '#ffffff'},
+    ruleType : {type : String},
     createdDate: { type: Date, default: Date.now },
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false }
