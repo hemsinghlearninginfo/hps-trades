@@ -20,7 +20,7 @@ router.post('/addUpdate', addUpdate);
 module.exports = router;
 
 function getAll(req, res, next) {
-    userRuleService.getAll()
+    userRuleService.getAll(req.userName)
         .then(userRules => res.json(userRules))
         .catch(err => next(err));
 }

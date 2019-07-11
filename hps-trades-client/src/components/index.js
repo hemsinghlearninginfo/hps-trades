@@ -28,6 +28,7 @@ import { ShowEvent } from './Event/showEvent';
 import { PaperTrade } from './Trading/paper';
 import { ShowRules } from './Trading/showRules';
 import { AddRule } from './Trading/addRule';
+import { AddNameSpace } from './Trading/addNameSpace';
 
 import error404 from './Error/404';
 
@@ -65,6 +66,7 @@ export default class Component {
     static PaperTrade = PaperTrade;
     static ShowRules = ShowRules;
     static AddRule = AddRule;
+    static AddNameSpace = AddNameSpace;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

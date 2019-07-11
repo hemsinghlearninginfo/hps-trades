@@ -16,8 +16,8 @@ module.exports = {
 };
 
 
-async function getAll() {
-    return await UserRuleDb.find().select('-hash');
+async function getAll(userName) {
+    return await UserRuleDb.find({ userName });
 }
 
 async function addUpdate(userRuleData) {

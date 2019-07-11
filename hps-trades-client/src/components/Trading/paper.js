@@ -21,27 +21,25 @@ class PaperTrade extends Component {
         this.state = {
             isError: false,
             showModal: false,
-            //addRule : false,
-            showAddRuleModal: false,
-            showAddRule: false,
+            showModalWindow: false,
+            moalWindowType: '',
+
             isMaximizeWindow: false,
+
+            isDropDownOpen: false,
+            dropDownSelectedLabel: 'All'
         };
     }
 
-    // showModal = () => {
-    //     this.setState({ show: true });
-    // }
-
-    // hideModal = () => {
-    //     this.setState({ show: false });
-    // }
-
-    showAddRuleModal = () => {
-        this.setState({ showAddRule: true });
+    showModal = (modalWindowType) => {
+        this.setState({ showModalWindow: true, modalWindowType });
+        if (modalWindowType === 'Add Namespace') {
+            this.setState({ dropDownSelectedLabel: '+ Add New Namespace' });
+        }
     }
 
-    hideAddRuleModal = () => {
-        this.setState({ showAddRule: false });
+    hideModal = () => {
+        this.setState({ showModalWindow: false, dropDownSelectedLabel: 'All' });
     }
 
     componentDidMount() {
@@ -55,23 +53,63 @@ class PaperTrade extends Component {
         this.setState({ isMaximizeWindow: (objWindowSize === iconConstants.WINDOWMAXIMIZE) });
     }
 
+    setDropDownLabel = (dropDownSelectedLabel) => this.setState({ dropDownSelectedLabel });
+    toggleOpen = () => this.setState({ isDropDownOpen: !this.state.isDropDownOpen });
+
     render() {
-        const { isMaximizeWindow } = this.state;
+        const { isMaximizeWindow, isDropDownOpen, modalWindowType, dropDownSelectedLabel } = this.state;
         const { requestLoading } = this.props;
+        const menuClass = `dropdown-menu${isDropDownOpen ? " show" : ""}`;
         return (
             <Components.PageTemplate iconType={iconConstants.PAPERTRADE} heading="Paper Trading" >
                 {requestLoading && (<Components.Loading message="loading" />)}
                 <div className={"mainContainer" + (isMaximizeWindow ? " trade-list-full" : "")}>
-                    <Components.ModalWindow heading="Add Rule" show={this.state.showAddRule} handleClose={this.hideAddRuleModal} >
-                        <Components.AddRule />
+                    <Components.ModalWindow
+                        heading={modalWindowType}
+                        show={this.state.showModalWindow}
+                        handleClose={this.hideModal}>
+                        {
+                            (modalWindowType === 'Add Rule' && <Components.AddRule />) ||
+                            (modalWindowType === 'Add Namespace' && <Components.AddNameSpace />)
+                        }
                     </Components.ModalWindow>
-                    {!isMaximizeWindow && (<button type="button" className="btn btn-sm btn-warning" title="Maximize" onClick={() => this.windowSize(iconConstants.WINDOWMAXIMIZE)}>{getIcon(iconConstants.WINDOWMAXIMIZE)}</button>)}
-                    {isMaximizeWindow && (<button type="button" className="btn btn-sm btn-warning" title="Restore" onClick={() => this.windowSize(iconConstants.WINDOWRESTORE)}>{getIcon(iconConstants.WINDOWRESTORE)}</button>)}
-                    <div className="float-right">
-                        <Components.ShowRules />
-                        {' '}
-                        <button type="button" className="btn btn-sm btn-primary" onClick={this.showAddRuleModal}>+ Rule</button>
+                    <div className="container tradding-Controls">
+                        <div className="row">
+                            <div className="col-sm-2">
+                                <div className="dropdown" onClick={this.toggleOpen}>
+                                    <button
+                                        className="btn btn-primary dropdown-toggle btn-sm"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true">
+                                        {dropDownSelectedLabel}
+                                    </button>
+                                    <div className={menuClass} aria-labelledby="dropdownMenuButton">
+                                        <button className={"dropdown-item btn-sm" + (dropDownSelectedLabel === "All" ? " active" : "")} onClick={() => this.setDropDownLabel('All')}>All</button>
+                                        {/* <button className={"dropdown-item btn-sm" + (dropDownSelectedLabel === "NSE Future" ? " active" : "")} onClick={() => this.setDropDownLabel('NSE Future')}>NSE Future</button>
+                                        <button className={"dropdown-item btn-sm" + (dropDownSelectedLabel === "MCX Future" ? " active" : "")} onClick={() => this.setDropDownLabel('MCX Future')}>MCX Future</button>
+                                        <button className={"dropdown-item btn-sm" + (dropDownSelectedLabel === "NSE Cash" ? " active" : "")} onClick={() => this.setDropDownLabel('NSE Cash')}>NSE Cash</button> */}
+                                        <div className="dropdown-divider"></div>
+                                        <button className="dropdown-item btn-sm" onClick={() => this.showModal('Add Namespace')}>+ Add New Namespace</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-10">
+                                <div className="float-right">
+                                    <Components.ShowRules />
+                                    {' '}
+                                    <button type="button" className="btn btn-sm btn-primary" onClick={() => this.showModal('Add Rule')}>+ Rule</button>
+                                    {' '}
+                                    <button type="button" className="btn btn-sm btn-warning" title={isMaximizeWindow ? "Restore" : "Maximize"}
+                                        onClick={() => this.windowSize(isMaximizeWindow ? iconConstants.WINDOWRESTORE : iconConstants.WINDOWMAXIMIZE)}>
+                                        {getIcon(isMaximizeWindow ? iconConstants.WINDOWRESTORE : iconConstants.WINDOWMAXIMIZE)}
+                                    </button>
+                                </div></div>
+                        </div>
                     </div>
+
+
                     <div className="table-responsive-sm text-nowrap">
                         <table className="table table-sm table-striped table-bordered">
                             <thead>
@@ -102,6 +140,7 @@ class PaperTrade extends Component {
                         </table>
                     </div>
                 </div>
+
             </Components.PageTemplate >
         );
     }

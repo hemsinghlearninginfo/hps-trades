@@ -16,4 +16,5 @@ module.exports = {
     Stock: require('../stock/stock.model'),
 
     UserRule: require('../userRules/userRule.model'),
+    TradingNameSpace: require('../tradingNameSpace/tradingNameSpace.model'),
 };

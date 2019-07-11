@@ -57,7 +57,8 @@ input.required,
 select.required,
 .rdt .form-control,
 .react-datepicker__input-container input,
-input.form-control.required {
+input.form-control.required,
+textarea.required {
     border-top: 1px solid #ced4da;
     border-right: 1px solid #ced4da;
     border-bottom: 1px solid #ced4da;

@@ -3,27 +3,22 @@ import Components from '../index';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import Wrapper from '../../hoc/Wrapper';
-// import DatePicker from 'react-datepicker';
-// import moment from 'moment';
 
 
 import styles from './trading.css'
-import { iconConstants } from '../../_constants';
-// import { getIcon } from '../../_helpers/';
 import { tradeActions } from '../../_actions';
 import { dataManager } from '../../dataManager';
-// import { utils } from '../../_helpers';
 
-class AddRule extends Component {
+class AddNameSpace extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            heading: '',
+            label: '',
             description: '',
-            ruleType: '',
-            isError: false,
+            type: '',
+            isError: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +31,6 @@ class AddRule extends Component {
         }
     }
 
-
     handleChange(event) {
         const { name, value } = event.target;
         this.setState({
@@ -47,20 +41,21 @@ class AddRule extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const { dispatch } = this.props;
-        const { heading, description, ruleType } = this.state;
-        if (heading === '' || description === '' || ruleType === '') {
+        const { label, description, type } = this.state;
+        if (label === '' || description === '') {
             this.setState({ isError: true });
         }
         else {
             this.setState({ isError: false });
-            const submitRule = {
-                username: dataManager.getCurrentUser()._id,
-                heading,
-                description,
-                ruleType,
-            }
-            dispatch(tradeActions.addUpdateRules(submitRule));
         }
+        //const submitRule = {
+        //     username: dataManager.getCurrentUser()._id,
+        //     label,
+        //     description,
+        //     type,
+        // }
+        //dispatch(tradeActions.addUpdateRules(submitRule));
+        // this.setState({ isAdd: false, stocks: [] });
     }
 
     render() {
@@ -73,7 +68,7 @@ class AddRule extends Component {
                     {isError && <div><Components.Alert message="Please fill all values." type="alert-danger" /></div>}
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon3">Heading</span>
+                            <span className="input-group-text" id="basic-addon3">Label</span>
                         </div>
                         <input type="text" className="form-control required" name="heading" onChange={this.handleChange}></input>
                     </div>
@@ -82,17 +77,6 @@ class AddRule extends Component {
                             <span className="input-group-text">Description</span>
                         </div>
                         <textarea className="form-control required" name="description" onChange={this.handleChange}></textarea>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text">Type</span>
-                        </div>
-                        <select className="form-control required" name="ruleType" onChange={this.handleChange}>
-                            <option>Select</option>
-                            <option>Buy</option>
-                            <option>Sell</option>
-                            <option>Info</option>
-                        </select>
                     </div>
                     <div className="float-right">
                         <button className="btn btn-sm btn-info">Save</button>
@@ -112,5 +96,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedAddRulePage = connect(mapStateToProps)(CSSModules(AddRule, styles));
-export { connectedAddRulePage as AddRule }; 
+const connectedAddNameSpacePage = connect(mapStateToProps)(CSSModules(AddNameSpace, styles));
+export { connectedAddNameSpacePage as AddNameSpace }; 
