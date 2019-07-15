@@ -14,7 +14,9 @@ export const dataManager = {
 
 export const dataManagerConstants = {
     LOGEED_IN_USER: 'LOGEED_IN_USER',
-    LOGEED_IN_ALERT: 'LOGEED_IN_ALERT'
+    LOGEED_IN_ALERT: 'LOGEED_IN_ALERT',
+    TRADDING_TYPE_PAPER : 'PAPER_TRADDING_TYPE',
+    TRADDING_TYPE_LIVE : 'LIVE_TRADDING_TYPE'
 }
 
 function getUserAlerts(alertData) {

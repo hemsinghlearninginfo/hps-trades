@@ -2,16 +2,33 @@ import { appConstants, responseConstants } from '../_constants';
 import { tradeService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
-//import { dataManager } from '../dataManager';
+import { dataManager } from '../dataManager';
 
 export const tradeActions = {
     getAllRules,
     addUpdateRules,
+    getAllNameSpaces,
+    addUpdateNameSpaces,
 };
 
-async function getAllRules(){
+async function getAllRules() {
     try {
-        const tradeRules = await tradeService.getAllRules();
+        const loggedInUserId = dataManager.getCurrentUser()._id;
+        const tradeRules = await tradeService.getAllRules(loggedInUserId);
+        return tradeRules;
+    }
+    catch (error) {
+        if (responseConstants.INVALID_TOKEN === error) {
+            history.push('/');
+            return '';
+        }
+        else { return error; }
+    }
+}
+async function getAllNameSpaces() {
+    try {
+        const loggedInUserId = dataManager.getCurrentUser()._id;
+        const tradeRules = await tradeService.getAllNameSpaces(loggedInUserId);
         return tradeRules;
     }
     catch (error) {
@@ -25,9 +42,10 @@ async function getAllRules(){
 
 
 function addUpdateRules(tradeRule) {
+    const submitData = { ...tradeRule, userName: dataManager.getCurrentUser()._id };
     return dispatch => {
-        dispatch(request(tradeRule));
-        tradeService.addUpdateRules(tradeRule)
+        dispatch(request(submitData));
+        tradeService.addUpdateRules(submitData)
             .then(
                 rule => {
                     dispatch(success());
@@ -40,11 +58,32 @@ function addUpdateRules(tradeRule) {
             );
     };
 
-    function request(tradeRule) { return { type: appConstants.REQUEST,  tradeRule } }
-    function success(tradeRule) { return { type: appConstants.SUCCESS,  tradeRule } }
+    function request(tradeRule) { return { type: appConstants.REQUEST, tradeRule } }
+    function success(tradeRule) { return { type: appConstants.SUCCESS, tradeRule } }
     function failure(error) { return { type: appConstants.FAILURE, error } }
 }
 
+function addUpdateNameSpaces(nameSpace) {
+    const submitData = { ...nameSpace, userName: dataManager.getCurrentUser()._id };
+    return dispatch => {
+        dispatch(request(submitData));
+        tradeService.addUpdateNameSpaces(submitData)
+            .then(
+                namespace => {
+                    dispatch(success());
+                    dispatch(alertActions.success('Trade Rule saved successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(nameSpace) { return { type: appConstants.REQUEST, nameSpace } }
+    function success(nameSpace) { return { type: appConstants.SUCCESS, nameSpace } }
+    function failure(error) { return { type: appConstants.FAILURE, error } }
+}
 // async function getAll(){
 //     try {
 //         const tradeRules = await tradeService.getAllRules();

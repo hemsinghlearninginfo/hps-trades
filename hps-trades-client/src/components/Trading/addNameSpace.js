@@ -13,11 +13,10 @@ class AddNameSpace extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             label: '',
             description: '',
-            type: '',
+            type:  this.props.traddingType,
             isError: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -47,15 +46,15 @@ class AddNameSpace extends Component {
         }
         else {
             this.setState({ isError: false });
+            const submitRule = {
+                label,
+                description,
+                type,
+            };
+            dispatch(tradeActions.addUpdateNameSpaces(submitRule));
+            // this.setState({ isAdd: false, stocks: [] });
         }
-        //const submitRule = {
-        //     username: dataManager.getCurrentUser()._id,
-        //     label,
-        //     description,
-        //     type,
-        // }
-        //dispatch(tradeActions.addUpdateRules(submitRule));
-        // this.setState({ isAdd: false, stocks: [] });
+
     }
 
     render() {
@@ -70,7 +69,7 @@ class AddNameSpace extends Component {
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon3">Label</span>
                         </div>
-                        <input type="text" className="form-control required" name="heading" onChange={this.handleChange}></input>
+                        <input type="text" className="form-control required" name="label" onChange={this.handleChange}></input>
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import styles from './trading.css'
 import { iconConstants } from '../../_constants';
 import { getIcon } from '../../_helpers/';
+import { dataManagerConstants } from '../../dataManager';
 // import { stockActions } from '../../_actions';
 // import { utils } from '../../_helpers';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -27,7 +28,8 @@ class PaperTrade extends Component {
             isMaximizeWindow: false,
 
             isDropDownOpen: false,
-            dropDownSelectedLabel: 'All'
+            dropDownSelectedLabel: 'All',
+            traddingType: dataManagerConstants.TRADDING_TYPE_PAPER
         };
     }
 
@@ -57,7 +59,7 @@ class PaperTrade extends Component {
     toggleOpen = () => this.setState({ isDropDownOpen: !this.state.isDropDownOpen });
 
     render() {
-        const { isMaximizeWindow, isDropDownOpen, modalWindowType, dropDownSelectedLabel } = this.state;
+        const { isMaximizeWindow, isDropDownOpen, modalWindowType, dropDownSelectedLabel, traddingType } = this.state;
         const { requestLoading } = this.props;
         const menuClass = `dropdown-menu${isDropDownOpen ? " show" : ""}`;
         return (
@@ -67,10 +69,11 @@ class PaperTrade extends Component {
                     <Components.ModalWindow
                         heading={modalWindowType}
                         show={this.state.showModalWindow}
-                        handleClose={this.hideModal}>
+                        handleClose={this.hideModal}
+                    >
                         {
                             (modalWindowType === 'Add Rule' && <Components.AddRule />) ||
-                            (modalWindowType === 'Add Namespace' && <Components.AddNameSpace />)
+                            (modalWindowType === 'Add Namespace' && <Components.AddNameSpace traddingType={traddingType} />)
                         }
                     </Components.ModalWindow>
                     <div className="container tradding-Controls">

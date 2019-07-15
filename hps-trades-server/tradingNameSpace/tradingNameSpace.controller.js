@@ -1,6 +1,6 @@
 ﻿const express = require('express');
 const router = express.Router();
-const tradingNameSpaceService = require('./tradingNameSpace.service').default;
+const tradingNameSpaceService = require('./tradingNameSpace.service');
 
 // routes
 router.get('/', getAll);

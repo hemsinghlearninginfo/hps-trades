@@ -86,6 +86,7 @@ function routes() {
     app.use('/users', require('./users/users.controller'));
     app.use('/usermapping', require('./userMapping/userMapping.controller'));
     app.use('/userRules', require('./userRules/userRule.controller'));
+    app.use('/namespace', require('./tradingNameSpace/tradingNameSpace.controller'));
 
     // global error handler
     app.use(errorHandler);

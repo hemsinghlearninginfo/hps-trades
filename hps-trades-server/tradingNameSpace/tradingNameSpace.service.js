@@ -13,7 +13,7 @@ async function getAll(userName) {
 async function addUpdate(paramData) {
     let dbObject = null;
     if (paramData.id === undefined) {
-        dbObject = new UserRuleDb();
+        dbObject = new TradingNameSpaceDb();
     }
     else {
         dbObject = await TradingNameSpaceDb.findById(paramData.id);
@@ -21,6 +21,7 @@ async function addUpdate(paramData) {
     dbObject.label = paramData.label;
     dbObject.description = paramData.description;
     dbObject.type = paramData.type;
+    dbObject.userName = paramData.userName;
     try {
         await dbObject.save();
     } catch (error) {
