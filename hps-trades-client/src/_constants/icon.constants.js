@@ -18,5 +18,6 @@ export const iconConstants = {
     CLOSE: 'CLOSE',
     PAPERTRADE: 'PAPERTRADE',
     WINDOWMAXIMIZE: 'window-maximize',
-    WINDOWRESTORE : 'window-restore'
+    WINDOWRESTORE : 'window-restore',
+    QUESTION : 'Question'
 };

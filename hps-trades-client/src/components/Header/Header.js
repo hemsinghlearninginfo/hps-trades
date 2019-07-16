@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import {
     FaUserSecret, FaSignOutAlt, FaSignInAlt, FaUserAlt, FaCogs, FaCalendar,
-    FaUsersCog, FaUserFriends, FaAtom, FaChartLine, FaBook
+    FaUsersCog, FaUserFriends, FaAtom, FaChartLine, FaBook, FaQuestion
 } from 'react-icons/fa';
 
 import { myConfig } from '../../config';
@@ -46,6 +46,7 @@ class Header extends Component {
         let userLoginHTML;
         let superAdminHTML;
         let stockHTML;
+        let faqs;
 
         if (user == null || user.token == null) {
             userLoginHTML = (
@@ -102,6 +103,12 @@ class Header extends Component {
             </DropdownMenu>
         </UncontrolledDropdown>)
 
+        faqs = (
+            <NavItem>
+                <NavLink href="/faqs/"><FaQuestion /> FAQs</NavLink>
+            </NavItem>
+        )
+
         return (
             <div>
                 <Navbar className="changeHeader" color="light" light expand="md">
@@ -109,6 +116,7 @@ class Header extends Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
+                            {faqs}
                             {stockHTML}
                             {superAdminHTML}
                             {userLoginHTML}

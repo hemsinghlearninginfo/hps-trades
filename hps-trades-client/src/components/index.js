@@ -30,6 +30,8 @@ import { ShowRules } from './Trading/showRules';
 import { AddRule } from './Trading/addRule';
 import { AddNameSpace } from './Trading/addNameSpace';
 
+import FAQs from './Extras/FAQs'
+
 import error404 from './Error/404';
 
 import pageTemplate from './Template/PageTemplate';
@@ -67,6 +69,8 @@ export default class Component {
     static ShowRules = ShowRules;
     static AddRule = AddRule;
     static AddNameSpace = AddNameSpace;
+
+    static FAQs = FAQs;
 
     static PageTemplate = pageTemplate;
     static Error404 = error404;

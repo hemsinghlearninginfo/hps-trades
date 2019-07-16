@@ -50,6 +50,7 @@ class App extends Component {
                 <Route exact path="/pp" component={Components.PP} />
                 <Route exact path="/login" component={Components.Login} />
                 <Route exact path="/register" component={Components.Register} />
+                <Route exact path="/faqs" component={Components.FAQs} />
                 <Route path='/404' component={Components.Error404} />
                 <Redirect path='*' to='/404' />
               </Switch>

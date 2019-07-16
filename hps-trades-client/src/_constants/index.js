@@ -3,3 +3,4 @@ export * from './app.constants';
 export * from './icon.constants';
 export * from './message.constants';
 export * from './response.constants';
+export * from './extras.constants';
